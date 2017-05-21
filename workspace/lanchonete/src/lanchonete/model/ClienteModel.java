@@ -2,12 +2,12 @@ package lanchonete.model;
 
 import java.math.BigDecimal;
 
-public class ClienteDto {
+public class ClienteModel {
 	private BigDecimal codigoCliente;
 	private String nome;
 	private String endereco;
 	private String telefone;
-	private String cpf;
+	private BigDecimal cpf;
 	
 	public String getNome() {
 		return nome;
@@ -27,10 +27,10 @@ public class ClienteDto {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public String getCpf() {
+	public BigDecimal getCpf() {
 		return cpf;
 	}
-	public void setCpf(String cpf) {
+	public void setCpf(BigDecimal cpf) {
 		this.cpf = cpf;
 	}
 	public BigDecimal getCodigoCliente() {

@@ -4,21 +4,23 @@
 package principal;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import lanchonete.model.UsuarioModel;
 import lanchonete.view.LoginView;
-import lanchonete.view.MenuProprietarioView;
+import lanchonete.view.MenuView;
 
 /**
  * @author Marcilio
  *
  */
 public class Principal {
-
+	
 	/**
 	 * @param args
+	 * @throws ParseException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		boolean flagLogin = true;
 		LoginView loginView = new LoginView();
 		do {
@@ -28,8 +30,8 @@ public class Principal {
 				System.out.println("");
 			} else {
 				flagLogin = false;
-				MenuProprietarioView menuProprietario = new MenuProprietarioView();
-				menuProprietario.menu(user.getPerfil_user());
+				MenuView menuProprietario = new MenuView();
+				menuProprietario.menu(user);
 			}
 		} while (flagLogin);
 	}

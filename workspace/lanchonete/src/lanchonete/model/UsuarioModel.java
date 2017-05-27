@@ -8,6 +8,7 @@ public class UsuarioModel {
 	private String senha_user;
 	private int perfil_user;
 	private int cod_user;
+	private int qtd_alerta_estoque;
 
 	public String getNome_user() {
 		return nome_user;
@@ -56,4 +57,13 @@ public class UsuarioModel {
 	public void setCod_user(int cod_user) {
 		this.cod_user = cod_user;
 	}
+
+	public int getQtd_alerta_estoque() {
+		return qtd_alerta_estoque;
+	}
+
+	public void setQtd_alerta_estoque(int qtd_alerta_estoque) {
+		this.qtd_alerta_estoque = qtd_alerta_estoque;
+	}
+	
 }

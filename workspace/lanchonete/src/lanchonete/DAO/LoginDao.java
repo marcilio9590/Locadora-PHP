@@ -34,6 +34,8 @@ public class LoginDao {
 			usuario.setLogin_user(resultado.getString(3));
 			usuario.setNome_user(resultado.getString(1));
 			usuario.setPerfil_user(resultado.getInt(5));
+			usuario.setPerfil_user(resultado.getInt(5));
+			usuario.setQtd_alerta_estoque(resultado.getInt(7));
 		}
 		if (resultado != null) {
 			resultado.close();

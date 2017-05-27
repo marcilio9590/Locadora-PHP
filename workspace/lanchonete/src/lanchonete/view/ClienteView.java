@@ -4,7 +4,6 @@ import java.util.List;
 
 import lanchonete.model.ClienteModel;
 import lanchonete.model.PedidoModel;
-import lanchonete.model.ProdutoModel;
 
 public class ClienteView {
 

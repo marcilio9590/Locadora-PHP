@@ -27,7 +27,11 @@ public class EstoqueDao {
 		ppst = conn.prepareStatement(sql.toString());
 		ppst.setString(1, p.getNome_produto());
 		ppst.setBigDecimal(2, p.getPreco_produto());
-		ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));
+		if(p.getData_validade() == null){
+			ppst.setString(3, null);
+		}else{
+			ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));			
+		}
 		ppst.setInt(4, p.getQtd_disponivel());
 
 		/* Executa a SQL e captura o resultado da consulta */

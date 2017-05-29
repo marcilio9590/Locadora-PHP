@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 import lanchonete.business.ClienteService;
 import lanchonete.business.EstoqueService;
+import lanchonete.business.MesaService;
 import lanchonete.business.UserService;
 import lanchonete.model.ClienteModel;
+import lanchonete.model.MesaModel;
 import lanchonete.model.PedidoModel;
 import lanchonete.model.ProdutoModel;
 import lanchonete.model.UsuarioModel;
@@ -20,11 +22,12 @@ public class MenuView {
 	private ClienteService clienteService = new ClienteService();
 	private EstoqueService estoqueService = new EstoqueService();
 	private UserService userService = new UserService();
+	private MesaService mesaService = new MesaService();
 	private int opcao = 0;
 
 	public void menu(UsuarioModel user) throws ParseException {
 		int perfil = user.getPerfil_user();
-		if(perfil == 1){
+		if (perfil == 1) {
 			estoqueService.checarNivelEstoque(user.getQtd_alerta_estoque());
 		}
 		do {
@@ -35,7 +38,6 @@ public class MenuView {
 				System.out.println("                  |     2 - Verifica Pedido               |");
 			if (perfil == 2)
 				System.out.println("                  |     3 - Checar Preço de Mercadoria    |");
-			// proprietario
 			if (perfil == 1)
 				System.out.println("                  |     2 - Gerenciamento de Estoque      |");
 			if (perfil == 1)
@@ -62,7 +64,7 @@ public class MenuView {
 
 					break;
 				case 5:
-
+					getSubmenu(5, user);
 					break;
 				case 0:
 					break;
@@ -107,7 +109,7 @@ public class MenuView {
 
 				break;
 			case 5:
-
+				MenuMesa();
 				break;
 			}
 		} while (opcao != 0);
@@ -221,8 +223,13 @@ public class MenuView {
 		System.out.println("Digite a data de validade(dd/mm/aaaa). Caso não tenha digite -");
 		sc.nextLine();
 		String data = sc.nextLine();
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		Date dataFormatada = formato.parse(data);
+		Date dataFormatada;
+		if (!data.equals("-")) {
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			dataFormatada = formato.parse(data);
+		} else {
+			dataFormatada = null;
+		}
 		p.setData_validade(dataFormatada);
 		System.out.println("Digite a quantidade a ser cadastrada no estoque: ");
 		p.setQtd_disponivel(sc.nextInt());
@@ -302,10 +309,84 @@ public class MenuView {
 				System.out.println("Erro ao cadastrar limite...");
 			}
 			break;
+		case 0:
+			break;
 
 		default:
+			System.out.println("Opção inválida");
 			break;
 		}
 	}
+
+	private void MenuMesa() throws ParseException {
+		System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+		System.out.println("\n                  =======================================================");
+		System.out.println("                  |     1 - Cadastrar Mesa                              |");
+		System.out.println("                  |     2 - Listar Mesas                                |");
+		System.out.println("                  |     3 - Editar Mesa                                 |");
+		System.out.println("                  |     4 - Excluir Mesa                                |");
+		System.out.println("                  |     0 - Voltar                                      |");
+		System.out.println("                  =======================================================\n");
+
+		int opcao = sc.nextInt();
+		switch (opcao) {
+		case 1:
+			MesaModel mesaCad = new MesaModel();
+			int returnSave = mesaService.cadastrarMesa(mesaCad);
+			if (returnSave > 0) {
+				System.out.println("Mesa Cadastrada com sucesso!!!");
+			} else {
+				System.out.println("Erro ao salvar Produto...");
+			}
+			break;
+		case 2:
+			mesaService.listarmesa();
+			break;
+		case 3:
+			List<MesaModel> listaUpdate;
+			System.out.println("Digite o número da mesa: ");
+			int numMesa = sc.nextInt();
+			listaUpdate = mesaService.getMesa(numMesa);
+			if (listaUpdate.size() > 0) {
+				MesaView e = new MesaView();
+				e.listarMesa(listaUpdate);
+				MesaModel p = new MesaModel();
+				p.setCod_mesa(listaUpdate.get(0).getCod_mesa());
+				System.out.println("Digite o status da mesa: Livre - 1 / Ocupada - 2 / Aguardando a conta - 3");
+				int status = sc.nextInt();
+				if(status == 1){
+					p.setStatus("Livre");
+				}else if(status == 2){
+					p.setStatus("Ocupada");
+				}else if(status == 3){
+					p.setStatus("Aguardando a conta");
+				}
+				int returnUpdate = mesaService.editarMesa(p);
+				if (returnUpdate > 0) {
+					System.out.println("Mesa editada com sucesso!!!");
+				} else {
+					System.out.println("Erro ao editar mesa...");
+				}
+			} else {
+				System.out.println("Número inválido");
+			}
+			break;
+		case 4:
+			System.out.println("Digite o número da mesa: ");
+			int returnDelete = mesaService.excluirMesa(sc.nextInt());
+			if (returnDelete > 0) {
+				System.out.println("Mesa excluída com sucesso!!!");
+			} else {
+				System.out.println("Erro ao excluir mesa...");
+			}
+			break;
+		case 0:
+			break;
+		default:
+			System.out.println("Opção inválida");
+			break;
+		}
+	}
+
 
 }

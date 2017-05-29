@@ -15,7 +15,11 @@ public class EstoqueView {
 				System.out.println("Código do produto: " + lista.get(i).getCod_produto());
 				System.out.println("Nome do produto: " + lista.get(i).getNome_produto());
 				System.out.println("Preço do produto: R$ " + lista.get(i).getPreco_produto());
-				System.out.println("Data de validade: " + new SimpleDateFormat("MM/dd/yyyy").format(lista.get(i).getData_validade()));
+				if(lista.get(i).getData_validade() != null){
+					System.out.println("Data de validade: " + new SimpleDateFormat("MM/dd/yyyy").format(lista.get(i).getData_validade()));					
+				}else{
+					System.out.println("Data de validade: -");
+				}
 				System.out.println("Quantidade em estoque: " + lista.get(i).getQtd_disponivel());
 				if (i != lista.size() - 1) {
 					System.out.println(

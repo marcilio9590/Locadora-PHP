@@ -90,17 +90,18 @@ INSERT INTO `tb_itens_pedido` (`id`, `cod_produto`, `cod_pedido`) VALUES
 --
 
 CREATE TABLE `tb_mesas` (
-  `numero_mesa` int(11) DEFAULT NULL,
-  `status` varchar(50) NOT NULL,
-  `cod_mesa` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+	`status` VARCHAR(50) NOT NULL,
+	`cod_mesa` INT(11) NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`cod_mesa`)
+);
+
 
 --
 -- Extraindo dados da tabela `tb_mesas`
 --
 
-INSERT INTO `tb_mesas` (`numero_mesa`, `status`, `cod_mesa`) VALUES
-(1, '1', 1);
+INSERT INTO `tb_mesas` (`status`, `cod_mesa`) VALUES
+( '1', 1);
 
 -- --------------------------------------------------------
 
@@ -109,20 +110,26 @@ INSERT INTO `tb_mesas` (`numero_mesa`, `status`, `cod_mesa`) VALUES
 --
 
 CREATE TABLE `tb_pedidos` (
-  `cod_pedido` int(11) NOT NULL,
-  `cod_cliente` int(11) DEFAULT NULL,
-  `total` decimal(10,2) UNSIGNED DEFAULT NULL,
-  `data` date DEFAULT NULL,
-  `status` int(11) NOT NULL
+	`cod_pedido` INT(11) NOT NULL,
+	`cod_cliente` INT(11) NULL,
+	`total` DECIMAL(10,2) UNSIGNED NOT NULL,
+	`data` DATE NULL DEFAULT NULL,
+	`status` INT(11) NOT NULL,
+	`cod_mesa` INT(11) NOT NULL,
+	PRIMARY KEY (`cod_pedido`),
+	INDEX `fk_cod_cliente` (`cod_cliente`),
+	INDEX `fk_cod_mesa` (`cod_mesa`),
+	CONSTRAINT `fk_cod_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `tb_clientes` (`cod_cliente`),
+	CONSTRAINT `fk_cod_mesa` FOREIGN KEY (`cod_mesa`) REFERENCES `tb_mesas` (`cod_mesa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_pedidos`
 --
 
-INSERT INTO `tb_pedidos` (`cod_pedido`, `cod_cliente`, `total`, `data`, `status`) VALUES
-(1, 1, '9.00', '2017-05-20', 3),
-(2, 2, '12.00', '2017-05-21', 3);
+INSERT INTO `tb_pedidos` (`cod_pedido`, `cod_cliente`, `total`, `data`, `status`, `cod_mesa`) VALUES
+(1, 1, '9.00', '2017-05-20', 3, 1),
+(2, 2, '12.00', '2017-05-21', 3, 1);
 
 -- --------------------------------------------------------
 

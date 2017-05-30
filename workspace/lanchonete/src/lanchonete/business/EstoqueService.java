@@ -92,7 +92,10 @@ public class EstoqueService {
 		}
 		return retorno;
 	}
-	
+	/**
+	 * 
+	 * @param nivel
+	 */
 	public void checarNivelEstoque(int nivel){
 		EstoqueDao dao = new EstoqueDao();
 		try {
@@ -105,4 +108,24 @@ public class EstoqueService {
 			e.printStackTrace();
 		}		
 	}
+	
+	public void checarValidadeEstoque() throws Exception {
+		EstoqueDao dao = new EstoqueDao();
+		try {
+			List<ProdutoModel> lista = dao.checarValidadeEstoque();
+			if (!lista.isEmpty()) {
+				EstoqueView estoqueView = new EstoqueView();
+				estoqueView.listarProdutos(lista, "validade estoque");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
+
+
 }

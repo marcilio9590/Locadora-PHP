@@ -1,9 +1,11 @@
 package lanchonete.DAO;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import lanchonete.model.ProdutoModel;
@@ -27,10 +29,10 @@ public class EstoqueDao {
 		ppst = conn.prepareStatement(sql.toString());
 		ppst.setString(1, p.getNome_produto());
 		ppst.setBigDecimal(2, p.getPreco_produto());
-		if(p.getData_validade() == null){
+		if (p.getData_validade() == null) {
 			ppst.setString(3, null);
-		}else{
-			ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));			
+		} else {
+			ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));
 		}
 		ppst.setInt(4, p.getQtd_disponivel());
 
@@ -196,12 +198,6 @@ public class EstoqueDao {
 		return resultado;
 	}
 
-	/**
-	 * 
-	 * @param nivel
-	 * @return
-	 * @throws Exception
-	 */
 	public List<ProdutoModel> checarNivelEstoque(int nivel) throws Exception {
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
@@ -252,4 +248,59 @@ public class EstoqueDao {
 		return lista;
 	}
 
+	public List<ProdutoModel> checarValidadeEstoque() throws Exception {
+		/* Define a SQL */
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tb_estoque t WHERE t.data_validade <= ?");
+
+		Connection conn = null;
+		PreparedStatement ppst = null;
+		ResultSet resultado = null;
+
+		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+		conn = Conexao.abrir();
+
+		Date data_vencimento = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(data_vencimento);
+		c.add(Calendar.DATE, +7);
+		data_vencimento = c.getTime();
+		
+		/* Mapeamento objeto relacional */
+		ppst = conn.prepareStatement(sql.toString());
+		ppst.setDate(1, new java.sql.Date(data_vencimento.getTime()));
+
+		/* Executa a SQL e captura o resultado da consulta */
+		resultado = ppst.executeQuery();
+
+		/* Cria uma lista para armazenar o resultado da consulta */
+		List<ProdutoModel> lista = new ArrayList<ProdutoModel>();
+
+		/* Percorre o resultado armazenando os valores em uma lista */
+		while (resultado.next()) {
+			/* Cria um objeto para armazenar uma linha da consulta */
+			ProdutoModel p = new ProdutoModel();
+			p.setCod_produto(resultado.getInt(5));
+			p.setNome_produto(resultado.getString(1));
+			p.setPreco_produto(resultado.getBigDecimal(2));
+			p.setData_validade(resultado.getDate(3));
+			p.setQtd_disponivel(resultado.getInt(4));
+			/* Armazena a linha lida em uma lista */
+			lista.add(p);
+		}
+
+		/* Fecha a conexão */
+		if (resultado != null) {
+			resultado.close();
+		}
+		if (ppst != null) {
+			ppst.close();
+		}
+		if (conn != null) {
+			conn.close();
+		}
+
+		/* Retorna a lista contendo o resultado da consulta */
+		return lista;
+	}
 }

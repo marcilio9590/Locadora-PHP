@@ -3,9 +3,6 @@
  */
 package principal;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 import lanchonete.model.UsuarioModel;
 import lanchonete.view.LoginView;
 import lanchonete.view.MenuView;
@@ -18,9 +15,9 @@ public class Principal {
 	
 	/**
 	 * @param args
-	 * @throws ParseException 
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) throws Exception {
 		boolean flagLogin = true;
 		LoginView loginView = new LoginView();
 		do {

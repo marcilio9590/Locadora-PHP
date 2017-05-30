@@ -25,10 +25,11 @@ public class MenuView {
 	private MesaService mesaService = new MesaService();
 	private int opcao = 0;
 
-	public void menu(UsuarioModel user) throws ParseException {
+	public void menu(UsuarioModel user) throws Exception {
 		int perfil = user.getPerfil_user();
 		if (perfil == 1) {
 			estoqueService.checarNivelEstoque(user.getQtd_alerta_estoque());
+			estoqueService.checarValidadeEstoque();
 		}
 		do {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
@@ -55,16 +56,16 @@ public class MenuView {
 
 					break;
 				case 2:
-					getSubmenu(2, user);
+					MenuEstoque(user);
 					break;
 				case 3:
-					getSubmenu(3, user);
+					MenuCliente();
 					break;
 				case 4:
 
 					break;
 				case 5:
-					getSubmenu(5, user);
+					MenuMesa();
 					break;
 				case 0:
 					break;
@@ -92,105 +93,86 @@ public class MenuView {
 		} while (opcao != 0);
 	}
 
-	private void getSubmenu(int i, UsuarioModel user) throws ParseException {
-
+	private void MenuCliente() {
+		int opcaoCliente = 0;
 		do {
-			switch (i) {
+			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+			System.out.println("\n                  ===========================================");
+			System.out.println("                  |     1 - Cadastrar Cliente               |");
+			System.out.println("                  |     2 - Listar Clientes                 |");
+			System.out.println("                  |     3 - Editar Cliente                  |");
+			System.out.println("                  |     4 - Excluir Cliente                 |");
+			System.out.println("                  |     5 - Pesquisar Cliente               |");
+			System.out.println("                  |     6 - Histórico de Pedidos do cliente |");
+			System.out.println("                  |     0 - Voltar                          |");
+			System.out.println("                  ===========================================\n");
+			opcaoCliente = sc.nextInt();
+			switch (opcaoCliente) {
 			case 1:
-
+				ClienteModel clienteCad = getDadosCliente();
+				int returnSave = clienteService.salvarCliente(clienteCad);
+				if (returnSave > 0) {
+					System.out.println("Cliente Cadastrado com sucesso!!!");
+				} else {
+					System.out.println("Erro ao salvar cliente...");
+				}
 				break;
 			case 2:
-				MenuEstoque(user);
+				clienteService.listarCliente();
 				break;
 			case 3:
-				MenuCliente();
+				List<ClienteModel> listaUpdate;
+				System.out.println("Digite o código do cliente: ");
+				BigDecimal codCliente = sc.nextBigDecimal();
+				listaUpdate = clienteService.getCliente(codCliente);
+				if (listaUpdate.size() > 0) {
+					ClienteModel c = getDadosCliente();
+					c.setCodigoCliente(codCliente);
+					int returnUpdate = clienteService.editarCliente(c);
+					if (returnUpdate > 0) {
+						System.out.println("Cliente editado com sucesso!!!");
+					} else {
+						System.out.println("Erro ao editar cliente...");
+					}
+				} else {
+					System.out.println("Código inválido");
+				}
 				break;
 			case 4:
-
+				System.out.println("Digite o código do cliente: ");
+				int returnDelete = clienteService.excluirCliente(sc.nextBigDecimal());
+				if (returnDelete > 0) {
+					System.out.println("Cliente excluído com sucesso!!!");
+				} else {
+					System.out.println("Erro ao excluir cliente...");
+				}
 				break;
 			case 5:
-				MenuMesa();
+				System.out.println("Digite o código do cliente: ");
+				List<ClienteModel> listaCliente = clienteService.getCliente(sc.nextBigDecimal());
+				if (listaCliente.size() > 0) {
+					ClienteView clienteView = new ClienteView();
+					clienteView.listarCliente(listaCliente);
+				}
+				break;
+			case 6:
+				System.out.println("Digite o código do cliente: ");
+				List<PedidoModel> listPedidosCliente = clienteService
+						.buscarHistoricoPedidosCliente(sc.nextBigDecimal());
+				if (listPedidosCliente.size() > 0) {
+					ClienteView clienteView = new ClienteView();
+					clienteView.listarPedidosCliente(listPedidosCliente);
+				} else {
+					System.out.println("Nenhum pedido encontrado");
+				}
+				break;
+			case 0:
+				break;
+			default:
+				System.out.println("Opção inválida!");
 				break;
 			}
-		} while (opcao != 0);
-	}
-
-	private void MenuCliente() {
-		System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
-		System.out.println("\n                  ===========================================");
-		System.out.println("                  |     1 - Cadastrar Cliente               |");
-		System.out.println("                  |     2 - Listar Clientes                 |");
-		System.out.println("                  |     3 - Editar Cliente                  |");
-		System.out.println("                  |     4 - Excluir Cliente                 |");
-		System.out.println("                  |     5 - Pesquisar Cliente               |");
-		System.out.println("                  |     6 - Histórico de Pedidos do cliente |");
-		System.out.println("                  |     0 - Voltar                          |");
-		System.out.println("                  ===========================================\n");
-		int opcao = sc.nextInt();
-		switch (opcao) {
-		case 1:
-			ClienteModel clienteCad = getDadosCliente();
-			int returnSave = clienteService.salvarCliente(clienteCad);
-			if (returnSave > 0) {
-				System.out.println("Cliente Cadastrado com sucesso!!!");
-			} else {
-				System.out.println("Erro ao salvar cliente...");
-			}
-			break;
-		case 2:
-			clienteService.listarCliente();
-			break;
-		case 3:
-			List<ClienteModel> listaUpdate;
-			System.out.println("Digite o código do cliente: ");
-			BigDecimal codCliente = sc.nextBigDecimal();
-			listaUpdate = clienteService.getCliente(codCliente);
-			if (listaUpdate.size() > 0) {
-				ClienteModel c = getDadosCliente();
-				c.setCodigoCliente(codCliente);
-				int returnUpdate = clienteService.editarCliente(c);
-				if (returnUpdate > 0) {
-					System.out.println("Cliente editado com sucesso!!!");
-				} else {
-					System.out.println("Erro ao editar cliente...");
-				}
-			} else {
-				System.out.println("Código inválido");
-			}
-			break;
-		case 4:
-			System.out.println("Digite o código do cliente: ");
-			int returnDelete = clienteService.excluirCliente(sc.nextBigDecimal());
-			if (returnDelete > 0) {
-				System.out.println("Cliente excluído com sucesso!!!");
-			} else {
-				System.out.println("Erro ao excluir cliente...");
-			}
-			break;
-		case 5:
-			System.out.println("Digite o código do cliente: ");
-			List<ClienteModel> listaCliente = clienteService.getCliente(sc.nextBigDecimal());
-			if (listaCliente.size() > 0) {
-				ClienteView clienteView = new ClienteView();
-				clienteView.listarCliente(listaCliente);
-			}
-			break;
-		case 6:
-			System.out.println("Digite o código do cliente: ");
-			List<PedidoModel> listPedidosCliente = clienteService.buscarHistoricoPedidosCliente(sc.nextBigDecimal());
-			if (listPedidosCliente.size() > 0) {
-				ClienteView clienteView = new ClienteView();
-				clienteView.listarPedidosCliente(listPedidosCliente);
-			} else {
-				System.out.println("Nenhum pedido encontrado");
-			}
-			break;
-		case 0:
-			break;
-		default:
-			System.out.println("Opção inválida!");
-			break;
-		}
+		} while (opcaoCliente != 0);
 	}
 
 	private ClienteModel getDadosCliente() {
@@ -237,156 +219,161 @@ public class MenuView {
 	}
 
 	private void MenuEstoque(UsuarioModel user) throws ParseException {
-		System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
-		System.out.println("\n                  =======================================================");
-		System.out.println("                  |     1 - Cadastrar Produto                           |");
-		System.out.println("                  |     2 - Listar Produtos                             |");
-		System.out.println("                  |     3 - Editar Produto                              |");
-		System.out.println("                  |     4 - Excluir Produto                             |");
-		System.out.println("                  |     5 - Pesquisar Produto                           |");
-		System.out.println("                  |     6 - Definir nível para alerta de estoque baixo  |");
-		System.out.println("                  |     0 - Voltar                                      |");
-		System.out.println("                  =======================================================\n");
+		int opcaoEstoque = 0;
+		do {
+			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+			System.out.println("\n                  =======================================================");
+			System.out.println("                  |     1 - Cadastrar Produto                           |");
+			System.out.println("                  |     2 - Listar Produtos                             |");
+			System.out.println("                  |     3 - Editar Produto                              |");
+			System.out.println("                  |     4 - Excluir Produto                             |");
+			System.out.println("                  |     5 - Pesquisar Produto                           |");
+			System.out.println("                  |     6 - Definir nível para alerta de estoque baixo  |");
+			System.out.println("                  |     0 - Voltar                                      |");
+			System.out.println("                  =======================================================\n");
 
-		int opcao = sc.nextInt();
-		switch (opcao) {
-		case 1:
-			ProdutoModel produtoCad = getDadosProduto();
-			int returnSave = estoqueService.salvarProduto(produtoCad);
-			if (returnSave > 0) {
-				System.out.println("Produto Cadastrado com sucesso!!!");
-			} else {
-				System.out.println("Erro ao salvar Produto...");
-			}
-			break;
-		case 2:
-			estoqueService.listarProdutos();
-			break;
-		case 3:
-			List<ProdutoModel> listaUpdate;
-			System.out.println("Digite o código do produto: ");
-			int codProduto = sc.nextInt();
-			listaUpdate = estoqueService.getProduto(codProduto);
-			if (listaUpdate.size() > 0) {
-				EstoqueView e = new EstoqueView();
-				e.listarProdutos(listaUpdate);
-				ProdutoModel p = getDadosProduto();
-				p.setCod_produto(codProduto);
-				int returnUpdate = estoqueService.editarProduto(p);
-				if (returnUpdate > 0) {
-					System.out.println("Produto editado com sucesso!!!");
+			opcaoEstoque = sc.nextInt();
+			switch (opcaoEstoque) {
+			case 1:
+				ProdutoModel produtoCad = getDadosProduto();
+				int returnSave = estoqueService.salvarProduto(produtoCad);
+				if (returnSave > 0) {
+					System.out.println("Produto Cadastrado com sucesso!!!");
 				} else {
-					System.out.println("Erro ao editar Produto...");
+					System.out.println("Erro ao salvar Produto...");
 				}
-			} else {
-				System.out.println("Código inválido");
-			}
-			break;
-		case 4:
-			System.out.println("Digite o código do produto: ");
-			int returnDelete = estoqueService.excluirProduto(sc.nextInt());
-			if (returnDelete > 0) {
-				System.out.println("Produto excluído com sucesso!!!");
-			} else {
-				System.out.println("Erro ao excluir Produto...");
-			}
-			break;
-		case 5:
-			System.out.println("Digite o código do produto: ");
-			List<ProdutoModel> listaProduto = estoqueService.getProduto(sc.nextInt());
-			if (listaProduto.size() > 0) {
-				EstoqueView estoqueView = new EstoqueView();
-				estoqueView.listarProdutos(listaProduto);
-			}
-			break;
-		case 6:
-			System.out.println("Digite a quantidade que deseja ser avisado, sobre o nivel do estoque dos produtos: ");
-			int nivel = sc.nextInt();
-			int returnSave1 = userService.setLimiteAviso(nivel, user.getCod_user());
-			if (returnSave1 > 0) {
-				System.out.println("Limite cadastrado com sucesso!!!");
-			} else {
-				System.out.println("Erro ao cadastrar limite...");
-			}
-			break;
-		case 0:
-			break;
+				break;
+			case 2:
+				estoqueService.listarProdutos();
+				break;
+			case 3:
+				List<ProdutoModel> listaUpdate;
+				System.out.println("Digite o código do produto: ");
+				int codProduto = sc.nextInt();
+				listaUpdate = estoqueService.getProduto(codProduto);
+				if (listaUpdate.size() > 0) {
+					EstoqueView e = new EstoqueView();
+					e.listarProdutos(listaUpdate);
+					ProdutoModel p = getDadosProduto();
+					p.setCod_produto(codProduto);
+					int returnUpdate = estoqueService.editarProduto(p);
+					if (returnUpdate > 0) {
+						System.out.println("Produto editado com sucesso!!!");
+					} else {
+						System.out.println("Erro ao editar Produto...");
+					}
+				} else {
+					System.out.println("Código inválido");
+				}
+				break;
+			case 4:
+				System.out.println("Digite o código do produto: ");
+				int returnDelete = estoqueService.excluirProduto(sc.nextInt());
+				if (returnDelete > 0) {
+					System.out.println("Produto excluído com sucesso!!!");
+				} else {
+					System.out.println("Erro ao excluir Produto...");
+				}
+				break;
+			case 5:
+				System.out.println("Digite o código do produto: ");
+				List<ProdutoModel> listaProduto = estoqueService.getProduto(sc.nextInt());
+				if (listaProduto.size() > 0) {
+					EstoqueView estoqueView = new EstoqueView();
+					estoqueView.listarProdutos(listaProduto);
+				}
+				break;
+			case 6:
+				System.out
+						.println("Digite a quantidade que deseja ser avisado, sobre o nivel do estoque dos produtos: ");
+				int nivel = sc.nextInt();
+				int returnSave1 = userService.setLimiteAviso(nivel, user.getCod_user());
+				if (returnSave1 > 0) {
+					System.out.println("Limite cadastrado com sucesso!!!");
+				} else {
+					System.out.println("Erro ao cadastrar limite...");
+				}
+				break;
+			case 0:
+				break;
 
-		default:
-			System.out.println("Opção inválida");
-			break;
-		}
+			default:
+				System.out.println("Opção inválida");
+				break;
+			}
+		} while (opcaoEstoque != 0);
 	}
 
 	private void MenuMesa() throws ParseException {
-		System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
-		System.out.println("\n                  =======================================================");
-		System.out.println("                  |     1 - Cadastrar Mesa                              |");
-		System.out.println("                  |     2 - Listar Mesas                                |");
-		System.out.println("                  |     3 - Editar Mesa                                 |");
-		System.out.println("                  |     4 - Excluir Mesa                                |");
-		System.out.println("                  |     0 - Voltar                                      |");
-		System.out.println("                  =======================================================\n");
+		int opcaoMesa = 0;
+		do {
+			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+			System.out.println("\n                  =======================================================");
+			System.out.println("                  |     1 - Cadastrar Mesa                              |");
+			System.out.println("                  |     2 - Listar Mesas                                |");
+			System.out.println("                  |     3 - Editar Mesa                                 |");
+			System.out.println("                  |     4 - Excluir Mesa                                |");
+			System.out.println("                  |     0 - Voltar                                      |");
+			System.out.println("                  =======================================================\n");
 
-		int opcao = sc.nextInt();
-		switch (opcao) {
-		case 1:
-			MesaModel mesaCad = new MesaModel();
-			int returnSave = mesaService.cadastrarMesa(mesaCad);
-			if (returnSave > 0) {
-				System.out.println("Mesa Cadastrada com sucesso!!!");
-			} else {
-				System.out.println("Erro ao salvar Produto...");
-			}
-			break;
-		case 2:
-			mesaService.listarmesa();
-			break;
-		case 3:
-			List<MesaModel> listaUpdate;
-			System.out.println("Digite o número da mesa: ");
-			int numMesa = sc.nextInt();
-			listaUpdate = mesaService.getMesa(numMesa);
-			if (listaUpdate.size() > 0) {
-				MesaView e = new MesaView();
-				e.listarMesa(listaUpdate);
-				MesaModel p = new MesaModel();
-				p.setCod_mesa(listaUpdate.get(0).getCod_mesa());
-				System.out.println("Digite o status da mesa: Livre - 1 / Ocupada - 2 / Aguardando a conta - 3");
-				int status = sc.nextInt();
-				if(status == 1){
-					p.setStatus("Livre");
-				}else if(status == 2){
-					p.setStatus("Ocupada");
-				}else if(status == 3){
-					p.setStatus("Aguardando a conta");
-				}
-				int returnUpdate = mesaService.editarMesa(p);
-				if (returnUpdate > 0) {
-					System.out.println("Mesa editada com sucesso!!!");
+			opcaoMesa = sc.nextInt();
+			switch (opcaoMesa) {
+			case 1:
+				MesaModel mesaCad = new MesaModel();
+				int returnSave = mesaService.cadastrarMesa(mesaCad);
+				if (returnSave > 0) {
+					System.out.println("Mesa Cadastrada com sucesso!!!");
 				} else {
-					System.out.println("Erro ao editar mesa...");
+					System.out.println("Erro ao salvar Produto...");
 				}
-			} else {
-				System.out.println("Número inválido");
+				break;
+			case 2:
+				mesaService.listarmesa();
+				break;
+			case 3:
+				List<MesaModel> listaUpdate;
+				System.out.println("Digite o número da mesa: ");
+				int numMesa = sc.nextInt();
+				listaUpdate = mesaService.getMesa(numMesa);
+				if (listaUpdate.size() > 0) {
+					MesaView e = new MesaView();
+					e.listarMesa(listaUpdate);
+					MesaModel p = new MesaModel();
+					p.setCod_mesa(listaUpdate.get(0).getCod_mesa());
+					System.out.println("Digite o status da mesa: Livre - 1 / Ocupada - 2 / Aguardando a conta - 3");
+					int status = sc.nextInt();
+					if (status == 1) {
+						p.setStatus("Livre");
+					} else if (status == 2) {
+						p.setStatus("Ocupada");
+					} else if (status == 3) {
+						p.setStatus("Aguardando a conta");
+					}
+					int returnUpdate = mesaService.editarMesa(p);
+					if (returnUpdate > 0) {
+						System.out.println("Mesa editada com sucesso!!!");
+					} else {
+						System.out.println("Erro ao editar mesa...");
+					}
+				} else {
+					System.out.println("Número inválido");
+				}
+				break;
+			case 4:
+				System.out.println("Digite o número da mesa: ");
+				int returnDelete = mesaService.excluirMesa(sc.nextInt());
+				if (returnDelete > 0) {
+					System.out.println("Mesa excluída com sucesso!!!");
+				} else {
+					System.out.println("Erro ao excluir mesa...");
+				}
+				break;
+			case 0:
+				break;
+			default:
+				System.out.println("Opção inválida");
+				break;
 			}
-			break;
-		case 4:
-			System.out.println("Digite o número da mesa: ");
-			int returnDelete = mesaService.excluirMesa(sc.nextInt());
-			if (returnDelete > 0) {
-				System.out.println("Mesa excluída com sucesso!!!");
-			} else {
-				System.out.println("Erro ao excluir mesa...");
-			}
-			break;
-		case 0:
-			break;
-		default:
-			System.out.println("Opção inválida");
-			break;
-		}
+		} while (opcaoMesa != 0);
 	}
-
-
 }

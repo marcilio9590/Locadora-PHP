@@ -62,7 +62,7 @@ public class MenuView {
 					MenuCliente();
 					break;
 				case 4:
-
+//					MenuUsuarios(user);
 					break;
 				case 5:
 					MenuMesa();
@@ -376,4 +376,140 @@ public class MenuView {
 			}
 		} while (opcaoMesa != 0);
 	}
+
+	private UsuarioModel getDadosUser() throws ParseException {
+		UsuarioModel user = new UsuarioModel();
+		System.out.println("Digite o nome do usuário: ");
+		sc.nextLine();
+		String nome = sc.nextLine();
+		user.setNome_user(nome);
+		System.out.println("Digite o cpf do usuario: ");
+		user.setCpf_user(sc.nextLine());
+		System.out.println("Digite o login do usuario: ");
+		user.setLogin_user(sc.nextLine());
+		System.out.println("Digite o perfil do usuario: 1-Proprietário / 2-Funcionário");
+		user.setPerfil_user(sc.nextInt());
+
+		return user;
+	}
+
+	private void MenuUsuarios(UsuarioModel user) throws ParseException {
+		int opcaoUsuario = 0;
+		do {
+			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+			System.out.println("\n                  =======================================================");
+			System.out.println("                  |     1 - Cadastrar Usuário                           |");
+			System.out.println("                  |     2 - Listar Usuários                             |");
+			System.out.println("                  |     3 - Editar Usuário                              |");
+			System.out.println("                  |     4 - Excluir Usuário                             |");
+			System.out.println("                  |     5 - Pesquisar Usuário                           |");
+			System.out.println("                  |     6 - Definir nível para alerta de estoque baixo  |");
+			System.out.println("                  |     7 - Trocar senha                                |");
+			System.out.println("                  |     8 - Trocar perfil de usuário                    |");
+			System.out.println("                  |     0 - Voltar                                      |");
+			System.out.println("                  =======================================================\n");
+
+			opcaoUsuario = sc.nextInt();
+			switch (opcaoUsuario) {
+			case 1:
+				UsuarioModel userCad = getDadosUser();
+				int returnSave = userService.salvarUsuario(userCad);
+				if (returnSave > 0) {
+					System.out.println("Usuário Cadastrado com sucesso./n A senha de acesso é igual ao login.");
+				} else {
+					System.out.println("Erro ao salvar usuário...");
+				}
+				break;
+			case 2:
+				userService.listarUsuarios();
+				break;
+			case 3:
+				List<UsuarioModel> listaUpdate;
+				System.out.println("Digite o código do usuário: ");
+				int codUser = sc.nextInt();
+				listaUpdate = userService.getUsuario(codUser);
+				if (listaUpdate.size() > 0) {
+					UsuarioView userView = new UsuarioView();
+					userView.listarUsuarios(listaUpdate);
+					UsuarioModel userUpdate = getDadosUser();
+					userUpdate.setCod_user(codUser);
+					int returnUpdate = userService.editarUsuario(userUpdate);
+					if (returnUpdate > 0) {
+						System.out.println("Usuário editado com sucesso!!!");
+					} else {
+						System.out.println("Erro ao editar usuário...");
+					}
+				} else {
+					System.out.println("Código inválido");
+				}
+				break;
+			case 4:
+				System.out.println("Digite o código do usuário: ");
+				int returnDelete = userService.excluirUsuario(sc.nextInt());
+				if (returnDelete > 0) {
+					System.out.println("Usuário excluído com sucesso!!!");
+				} else {
+					System.out.println("Erro ao excluir usuário...");
+				}
+				break;
+			case 5:
+				System.out.println("Digite o código do usuário: ");
+				List<UsuarioModel> listaUser = userService.getUsuario(sc.nextInt());
+				if (listaUser.size() > 0) {
+					UsuarioView userView = new UsuarioView();
+					userView.listarUsuarios(listaUser);
+				}
+				break;
+			case 6:
+				System.out
+						.println("Digite a quantidade que deseja ser avisado, sobre o nivel do estoque dos produtos: ");
+				int nivel = sc.nextInt();
+				int returnSave1 = userService.setLimiteAviso(nivel, user.getCod_user());
+				if (returnSave1 > 0) {
+					System.out.println("Limite cadastrado com sucesso!!!");
+				} else {
+					System.out.println("Erro ao cadastrar limite...");
+				}
+				break;
+			case 7:
+				System.out.println("Digite sua senha antiga: ");
+				String senhaAntiga = sc.nextLine();
+				System.out.println("Digite a nova senha: ");
+				String novaSenha = sc.nextLine();
+				System.out.println("Confirme a nova senha: ");
+				String confirmaSenha = sc.nextLine();
+				if(confirmaSenha != novaSenha){
+					System.out.println("Confirmação de senha não confere");
+				}else{
+					
+				}
+				
+				int returnSenha = userService.setLimiteAviso(nivel, user.getCod_user());
+				if (returnSenha > 0) {
+					System.out.println("Limite cadastrado com sucesso!!!");
+				} else {
+					System.out.println("Erro ao cadastrar limite...");
+				}
+				break;
+			case 8:
+				System.out
+						.println("Digite a quantidade que deseja ser avisado, sobre o nivel do estoque dos produtos: ");
+				int nivel1 = sc.nextInt();
+				int returnSave2 = userService.setLimiteAviso(nivel1, user.getCod_user());
+				if (returnSave2 > 0) {
+					System.out.println("Limite cadastrado com sucesso!!!");
+				} else {
+					System.out.println("Erro ao cadastrar limite...");
+				}
+				break;
+			case 0:
+				break;
+
+			default:
+				System.out.println("Opção inválida");
+				break;
+			}
+		} while (opcaoUsuario != 0);
+	}
+
 }

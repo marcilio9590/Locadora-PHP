@@ -62,10 +62,20 @@ public class UserService {
 		return retorno;
 	}
 	
-	public int trocarSenha(int codUser, int novaSenha) {
+	public int trocarSenha(int codUser, String novaSenha) {
 		int retorno = 0;
 		try {
 			retorno = dao.trocarSenha(codUser, novaSenha);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
+	public int verificarSenha(String senhaDigitada, int codUser){
+		int retorno = 0;
+		try {
+			retorno = dao.verificarSenha(senhaDigitada, codUser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

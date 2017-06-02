@@ -1,6 +1,5 @@
 package lanchonete.view;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import lanchonete.model.UsuarioModel;
@@ -12,7 +11,7 @@ public class UsuarioView {
 		if(!lista.isEmpty()) {
 			for (int i = 0; i < lista.size(); i++) {
 				System.out.println("Código: " + lista.get(i).getCod_user());
-				System.out.println("Perfil: " + new BigDecimal(lista.get(i).getPerfil_user()).compareTo(BigDecimal.ONE) != null ? "Proprietário" : "Funcionário");
+				System.out.print("Perfil: "); System.out.println(lista.get(i).getPerfil_user() == 1 ? "Proprietário" : "Funcionário"); 
 				System.out.println("Nome: " + lista.get(i).getNome_user());
 				
 				System.out.println("CPF: " + lista.get(i).getCpf_user());

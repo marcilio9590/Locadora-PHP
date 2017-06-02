@@ -25,7 +25,7 @@ public class MenuView {
 	private UserService userService = new UserService();
 	private MesaService mesaService = new MesaService();
 	private PedidoService pedidoService = new PedidoService();
-	
+
 	private int opcao = 0;
 
 	public void menu(UsuarioModel user) throws Exception {
@@ -38,10 +38,10 @@ public class MenuView {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
 			System.out.println("\n                  =========================================");
 			System.out.println("                  |     1 - Realizar Pedido               |");
-			if (perfil == 2){
-				System.out.println("                  |     2 - Verifica Pedido               |");				
+			if (perfil == 2) {
+				System.out.println("                  |     2 - Verifica Pedido               |");
 			}
-			if (perfil == 2){
+			if (perfil == 2) {
 				System.out.println("                  |     3 - Checar Preço de Mercadoria    |");
 			}
 			if (perfil == 1)
@@ -67,7 +67,7 @@ public class MenuView {
 					MenuCliente();
 					break;
 				case 4:
-//					MenuUsuarios(user);
+					MenuUsuarios(user);
 					break;
 				case 5:
 					MenuMesa();
@@ -420,7 +420,7 @@ public class MenuView {
 				UsuarioModel userCad = getDadosUser();
 				int returnSave = userService.salvarUsuario(userCad);
 				if (returnSave > 0) {
-					System.out.println("Usuário Cadastrado com sucesso./n A senha de acesso é igual ao login.");
+					System.out.println("Usuário Cadastrado com sucesso.\n A senha de acesso é igual ao login.");
 				} else {
 					System.out.println("Erro ao salvar usuário...");
 				}
@@ -478,33 +478,46 @@ public class MenuView {
 				break;
 			case 7:
 				System.out.println("Digite sua senha antiga: ");
+				sc.nextLine();
 				String senhaAntiga = sc.nextLine();
 				System.out.println("Digite a nova senha: ");
 				String novaSenha = sc.nextLine();
 				System.out.println("Confirme a nova senha: ");
 				String confirmaSenha = sc.nextLine();
-				if(confirmaSenha != novaSenha){
-					System.out.println("Confirmação de senha não confere");
-				}else{
-					
+				int validaSenha = userService.verificarSenha(senhaAntiga, user.getCod_user());
+				if (validaSenha == 0) {
+					System.out.println("Senha antiga incorreta.");
+				} else {
+					if (!confirmaSenha.equals(novaSenha)) {
+						System.out.println("Confirmação de senha não confere");
+					} else {
+						int validaTrocaSenha = userService.trocarSenha(user.getCod_user(), confirmaSenha);
+						if (validaTrocaSenha == 0)
+							System.out.println("Erro ao trocar senha...");
+						else
+							System.out.println("Senha alterada com sucesso...");
+
+					}
 				}
-//				
-//				int returnSenha = userService.setLimiteAviso(nivel, user.getCod_user());
-//				if (returnSenha > 0) {
-//					System.out.println("Limite cadastrado com sucesso!!!");
-//				} else {
-//					System.out.println("Erro ao cadastrar limite...");
-//				}
 				break;
 			case 8:
-				System.out
-						.println("Digite a quantidade que deseja ser avisado, sobre o nivel do estoque dos produtos: ");
-				int nivel1 = sc.nextInt();
-				int returnSave2 = userService.setLimiteAviso(nivel1, user.getCod_user());
-				if (returnSave2 > 0) {
-					System.out.println("Limite cadastrado com sucesso!!!");
+				List<UsuarioModel> listUser;
+				System.out.println("Digite o código do usuário: ");
+				int cod = sc.nextInt();
+				listUser = userService.getUsuario(cod);
+				if (listUser.size() > 0) {
+					UsuarioView userView = new UsuarioView();
+					userView.listarUsuarios(listUser);
+					System.out.println("Digite o perfil do usuario: 1-Proprietário / 2-Funcionário");
+					int novoPerfil = sc.nextInt();
+					int returnUpdate = userService.trocarPerfil(cod, novoPerfil);
+					if (returnUpdate > 0) {
+						System.out.println("Perfil editado com sucesso!!!");
+					} else {
+						System.out.println("Erro ao editar perfil do usuário...");
+					}
 				} else {
-					System.out.println("Erro ao cadastrar limite...");
+					System.out.println("Código inválido");
 				}
 				break;
 			case 0:
@@ -516,12 +529,13 @@ public class MenuView {
 			}
 		} while (opcaoUsuario != 0);
 	}
-	
-	public void BuscarPedidoFuncionario(){
+
+	public void BuscarPedidoFuncionario() {
 		System.out.println("Digite o número do pedido:");
 		int codPedido = sc.nextInt();
 		PedidoModel pedido = pedidoService.buscarPedidos(codPedido);
-		//Necessário criar uma lista para adicionar o retorno da consulta acima, e em seguida emviar a lista para ser exibida na Pedidoview
+		// Necessário criar uma lista para adicionar o retorno da consulta
+		// acima, e em seguida emviar a lista para ser exibida na Pedidoview
 	}
 
 }

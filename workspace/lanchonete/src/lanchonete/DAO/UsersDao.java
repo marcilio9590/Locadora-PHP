@@ -220,7 +220,7 @@ public class UsersDao {
 
 	}
 	
-	public int trocarSenha(int codUser, int novaSenha) throws Exception {
+	public int trocarSenha(int codUser, String novaSenha) throws Exception {
 
 		/* Define a SQL */
 		StringBuilder sql = new StringBuilder();
@@ -235,7 +235,7 @@ public class UsersDao {
 
 		/* Mapeamento objeto relacional */
 		ppst = conn.prepareStatement(sql.toString());
-		ppst.setInt(1, novaSenha);
+		ppst.setString(1, novaSenha);
 		ppst.setInt(2, codUser);
 		
 		/* Executa a SQL e captura o resultado da consulta */
@@ -290,6 +290,40 @@ public class UsersDao {
 		}
 		return user;
 
+	}
+
+	public int verificarSenha(String senhaDigitada, int codUser) throws Exception {
+		/* Define a SQL */
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT t1.senha_user FROM tb_users t1 WHERE cod_user = ? AND senha_user = ?");
+
+		Connection conn = null;
+		PreparedStatement ppst = null;
+		ResultSet resultado = null;
+		int flagSenha = 0;
+		
+		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+		conn = Conexao.abrir();
+
+		/* Mapeamento objeto relacional */
+		ppst = conn.prepareStatement(sql.toString());
+		ppst.setInt(1, codUser);
+		ppst.setString(2, senhaDigitada);
+		
+		/* Executa a SQL e captura o resultado da consulta */
+		resultado = ppst.executeQuery();
+		while (resultado.next()) {
+			flagSenha = 1;
+		}
+
+		/* Fecha a conexão */
+		if (ppst != null) {
+			ppst.close();
+		}
+		if (conn != null) {
+			conn.close();
+		}
+		return flagSenha;
 	}
 
 	

@@ -10,6 +10,7 @@ import java.util.Scanner;
 import lanchonete.business.ClienteService;
 import lanchonete.business.EstoqueService;
 import lanchonete.business.MesaService;
+import lanchonete.business.PedidoService;
 import lanchonete.business.UserService;
 import lanchonete.model.ClienteModel;
 import lanchonete.model.MesaModel;
@@ -23,6 +24,8 @@ public class MenuView {
 	private EstoqueService estoqueService = new EstoqueService();
 	private UserService userService = new UserService();
 	private MesaService mesaService = new MesaService();
+	private PedidoService pedidoService = new PedidoService();
+	
 	private int opcao = 0;
 
 	public void menu(UsuarioModel user) throws Exception {
@@ -35,10 +38,12 @@ public class MenuView {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
 			System.out.println("\n                  =========================================");
 			System.out.println("                  |     1 - Realizar Pedido               |");
-			if (perfil == 2)
-				System.out.println("                  |     2 - Verifica Pedido               |");
-			if (perfil == 2)
+			if (perfil == 2){
+				System.out.println("                  |     2 - Verifica Pedido               |");				
+			}
+			if (perfil == 2){
 				System.out.println("                  |     3 - Checar Preço de Mercadoria    |");
+			}
 			if (perfil == 1)
 				System.out.println("                  |     2 - Gerenciamento de Estoque      |");
 			if (perfil == 1)
@@ -78,7 +83,7 @@ public class MenuView {
 
 					break;
 				case 2:
-
+					BuscarPedidoFuncionario();
 					break;
 				case 3:
 
@@ -483,13 +488,13 @@ public class MenuView {
 				}else{
 					
 				}
-				
-				int returnSenha = userService.setLimiteAviso(nivel, user.getCod_user());
-				if (returnSenha > 0) {
-					System.out.println("Limite cadastrado com sucesso!!!");
-				} else {
-					System.out.println("Erro ao cadastrar limite...");
-				}
+//				
+//				int returnSenha = userService.setLimiteAviso(nivel, user.getCod_user());
+//				if (returnSenha > 0) {
+//					System.out.println("Limite cadastrado com sucesso!!!");
+//				} else {
+//					System.out.println("Erro ao cadastrar limite...");
+//				}
 				break;
 			case 8:
 				System.out
@@ -510,6 +515,13 @@ public class MenuView {
 				break;
 			}
 		} while (opcaoUsuario != 0);
+	}
+	
+	public void BuscarPedidoFuncionario(){
+		System.out.println("Digite o número do pedido:");
+		int codPedido = sc.nextInt();
+		PedidoModel pedido = pedidoService.buscarPedidos(codPedido);
+		//Necessário criar uma lista para adicionar o retorno da consulta acima, e em seguida emviar a lista para ser exibida na Pedidoview
 	}
 
 }

@@ -241,11 +241,11 @@ public class ClienteDao {
 			pedido.setStatus_pedido(resultado.getInt(5));
 			pedido.setTotal(resultado.getBigDecimal(3));
 			// Populando dados do cliente
-			cliente.setCodigoCliente(resultado.getBigDecimal(1));
-			cliente.setCpf(resultado.getBigDecimal(8));
-			cliente.setEndereco(resultado.getString(9));
-			cliente.setNome(resultado.getString(6));
-			cliente.setTelefone(resultado.getString(7));
+			cliente.setCodigoCliente(resultado.getBigDecimal(2));
+			cliente.setCpf(resultado.getBigDecimal(9));
+			cliente.setEndereco(resultado.getString(10));
+			cliente.setNome(resultado.getString(7));
+			cliente.setTelefone(resultado.getString(8));
 			// Colocando o objeto cliente dentro do pedido
 			pedido.setCliente(cliente);
 			// Colocando a lista de produtos no pedido

@@ -37,7 +37,12 @@ public class MenuView {
 		do {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
 			System.out.println("\n                  =========================================");
-			System.out.println("                  |     1 - Realizar Pedido               |");
+			if(perfil == 2){
+				System.out.println("                  |     1 - Realizar Pedido               |");				
+			}
+			if(perfil == 1){
+				System.out.println("                  |     1 - Gerenciamento de Pedido       |");
+			}
 			if (perfil == 2) {
 				System.out.println("                  |     2 - Verifica Pedido               |");
 			}
@@ -538,4 +543,7 @@ public class MenuView {
 		// acima, e em seguida emviar a lista para ser exibida na Pedidoview
 	}
 
+	public void RealizarPedido(){
+		
+	}
 }

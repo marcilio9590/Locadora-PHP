@@ -6,6 +6,7 @@ import java.util.List;
 
 public class PedidoModel {
 	private int cod_pedido;
+	private int cod_mesa;
 	private ClienteModel cliente;
 	private List<ProdutoModel> produtos;
 	private BigDecimal total;
@@ -18,6 +19,14 @@ public class PedidoModel {
 
 	public void setCod_pedido(int cod_pedido) {
 		this.cod_pedido = cod_pedido;
+	}
+		
+	public int getCod_mesa() {
+		return cod_mesa;
+	}
+
+	public void setCod_mesa(int cod_mesa) {
+		this.cod_mesa = cod_mesa;
 	}
 
 	public ClienteModel getCliente() {

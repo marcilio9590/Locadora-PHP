@@ -1,6 +1,5 @@
 package lanchonete.business;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class EstoqueService {
 		List<ProdutoModel> lista = new ArrayList<>();
 		try {
 			ProdutoModel p = dao.getProduto(codProduto);
-			if (new BigDecimal(p.getCod_produto()) != null) {
+			if (p.getNome_produto() != null) {
 				lista.add(p);
 			}
 

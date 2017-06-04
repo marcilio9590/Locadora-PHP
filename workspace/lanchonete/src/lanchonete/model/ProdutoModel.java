@@ -4,18 +4,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProdutoModel {
-	/**
-	 * Atributos referentes ao relacionamento com a tabela de itens pedido
-	 */
+	//Atributos referentes ao relacionamento com a tabela de itens pedido
 	private int idItemPedido;
 	private int cod_pedido;
-	/**
-	 * FIM
-	 */
+	//FIM
 	private String nome_produto;
 	private BigDecimal preco_produto;
 	private Date data_validade;
-	private int qtd_disponivel;
+	private int quantidade;
 	private int cod_produto;
 
 	public int getCod_pedido() {
@@ -58,12 +54,12 @@ public class ProdutoModel {
 		this.data_validade = data_validade;
 	}
 
-	public int getQtd_disponivel() {
-		return qtd_disponivel;
+	public int getQuantidade() {
+		return quantidade;
 	}
 
-	public void setQtd_disponivel(int qtd_disponivel) {
-		this.qtd_disponivel = qtd_disponivel;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public int getCod_produto() {

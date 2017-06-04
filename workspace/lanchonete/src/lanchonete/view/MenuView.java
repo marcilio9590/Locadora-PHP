@@ -3,6 +3,7 @@ package lanchonete.view;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -37,10 +38,10 @@ public class MenuView {
 		do {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
 			System.out.println("\n                  =========================================");
-			if(perfil == 2){
-				System.out.println("                  |     1 - Realizar Pedido               |");				
+			if (perfil == 2) {
+				System.out.println("                  |     1 - Realizar Pedido               |");
 			}
-			if(perfil == 1){
+			if (perfil == 1) {
 				System.out.println("                  |     1 - Gerenciamento de Pedido       |");
 			}
 			if (perfil == 2) {
@@ -63,7 +64,7 @@ public class MenuView {
 			if (perfil == 1) {
 				switch (opcao) {
 				case 1:
-
+					MenuPedido();
 					break;
 				case 2:
 					MenuEstoque(user);
@@ -85,13 +86,13 @@ public class MenuView {
 			} else {
 				switch (opcao) {
 				case 1:
-
+					RealizarPedido();
 					break;
 				case 2:
-					BuscarPedidoFuncionario();
+					BuscarPedido();
 					break;
 				case 3:
-
+					BuscarProduto();
 					break;
 				case 0:
 					break;
@@ -224,7 +225,7 @@ public class MenuView {
 		}
 		p.setData_validade(dataFormatada);
 		System.out.println("Digite a quantidade a ser cadastrada no estoque: ");
-		p.setQtd_disponivel(sc.nextInt());
+		p.setQuantidade(sc.nextInt());
 		return p;
 	}
 
@@ -286,12 +287,7 @@ public class MenuView {
 				}
 				break;
 			case 5:
-				System.out.println("Digite o código do produto: ");
-				List<ProdutoModel> listaProduto = estoqueService.getProduto(sc.nextInt());
-				if (listaProduto.size() > 0) {
-					EstoqueView estoqueView = new EstoqueView();
-					estoqueView.listarProdutos(listaProduto);
-				}
+				BuscarProduto();
 				break;
 			case 6:
 				System.out
@@ -312,6 +308,15 @@ public class MenuView {
 				break;
 			}
 		} while (opcaoEstoque != 0);
+	}
+
+	public void BuscarProduto() {
+		System.out.println("Digite o código do produto: ");
+		List<ProdutoModel> listaProduto = estoqueService.getProduto(sc.nextInt());
+		if (listaProduto.size() > 0) {
+			EstoqueView estoqueView = new EstoqueView();
+			estoqueView.listarProdutos(listaProduto);
+		}
 	}
 
 	private void MenuMesa() throws ParseException {
@@ -535,15 +540,165 @@ public class MenuView {
 		} while (opcaoUsuario != 0);
 	}
 
-	public void BuscarPedidoFuncionario() {
+	public void BuscarPedido() {
 		System.out.println("Digite o número do pedido:");
 		int codPedido = sc.nextInt();
-		PedidoModel pedido = pedidoService.buscarPedidos(codPedido);
-		// Necessário criar uma lista para adicionar o retorno da consulta
-		// acima, e em seguida emviar a lista para ser exibida na Pedidoview
+		List<PedidoModel> pedido = pedidoService.buscarPedido(codPedido);
+		PedidoView viewPedido = new PedidoView();
+		viewPedido.listarPedidos(pedido);
 	}
 
-	public void RealizarPedido(){
-		
+	public void RealizarPedido() {
+		PedidoModel pedido = new PedidoModel();
+		/**
+		 * Obtendo código dos produtos do pedido
+		 */
+		int opcaoProdutos = 0;
+		List<ProdutoModel> produtosPedido = new ArrayList<>();
+		do {
+			System.out.println("Digite o código do produto");
+			List<ProdutoModel> produto = estoqueService.getProduto(sc.nextInt());
+			if (produto.get(0).getNome_produto() != null) {
+				System.out.println("- " + produto.get(0).getNome_produto() + " Inserido no pedido");
+				System.out.println("Digite a quantidade");
+				produto.get(0).setQuantidade(sc.nextInt());
+				produtosPedido.add(produto.get(0));
+			} else {
+				System.out.println("Código inválido");
+			}
+			System.out.println("Deseja adicionar outro item? 1-Sim / 0-Não");
+			opcaoProdutos = sc.nextInt();
+		} while (opcaoProdutos != 0);
+
+		pedido.setProdutos(produtosPedido);
+		/**
+		 * Obtendo código da mesa e checando se o mesmo é valido
+		 */
+		int continuaMesa = 0;
+		List<MesaModel> mesa = new ArrayList<>();
+		do {
+			System.out.println("Digite o número da mesa");
+			int cod_mesa = sc.nextInt();
+			mesa = mesaService.getMesa(cod_mesa);
+			if (mesa.size() > 0) {
+				if (mesa.get(0).getStatus().equals("Ocupada")) {
+					System.out.println("Mesa ocupada");
+				} else {
+					continuaMesa = 0;
+					mesa.get(0).setStatus("Ocupada");
+					pedido.setCod_mesa(cod_mesa);
+				}
+			} else {
+				System.out.println("Código inválido");
+				continuaMesa = 1;
+			}
+		} while (continuaMesa != 0);
+
+		/**
+		 * Obtendo código do cliente e checando se o mesmo é valido
+		 */
+		int continuaCliente = 0;
+		do {
+			System.out.println("Digite o código do cliente");
+			int cod_cliente = sc.nextInt();
+			if (clienteService.getCliente(new BigDecimal(cod_cliente)).size() > 0) {
+				continuaCliente = 0;
+				ClienteModel c = new ClienteModel();
+				c.setCodigoCliente(new BigDecimal(cod_cliente));
+				pedido.setCliente(c);
+			} else {
+				System.out.println("Código inválido");
+				continuaCliente = 1;
+			}
+		} while (continuaCliente != 0);
+		int resultPedido = pedidoService.realizarPedidos(pedido);
+		if (resultPedido == 1) {
+			System.out.println("Pedido realizado com sucesso");
+			mesaService.editarMesa(mesa.get(0));
+		} else {
+			System.out.println("Erro ao realizar pedido");
+		}
 	}
+
+	public void MenuPedido() {
+		int opcaoPedido = 0;
+		do {
+			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+			System.out.println("\n                  =======================================================");
+			System.out.println("                  |     1 - Realizar Pedido                             |");
+			System.out.println("                  |     2 - Consultar Pedido                            |");
+			System.out.println("                  |     3 - Encerrar Pedido                             |");
+			System.out.println("                  |     4 - Excluir Pedido                              |");
+			System.out.println("                  |     0 - Voltar                                      |");
+			System.out.println("                  =======================================================\n");
+
+			opcaoPedido = sc.nextInt();
+			switch (opcaoPedido) {
+			case 1:
+				RealizarPedido();
+				break;
+			case 2:
+				BuscarPedido();
+				break;
+			case 3:
+				EncerrarPedido();
+				break;
+			case 4:
+				ExcluirPedido();
+				break;
+			case 0:
+				break;
+
+			default:
+				System.out.println("Opção Inválida...");
+				break;
+			}
+		} while (opcaoPedido != 0);
+	}
+
+	public void EncerrarPedido() {
+		System.out.println("Digite o número do pedido: ");
+		int codPedido = sc.nextInt();
+		List<PedidoModel> pedido = pedidoService.buscarPedido(codPedido);
+		if (pedido.size() > 0) {
+			if (pedido.get(0).getStatus_pedido() == 1) {
+				int resultadoEncerra = pedidoService.encerrarPedido(codPedido);
+				if (resultadoEncerra == 1) {
+					MesaModel m = new MesaModel();
+					m.setStatus("Livre");
+					m.setCod_mesa(pedido.get(0).getCod_mesa());
+					int retoroMesa = mesaService.editarMesa(m);
+					if (retoroMesa == 1) {
+						System.out.println("Pedido encerrado.");
+					}
+				} else {
+					System.out.println("Erro ao encerrar pedido...");
+				}
+			} else {
+				System.out.println("Pedido " + codPedido + " já encerrado.");
+			}
+		}
+
+	}
+
+	public void ExcluirPedido() {
+		System.out.println("Digite o número do pedido: ");
+		int codPedido = sc.nextInt();
+		List<PedidoModel> pedido = pedidoService.buscarPedido(codPedido);
+		if (pedido.size() > 0) {
+			int resultadoExclui = pedidoService.excluirPedido(codPedido);
+			if (resultadoExclui == 1) {
+				MesaModel m = new MesaModel();
+				m.setStatus("Livre");
+				m.setCod_mesa(pedido.get(0).getCod_mesa());
+				int retoroMesa = mesaService.editarMesa(m);
+				if (retoroMesa == 1) {
+					System.out.println("Pedido excluido.");
+				}
+			} else {
+				System.out.println("Erro ao excluir pedido...");
+			}
+		}
+	}
+
 }

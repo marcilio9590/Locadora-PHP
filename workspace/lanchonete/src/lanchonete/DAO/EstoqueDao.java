@@ -34,7 +34,7 @@ public class EstoqueDao {
 		} else {
 			ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));
 		}
-		ppst.setInt(4, p.getQtd_disponivel());
+		ppst.setInt(4, p.getQuantidade());
 
 		/* Executa a SQL e captura o resultado da consulta */
 		resultado = ppst.executeUpdate();
@@ -78,7 +78,7 @@ public class EstoqueDao {
 			p.setNome_produto(resultado.getString(1));
 			p.setPreco_produto(resultado.getBigDecimal(2));
 			p.setData_validade(resultado.getDate(3));
-			p.setQtd_disponivel(resultado.getInt(4));
+			p.setQuantidade(resultado.getInt(4));
 			/* Armazena a linha lida em uma lista */
 			lista.add(p);
 		}
@@ -123,7 +123,7 @@ public class EstoqueDao {
 			p.setData_validade(resultado.getDate(3));
 			p.setNome_produto(resultado.getString(1));
 			p.setPreco_produto(resultado.getBigDecimal(2));
-			p.setQtd_disponivel(resultado.getInt(4));
+			p.setQuantidade(resultado.getInt(4));
 		}
 		if (resultado != null) {
 			resultado.close();
@@ -155,7 +155,7 @@ public class EstoqueDao {
 		ppst.setString(1, p.getNome_produto());
 		ppst.setBigDecimal(2, p.getPreco_produto());
 		ppst.setDate(3, new java.sql.Date(p.getData_validade().getTime()));
-		ppst.setInt(4, p.getQtd_disponivel());
+		ppst.setInt(4, p.getQuantidade());
 		ppst.setInt(5, p.getCod_produto());
 
 		/* Executa a SQL e captura o resultado da consulta */
@@ -228,7 +228,7 @@ public class EstoqueDao {
 			p.setNome_produto(resultado.getString(1));
 			p.setPreco_produto(resultado.getBigDecimal(2));
 			p.setData_validade(resultado.getDate(3));
-			p.setQtd_disponivel(resultado.getInt(4));
+			p.setQuantidade(resultado.getInt(4));
 			/* Armazena a linha lida em uma lista */
 			lista.add(p);
 		}
@@ -284,7 +284,7 @@ public class EstoqueDao {
 			p.setNome_produto(resultado.getString(1));
 			p.setPreco_produto(resultado.getBigDecimal(2));
 			p.setData_validade(resultado.getDate(3));
-			p.setQtd_disponivel(resultado.getInt(4));
+			p.setQuantidade(resultado.getInt(4));
 			/* Armazena a linha lida em uma lista */
 			lista.add(p);
 		}

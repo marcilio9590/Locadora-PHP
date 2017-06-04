@@ -20,7 +20,7 @@ public class EstoqueView {
 				}else{
 					System.out.println("Data de validade: -");
 				}
-				System.out.println("Quantidade em estoque: " + lista.get(i).getQtd_disponivel());
+				System.out.println("Quantidade em estoque: " + lista.get(i).getQuantidade());
 				if (i != lista.size() - 1) {
 					System.out.println(
 							"------------------------------------------------------------------------------------------------");
@@ -43,7 +43,7 @@ public class EstoqueView {
 					System.out.println("Nome do produto: " + lista.get(i).getNome_produto());
 					System.out.println("Preço do produto: R$ " + lista.get(i).getPreco_produto());
 					System.out.println("Data de vencimento: " + new SimpleDateFormat("dd/MM/yyyy").format(lista.get(i).getData_validade()));
-					System.out.println("Quantidade em estoque: " + lista.get(i).getQtd_disponivel());
+					System.out.println("Quantidade em estoque: " + lista.get(i).getQuantidade());
 					if (i != lista.size() - 1) {
 						System.out.println(
 								"------------------------------------------------------------------------------------------------");
@@ -59,7 +59,7 @@ public class EstoqueView {
 					System.out.println("Nome do produto: " + lista.get(i).getNome_produto());
 					System.out.println("Preço do produto: R$ " + lista.get(i).getPreco_produto());
 					System.out.println("Data de vencimento: " + new SimpleDateFormat("dd/MM/yyyy").format(lista.get(i).getData_validade()));
-					System.out.println("Quantidade em estoque: " + lista.get(i).getQtd_disponivel());
+					System.out.println("Quantidade em estoque: " + lista.get(i).getQuantidade());
 					if (i != lista.size() - 1) {
 						System.out.println(
 								"------------------------------------------------------------------------------------------------");

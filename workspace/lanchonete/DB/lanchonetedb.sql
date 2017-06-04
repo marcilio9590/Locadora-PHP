@@ -71,7 +71,8 @@ INSERT INTO `tb_estoque` (`nome_produto`, `preco_produto`, `data_validade`, `qtd
 CREATE TABLE `tb_itens_pedido` (
   `id` int(11) NOT NULL,
   `cod_produto` int(11) DEFAULT NULL,
-  `cod_pedido` int(11) DEFAULT NULL
+  `cod_pedido` int(11) DEFAULT NULL,
+  `quantidade` INT(11) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

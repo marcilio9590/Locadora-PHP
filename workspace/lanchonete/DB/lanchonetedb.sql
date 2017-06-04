@@ -3,9 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Maio-2017 às 05:29
+-- Generation Time: 04-Jun-2017 às 04:21
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
+
+
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -46,10 +48,10 @@ INSERT INTO `tb_clientes` (`cod_cliente`, `nome_cliente`, `telefone_cliente`, `c
 --
 
 CREATE TABLE `tb_estoque` (
-  `nome_produto` varchar(100) DEFAULT NULL,
-  `preco_produto` decimal(10,2) DEFAULT NULL,
-  `data_validade` date NOT NULL,
-  `qtd_disponivel` int(11) DEFAULT NULL,
+  `nome_produto` varchar(100) NOT NULL,
+  `preco_produto` decimal(10,2) NOT NULL,
+  `data_validade` date DEFAULT NULL,
+  `qtd_disponivel` int(11) NOT NULL,
   `cod_produto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -58,9 +60,10 @@ CREATE TABLE `tb_estoque` (
 --
 
 INSERT INTO `tb_estoque` (`nome_produto`, `preco_produto`, `data_validade`, `qtd_disponivel`, `cod_produto`) VALUES
-('X-Tudo', '9.00', '2017-05-21', 10, 1),
+('X-Tudo', '9.00', '2017-06-04', 10, 1),
 ('Antartica', '3.50', '2017-06-06', 23, 2),
-('Fanta', '3.50', '2017-08-10', 20, 3);
+('Fanta', '3.50', '2017-08-10', 20, 3),
+('Coca-Cola 2L', '8.00', '2017-08-10', 20, 4);
 
 -- --------------------------------------------------------
 
@@ -72,17 +75,8 @@ CREATE TABLE `tb_itens_pedido` (
   `id` int(11) NOT NULL,
   `cod_produto` int(11) DEFAULT NULL,
   `cod_pedido` int(11) DEFAULT NULL,
-  `quantidade` INT(11) NOT NULL,
+  `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tb_itens_pedido`
---
-
-INSERT INTO `tb_itens_pedido` (`id`, `cod_produto`, `cod_pedido`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -91,18 +85,18 @@ INSERT INTO `tb_itens_pedido` (`id`, `cod_produto`, `cod_pedido`) VALUES
 --
 
 CREATE TABLE `tb_mesas` (
-	`status` VARCHAR(50) NOT NULL,
-	`cod_mesa` INT(11) NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`cod_mesa`)
-);
-
+  `status` varchar(50) NOT NULL,
+  `cod_mesa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_mesas`
 --
 
 INSERT INTO `tb_mesas` (`status`, `cod_mesa`) VALUES
-( '1', 1);
+('Livre', 1),
+('Ocupada', 2),
+('Livre', 3);
 
 -- --------------------------------------------------------
 
@@ -111,26 +105,13 @@ INSERT INTO `tb_mesas` (`status`, `cod_mesa`) VALUES
 --
 
 CREATE TABLE `tb_pedidos` (
-	`cod_pedido` INT(11) NOT NULL,
-	`cod_cliente` INT(11) NULL,
-	`total` DECIMAL(10,2) UNSIGNED NOT NULL,
-	`data` DATE NULL DEFAULT NULL,
-	`status` INT(11) NOT NULL,
-	`cod_mesa` INT(11) NOT NULL,
-	PRIMARY KEY (`cod_pedido`),
-	INDEX `fk_cod_cliente` (`cod_cliente`),
-	INDEX `fk_cod_mesa` (`cod_mesa`),
-	CONSTRAINT `fk_cod_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `tb_clientes` (`cod_cliente`),
-	CONSTRAINT `fk_cod_mesa` FOREIGN KEY (`cod_mesa`) REFERENCES `tb_mesas` (`cod_mesa`)
+  `cod_pedido` int(11) NOT NULL,
+  `cod_cliente` int(11),
+  `total` decimal(10,2) UNSIGNED NOT NULL,
+  `data` date DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `cod_mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tb_pedidos`
---
-
-INSERT INTO `tb_pedidos` (`cod_pedido`, `cod_cliente`, `total`, `data`, `status`, `cod_mesa`) VALUES
-(1, 1, '9.00', '2017-05-20', 3, 1),
-(2, 2, '12.00', '2017-05-21', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -153,8 +134,9 @@ CREATE TABLE `tb_users` (
 --
 
 INSERT INTO `tb_users` (`nome_user`, `cpf_user`, `login_user`, `senha_user`, `perfil_user`, `cod_user`, `qtd_alerta_nivel_estoque`) VALUES
-('admin', '01234567890', 'admin', 'admin', 1, 1, 10),
-('José da Silva', '00191000000', 'jose', 'jose', 2, 2, NULL);
+('admin', '01234567890', 'admin', 'admin', 1, 1, 11),
+('José da Silva', '00191000000', 'jose', 'jose', 2, 2, NULL),
+('Ellen da silva', '01234567890', 'ellen', 'ellen', 1, 4, NULL);
 
 --
 -- Indexes for dumped tables
@@ -191,7 +173,8 @@ ALTER TABLE `tb_mesas`
 --
 ALTER TABLE `tb_pedidos`
   ADD PRIMARY KEY (`cod_pedido`),
-  ADD KEY `fk_cod_cliente` (`cod_cliente`);
+  ADD KEY `fk_cod_cliente` (`cod_cliente`),
+  ADD KEY `fk_cod_mesa` (`cod_mesa`);
 
 --
 -- Indexes for table `tb_users`
@@ -217,17 +200,22 @@ ALTER TABLE `tb_estoque`
 -- AUTO_INCREMENT for table `tb_itens_pedido`
 --
 ALTER TABLE `tb_itens_pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tb_mesas`
 --
 ALTER TABLE `tb_mesas`
-  MODIFY `cod_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tb_pedidos`
+--
+ALTER TABLE `tb_pedidos`
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `cod_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cod_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -243,7 +231,8 @@ ALTER TABLE `tb_itens_pedido`
 -- Limitadores para a tabela `tb_pedidos`
 --
 ALTER TABLE `tb_pedidos`
-  ADD CONSTRAINT `fk_cod_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `tb_clientes` (`cod_cliente`);
+  ADD CONSTRAINT `fk_cod_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `tb_clientes` (`cod_cliente`),
+  ADD CONSTRAINT `fk_cod_mesa` FOREIGN KEY (`cod_mesa`) REFERENCES `tb_mesas` (`cod_mesa`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,82 +31,87 @@ public class MenuView {
 	private int opcao = 0;
 
 	public void menu(UsuarioModel user) throws Exception {
-		int perfil = user.getPerfil_user();
-		if (perfil == 1) {
-			estoqueService.checarNivelEstoque(user.getQtd_alerta_estoque());
-			estoqueService.checarValidadeEstoque();
-		}
-		do {
-			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
-			System.out.println("\n                  =========================================");
-			if (perfil == 2) {
-				System.out.println("                  |     1 - Realizar Pedido               |");
-			}
+		try {
+			int perfil = user.getPerfil_user();
 			if (perfil == 1) {
-				System.out.println("                  |     1 - Gerenciamento de Pedido       |");
+				estoqueService.checarNivelEstoque(user.getQtd_alerta_estoque());
+				estoqueService.checarValidadeEstoque();
 			}
-			if (perfil == 2) {
-				System.out.println("                  |     2 - Verifica Pedido               |");
-			}
-			if (perfil == 2) {
-				System.out.println("                  |     3 - Checar Preço de Mercadoria    |");
-			}
-			if (perfil == 1)
-				System.out.println("                  |     2 - Gerenciamento de Estoque      |");
-			if (perfil == 1)
-				System.out.println("                  |     3 - Gerenciamento de Clientes     |");
-			if (perfil == 1)
-				System.out.println("                  |     4 - Gerenciamento de Usuários     |");
-			if (perfil == 1)
-				System.out.println("                  |     5 - Gerenciamento de Mesas        |");
-			System.out.println("                  |     0 - Sair                          |");
-			System.out.println("                  =========================================\n");
-			try {
+			do {
+				System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
+				System.out.println("\n                  =========================================");
+				if (perfil == 2) {
+					System.out.println("                  |     1 - Realizar Pedido               |");
+				}
+				if (perfil == 1) {
+					System.out.println("                  |     1 - Gerenciamento de Pedido       |");
+				}
+				if (perfil == 2) {
+					System.out.println("                  |     2 - Verifica Pedido               |");
+				}
+				if (perfil == 2) {
+					System.out.println("                  |     3 - Checar Preço de Mercadoria    |");
+				}
+				if (perfil == 1)
+					System.out.println("                  |     2 - Gerenciamento de Estoque      |");
+				if (perfil == 1)
+					System.out.println("                  |     3 - Gerenciamento de Clientes     |");
+				if (perfil == 1)
+					System.out.println("                  |     4 - Gerenciamento de Usuários     |");
+				if (perfil == 1)
+					System.out.println("                  |     5 - Gerenciamento de Mesas        |");
+				System.out.println("                  |     0 - Sair                          |");
+				System.out.println("                  =========================================\n");
+
 				opcao = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
-			if (perfil == 1) {
-				switch (opcao) {
-				case 1:
-					MenuPedido();
-					break;
-				case 2:
-					MenuEstoque(user);
-					break;
-				case 3:
-					MenuCliente();
-					break;
-				case 4:
-					MenuUsuarios(user);
-					break;
-				case 5:
-					MenuMesa();
-					break;
-				case 0:
-					break;
-				default:
-					System.out.println("Opção inválida!");
+
+				if (perfil == 1) {
+					switch (opcao) {
+					case 1:
+						MenuPedido();
+						break;
+					case 2:
+						MenuEstoque(user);
+						break;
+					case 3:
+						MenuCliente();
+						break;
+					case 4:
+						MenuUsuarios(user);
+						break;
+					case 5:
+						MenuMesa();
+						break;
+					case 0:
+						break;
+					default:
+						System.out.println("Opção inválida!");
+					}
+				} else {
+					switch (opcao) {
+					case 1:
+						RealizarPedido();
+						break;
+					case 2:
+						BuscarPedido();
+						break;
+					case 3:
+						BuscarProduto();
+						break;
+					case 0:
+						break;
+					default:
+						System.out.println("Opção inválida!");
+						break;
+					}
 				}
-			} else {
-				switch (opcao) {
-				case 1:
-					RealizarPedido();
-					break;
-				case 2:
-					BuscarPedido();
-					break;
-				case 3:
-					BuscarProduto();
-					break;
-				case 0:
-					break;
-				default:
-					System.out.println("Opção inválida!");
-					break;
-				}
-			}
-		} while (opcao != 0);
+			} while (opcao != 0);
+
+		} catch (InputMismatchException e) {
+			System.out.println("Digitação Inválida.");
+		} catch (Exception e) {
+			System.out.println("Desculpe ocorreu um erro: " + e);
+		}
 	}
 
 	private void MenuCliente() {
@@ -121,11 +127,7 @@ public class MenuView {
 			System.out.println("                  |     6 - Histórico de Pedidos do cliente |");
 			System.out.println("                  |     0 - Voltar                          |");
 			System.out.println("                  ===========================================\n");
-			try {
-				opcaoCliente = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
+			opcaoCliente = sc.nextInt();
 			switch (opcaoCliente) {
 			case 1:
 				ClienteModel clienteCad = getDadosCliente();
@@ -251,11 +253,8 @@ public class MenuView {
 			System.out.println("                  |     6 - Definir nível para alerta de estoque baixo  |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-			try {
-				opcaoEstoque = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
+
+			opcaoEstoque = sc.nextInt();
 			switch (opcaoEstoque) {
 			case 1:
 				ProdutoModel produtoCad = getDadosProduto();
@@ -300,7 +299,7 @@ public class MenuView {
 					} else {
 						System.out.println("Erro ao excluir Produto...");
 					}
-				}else{
+				} else {
 					System.out.println("Produto não encontrado");
 				}
 				break;
@@ -334,7 +333,7 @@ public class MenuView {
 		if (listaProduto.size() > 0) {
 			EstoqueView estoqueView = new EstoqueView();
 			estoqueView.listarProdutos(listaProduto);
-		}else{
+		} else {
 			System.out.println("Produto não encontrado.");
 		}
 	}
@@ -350,11 +349,8 @@ public class MenuView {
 			System.out.println("                  |     4 - Excluir Mesa                                |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-			try {
-				opcaoMesa = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
+
+			opcaoMesa = sc.nextInt();
 			switch (opcaoMesa) {
 			case 1:
 				MesaModel mesaCad = new MesaModel();
@@ -446,11 +442,8 @@ public class MenuView {
 			System.out.println("                  |     8 - Trocar perfil de usuário                    |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-			try {
-				opcaoUsuario = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
+
+			opcaoUsuario = sc.nextInt();
 			switch (opcaoUsuario) {
 			case 1:
 				UsuarioModel userCad = getDadosUser();
@@ -658,11 +651,8 @@ public class MenuView {
 			System.out.println("                  |     5 - Excluir Pedido                              |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-			try {
-				opcaoPedido = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("Opção inválida " + e);
-			}
+
+			opcaoPedido = sc.nextInt();
 			switch (opcaoPedido) {
 			case 1:
 				RealizarPedido();
@@ -689,7 +679,7 @@ public class MenuView {
 		} while (opcaoPedido != 0);
 	}
 
-	public void ListarPedidos(){
+	public void ListarPedidos() {
 		List<PedidoModel> pedidos = pedidoService.listarPedidos();
 		if (pedidos.size() > 0) {
 			PedidoView view = new PedidoView();
@@ -698,7 +688,7 @@ public class MenuView {
 			System.out.println("Nenhum pedido cadastrado...");
 		}
 	}
-	
+
 	public void EncerrarPedido() {
 		System.out.println("Digite o número do pedido: ");
 		int codPedido = sc.nextInt();

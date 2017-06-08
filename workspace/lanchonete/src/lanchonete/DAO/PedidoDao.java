@@ -5,6 +5,7 @@ import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -139,7 +140,7 @@ public class PedidoDao {
 		conn = Conexao.abrir();
 
 		/* Mapeamento objeto relacional */
-		ppst = conn.prepareStatement(sql.toString());
+		ppst = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 		ppst.setBigDecimal(1, pedido.getCliente().getCodigoCliente());
 		ppst.setBigDecimal(2, calcularTotal(pedido.getProdutos()));
 		java.util.Date data = new java.util.Date();
@@ -156,7 +157,7 @@ public class PedidoDao {
 			while (resultadoNumPedido.next()) {
 				int countItemPedido = salvarItensPedido(pedido.getProdutos(), resultadoNumPedido.getInt(1));
 				if (countItemPedido == 1) {
-					resultado = 1;
+					resultado = resultadoNumPedido.getInt(1);
 				}
 			}
 			if (resultadoNumPedido != null) {
@@ -310,4 +311,81 @@ public class PedidoDao {
 		return resultado;
 	}
 
+	public List<PedidoModel> listarPedidos() throws Exception{
+		/* Define a SQL */
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT t1.*, t2.nome_cliente,t2.telefone_cliente,t2.cpf_cliente,t2.endereco_cliente"
+				+ " FROM tb_pedidos t1" + " INNER JOIN tb_clientes t2 ON (t1.cod_cliente = t2.cod_cliente)");
+
+		Connection conn = null;
+		PreparedStatement ppst = null;
+		ResultSet resultado = null;
+
+		/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
+		conn = Conexao.abrir();
+
+		/* Mapeamento objeto relacional */
+		ppst = conn.prepareStatement(sql.toString());
+
+		/* Executa a SQL e captura o resultado da consulta */
+		resultado = ppst.executeQuery();
+		List<PedidoModel> pedidos = new ArrayList<PedidoModel>();
+		/* Percorre o resultado armazenando os valores em uma lista */
+		while (resultado.next()) {
+			//cria o objeto pedido para setar o pedido e depois adicionar na lista
+			PedidoModel pedido = new PedidoModel();
+			/*
+			 * Chama o Dao dos pedidos para buscar os itens do pedido que esta
+			 * sendo preenchido neste loop
+			 */
+			List<ProdutoModel> listProdutos = getProdutosPedido(resultado.getBigDecimal(1));
+			/* Cria um objeto para armazenar uma linha da consulta */
+			ClienteModel cliente = new ClienteModel();
+			// Populando dados do pedido
+			pedido.setCod_pedido(resultado.getInt(1));
+			pedido.setData_pedido(resultado.getDate(4));
+			pedido.setStatus_pedido(resultado.getInt(5));
+			pedido.setCod_mesa(resultado.getInt(6));
+			pedido.setTotal(resultado.getBigDecimal(3));
+			// Populando dados do cliente
+			cliente.setCodigoCliente(resultado.getBigDecimal(2));
+			cliente.setCpf(resultado.getBigDecimal(9));
+			cliente.setEndereco(resultado.getString(10));
+			cliente.setNome(resultado.getString(7));
+			cliente.setTelefone(resultado.getString(8));
+			// Colocando o objeto cliente dentro do pedido
+			pedido.setCliente(cliente);
+			// Colocando a lista de produtos no pedido
+			pedido.setProdutos(listProdutos);
+			
+			pedidos.add(pedido);
+		}
+
+		/* Fecha a conexão */
+		if (resultado != null) {
+			resultado.close();
+		}
+		if (ppst != null) {
+			ppst.close();
+		}
+		if (conn != null) {
+			conn.close();
+		}
+
+		/* Retorna a lista contendo o resultado da consulta */
+		return pedidos;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

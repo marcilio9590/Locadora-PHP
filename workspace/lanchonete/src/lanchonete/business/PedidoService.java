@@ -9,6 +9,16 @@ import lanchonete.model.PedidoModel;
 public class PedidoService {
 	PedidoDao dao = new PedidoDao();
 	
+	public List<PedidoModel> listarPedidos() {
+		List<PedidoModel> ListPedido = new ArrayList<PedidoModel>();
+		try {
+			ListPedido = dao.listarPedidos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ListPedido;
+	}
+	
 	public List<PedidoModel> buscarPedido(int codPedido) {
 		PedidoModel pedido = new PedidoModel();
 		List<PedidoModel> ListPedido = new ArrayList<PedidoModel>();

@@ -60,7 +60,11 @@ public class MenuView {
 				System.out.println("                  |     5 - Gerenciamento de Mesas        |");
 			System.out.println("                  |     0 - Sair                          |");
 			System.out.println("                  =========================================\n");
-			opcao = sc.nextInt();
+			try {
+				opcao = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			if (perfil == 1) {
 				switch (opcao) {
 				case 1:
@@ -117,7 +121,11 @@ public class MenuView {
 			System.out.println("                  |     6 - Histórico de Pedidos do cliente |");
 			System.out.println("                  |     0 - Voltar                          |");
 			System.out.println("                  ===========================================\n");
-			opcaoCliente = sc.nextInt();
+			try {
+				opcaoCliente = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			switch (opcaoCliente) {
 			case 1:
 				ClienteModel clienteCad = getDadosCliente();
@@ -134,6 +142,7 @@ public class MenuView {
 			case 3:
 				List<ClienteModel> listaUpdate;
 				System.out.println("Digite o código do cliente: ");
+
 				BigDecimal codCliente = sc.nextBigDecimal();
 				listaUpdate = clienteService.getCliente(codCliente);
 				if (listaUpdate.size() > 0) {
@@ -242,8 +251,11 @@ public class MenuView {
 			System.out.println("                  |     6 - Definir nível para alerta de estoque baixo  |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-
-			opcaoEstoque = sc.nextInt();
+			try {
+				opcaoEstoque = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			switch (opcaoEstoque) {
 			case 1:
 				ProdutoModel produtoCad = getDadosProduto();
@@ -274,16 +286,22 @@ public class MenuView {
 						System.out.println("Erro ao editar Produto...");
 					}
 				} else {
-					System.out.println("Código inválido");
+					System.out.println("Produto não encontrado");
 				}
 				break;
 			case 4:
 				System.out.println("Digite o código do produto: ");
-				int returnDelete = estoqueService.excluirProduto(sc.nextInt());
-				if (returnDelete > 0) {
-					System.out.println("Produto excluído com sucesso!!!");
-				} else {
-					System.out.println("Erro ao excluir Produto...");
+				int codProdutoExluir = sc.nextInt();
+				listaUpdate = estoqueService.getProduto(codProdutoExluir);
+				if (listaUpdate.size() > 0) {
+					int returnDelete = estoqueService.excluirProduto(codProdutoExluir);
+					if (returnDelete > 0) {
+						System.out.println("Produto excluído com sucesso!!!");
+					} else {
+						System.out.println("Erro ao excluir Produto...");
+					}
+				}else{
+					System.out.println("Produto não encontrado");
 				}
 				break;
 			case 5:
@@ -316,6 +334,8 @@ public class MenuView {
 		if (listaProduto.size() > 0) {
 			EstoqueView estoqueView = new EstoqueView();
 			estoqueView.listarProdutos(listaProduto);
+		}else{
+			System.out.println("Produto não encontrado.");
 		}
 	}
 
@@ -330,8 +350,11 @@ public class MenuView {
 			System.out.println("                  |     4 - Excluir Mesa                                |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-
-			opcaoMesa = sc.nextInt();
+			try {
+				opcaoMesa = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			switch (opcaoMesa) {
 			case 1:
 				MesaModel mesaCad = new MesaModel();
@@ -423,8 +446,11 @@ public class MenuView {
 			System.out.println("                  |     8 - Trocar perfil de usuário                    |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-
-			opcaoUsuario = sc.nextInt();
+			try {
+				opcaoUsuario = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			switch (opcaoUsuario) {
 			case 1:
 				UsuarioModel userCad = getDadosUser();
@@ -558,7 +584,7 @@ public class MenuView {
 		do {
 			System.out.println("Digite o código do produto");
 			List<ProdutoModel> produto = estoqueService.getProduto(sc.nextInt());
-			if (produto.get(0).getNome_produto() != null) {
+			if (produto.size() > 0) {
 				System.out.println("- " + produto.get(0).getNome_produto() + " Inserido no pedido");
 				System.out.println("Digite a quantidade");
 				produto.get(0).setQuantidade(sc.nextInt());
@@ -612,8 +638,8 @@ public class MenuView {
 			}
 		} while (continuaCliente != 0);
 		int resultPedido = pedidoService.realizarPedidos(pedido);
-		if (resultPedido == 1) {
-			System.out.println("Pedido realizado com sucesso");
+		if (resultPedido > 0) {
+			System.out.println("Pedido " + resultPedido + " realizado com sucesso");
 			mesaService.editarMesa(mesa.get(0));
 		} else {
 			System.out.println("Erro ao realizar pedido");
@@ -626,24 +652,31 @@ public class MenuView {
 			System.out.println("\n\n            ### SISLANCHE - Sistema Gerencial De Lanchonetes ###");
 			System.out.println("\n                  =======================================================");
 			System.out.println("                  |     1 - Realizar Pedido                             |");
-			System.out.println("                  |     2 - Consultar Pedido                            |");
-			System.out.println("                  |     3 - Encerrar Pedido                             |");
-			System.out.println("                  |     4 - Excluir Pedido                              |");
+			System.out.println("                  |     2 - Listar Pedidos                              |");
+			System.out.println("                  |     3 - Consultar Pedido                            |");
+			System.out.println("                  |     4 - Encerrar Pedido                             |");
+			System.out.println("                  |     5 - Excluir Pedido                              |");
 			System.out.println("                  |     0 - Voltar                                      |");
 			System.out.println("                  =======================================================\n");
-
-			opcaoPedido = sc.nextInt();
+			try {
+				opcaoPedido = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Opção inválida " + e);
+			}
 			switch (opcaoPedido) {
 			case 1:
 				RealizarPedido();
 				break;
 			case 2:
-				BuscarPedido();
+				ListarPedidos();
 				break;
 			case 3:
-				EncerrarPedido();
+				BuscarPedido();
 				break;
 			case 4:
+				EncerrarPedido();
+				break;
+			case 5:
 				ExcluirPedido();
 				break;
 			case 0:
@@ -656,6 +689,16 @@ public class MenuView {
 		} while (opcaoPedido != 0);
 	}
 
+	public void ListarPedidos(){
+		List<PedidoModel> pedidos = pedidoService.listarPedidos();
+		if (pedidos.size() > 0) {
+			PedidoView view = new PedidoView();
+			view.listarPedidos(pedidos);
+		} else {
+			System.out.println("Nenhum pedido cadastrado...");
+		}
+	}
+	
 	public void EncerrarPedido() {
 		System.out.println("Digite o número do pedido: ");
 		int codPedido = sc.nextInt();
@@ -677,8 +720,9 @@ public class MenuView {
 			} else {
 				System.out.println("Pedido " + codPedido + " já encerrado.");
 			}
+		} else {
+			System.out.println("Pedido não encontrado...");
 		}
-
 	}
 
 	public void ExcluirPedido() {
@@ -698,6 +742,8 @@ public class MenuView {
 			} else {
 				System.out.println("Erro ao excluir pedido...");
 			}
+		} else {
+			System.out.println("Pedido não encontrado...");
 		}
 	}
 

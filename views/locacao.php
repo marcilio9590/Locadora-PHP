@@ -1,3 +1,5 @@
+<?php require_once('../controllers/locacoes.php'); ?>
+
 <html>
     <head>
         <script src="../resources/bootstrap/js/jquery.min.js"></script>
@@ -10,16 +12,52 @@
             <?php require_once('menu.php'); ?>
         </div>
         <div class="container-fluid"> 
-            <section> 
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <button><a href="#">Cadastrar Locação</a></button>
-                        </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4"></div>
+                <div class="row">
+                    <div class="col-sm-4"><h1><label>Locações</label></h1></div>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                    <button class="btn btn-default"><a href="#">Cadastrar Locação</a></button>
                     </div>
-        <?php echo $index ?>
-            </section>
+                    <div class="col-sm-2"></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <table class="table table-bordered table-condensed">
+                 
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome do Cliente</th>
+                                    <th>Data</th>
+                                    <th>Total</th>
+                                    <th>Situação</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    
+                </div>
+
+
+
+
+
+
+
         </div>
     </body>
 </html>

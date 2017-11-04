@@ -1,6 +1,6 @@
 <?php
     $endereco = $_SERVER ['REQUEST_URI'];
-    if($endereco == "/Locadora-PHP/index.php"){
+    if($endereco == "/Locadora-PHP/" || $endereco == "/Locadora-PHP/index.php"){
       $index = "index.php";
       $urlCliente = "#";
       $urlFuncionario = "#";

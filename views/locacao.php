@@ -7,6 +7,7 @@
     </head>
     <body>
         <div>
+            <?php require_once('menu.php'); ?>
         </div>
         <div class="container-fluid"> 
             <section> 

@@ -1,4 +1,4 @@
-<?php require_once('../controllers/locacoes.php'); ?>
+<?php require_once('../controllers/locacoes.controller.php'); ?>
 
 <html>
     <head>

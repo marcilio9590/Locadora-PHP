@@ -1,4 +1,4 @@
-<?php require_once('../controllers/cadastro.locacoes.php'); ?>
+<?php require_once('../controllers/cadastro.locacoes.controller.php'); ?>
 
 <html>
     <head>

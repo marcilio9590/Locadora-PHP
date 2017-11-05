@@ -29,7 +29,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" style="width:350px;" class="pull-left form-control" id="codCliente"/>
                                     <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
-                                    type="button" onclick="buscarCliente()">Pesquisar</button>
+                                    type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
                                 </div>
                             </div>
 
@@ -92,11 +92,18 @@
             data: {
                 codigoCliente: $('#codCliente').val()
             },success:function(data){
-                response = JSON.parse(data);
-                $("#nomeCliente")[0].value = response.nomeCliente;
-                $("#divNomeCliente")[0].style.display = 'inherit';
-            },
-            error:function(){
+                if(data !== "false"){
+                    response = JSON.parse(data);
+                    $("#nomeCliente")[0].value = response.nome;
+                    $("#divNomeCliente")[0].style.display = 'inherit';
+                    $("#codCliente")[0].disabled = true;                    
+                    $("#btnPesquisarCliente")[0].disabled = true;                    
+
+                }else{
+                    alert('Código do cliente incorreto');
+
+                }
+            },error:function(){
                 alert("ERRO AO BUSCAR CLIENTE");
             }
         });  

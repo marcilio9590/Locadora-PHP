@@ -145,11 +145,12 @@
     }
 
     function montarTabela(filmes){
-        var $table = $("<table class='table table-striped table-bordered table-condensed'></table>" );
+        var $table = $("<table class='text-center table table-striped table-bordered table-condensed'></table>" );
         var $thead = $( "<thead></thead>" );
         var $cabecalho = $( "<tr></tr>" );
-        $cabecalho.append("<th>Código</th>");
-        $cabecalho.append("<th>Nome</th>");
+        $cabecalho.append("<td><b>Código</b></td>");
+        $cabecalho.append("<td><b>Nome</b></td>");
+        $cabecalho.append("<td><b>Ações</b></td>");
         $thead.append($cabecalho);
         $table.append( $thead );
         
@@ -159,6 +160,7 @@
             var $line = $( "<tr>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
             $line.append( $( "<td></td>" ).html( filme.nome ) );
+            $line.append( $( "<td><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );
         }
@@ -172,5 +174,9 @@
     function montarinputHidden(filme, arrayFilmes){
         var $form =  $( "#formLocacao" );
         $form.append($("<input type='hidden' name='codigoFilmes[]' value='"+filme.cod_filme+"'/>"));
+    }
+
+    function removerFilme(filme){
+        console.log(filme);
     }
 </script>

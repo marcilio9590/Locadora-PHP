@@ -23,23 +23,56 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-6">
                     
-                        <form>
+                        <form class="form-horizontal" method="post">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Código do cliente</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" >
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Código do funcionário</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Código do filme</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Cod. Cliente:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" style="width:350px;" class="pull-left form-control" id="codCliente"/>
+                                    <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                                    type="button" onclick="buscarCliente()">Pesquisar</button>
+                                </div>
                             </div>
 
+                            <div style="display:none;" id="divNomeCliente" class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Nome Cliente:</label>
+                                <div class="col-sm-9">
+                                    <input style="width:350px;" type="text" disabled="true" class="form-control" id="nomeCliente">
+                                </div>
+                            </div> 
 
 
-                            <button type="submit" class="btn btn-default">Enviar</button>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Cod. Funcionário:</label>
+                                <div class="col-sm-9">
+                                        <input type="text" style="width:350px;" class="pull-left form-control" name="codFuncionario"/>
+                                        <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                                        type="submit" name="buscarFuncionario">Pesquisar</button>
+                                </div>
+                            </div>
+                            
+                            <div style="display:none;" class="form-group" id="divNomeFuncionario">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Nome Funcionário:</label>
+                                <div class="col-sm-9">
+                                    <input style="width:350px;" type="text" disabled="true" class="form-control" id="inputPassword3">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+								<label for="inputPassword3" class="col-sm-3 control-label">Cod. Filme:</label>
+								<div class="col-sm-9">
+                                    <input type="text" style="width:350px;" class="pull-left form-control" name="codFilme"/>
+                                    <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                                    type="submit" name="buscarFilme">Pesquisar</button>
+								</div>
+							</div>
+                            
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">Cadastrar</button>
+                                </div>
+                            </div>
+
                         </form>
                     
                     </div>
@@ -50,3 +83,22 @@
         </div>
     </body>
 </html>
+
+<script>
+    function buscarCliente(){
+        $.ajax({
+            url: '../controllers/cadastro.locacoes.controller.php',
+            type: 'POST',
+            data: {
+                codigoCliente: $('#codCliente').val()
+            },success:function(data){
+                response = JSON.parse(data);
+                $("#nomeCliente")[0].value = response.nomeCliente;
+                $("#divNomeCliente")[0].style.display = 'inherit';
+            },
+            error:function(){
+                alert("ERRO AO BUSCAR CLIENTE");
+            }
+        });  
+    }
+</script>

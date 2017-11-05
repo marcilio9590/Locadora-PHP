@@ -8,12 +8,6 @@
             return $connection;
         }
 
-        public function closeConnection(){
-            if($connection != null){
-                $connection = null;
-            }
-        }
-
     }
 
 ?>

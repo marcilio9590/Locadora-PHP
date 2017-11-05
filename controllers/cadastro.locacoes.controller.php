@@ -11,13 +11,10 @@
         //codigo digitado no campo
         $codCliente = $_REQUEST['codigoCliente'];
         //realizar busca na base pelo codigo do cliente
-
-
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
         $res = $conexao->query("select * from clientes where cod_cliente = '+$codCliente+'");
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
-
     }
 
     if(isset($_POST["codFuncionario"])){

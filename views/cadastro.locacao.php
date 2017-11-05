@@ -98,10 +98,8 @@
                     $("#divNomeCliente")[0].style.display = 'inherit';
                     $("#codCliente")[0].disabled = true;                    
                     $("#btnPesquisarCliente")[0].disabled = true;                    
-
                 }else{
                     alert('Código do cliente incorreto');
-
                 }
             },error:function(){
                 alert("ERRO AO BUSCAR CLIENTE");

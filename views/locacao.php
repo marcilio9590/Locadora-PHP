@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <button class="btn btn-default"><a href="cadastro.locacao.php">Cadastrar Locação</a></button>
+                    <a href="cadastro.locacao.php"> <button class="btn btn-default">Cadastrar Locação</button></a>
                     </div>
                     <div class="col-sm-2"></div>
                 </div>

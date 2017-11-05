@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Nov-2017 às 20:48
+-- Generation Time: 05-Nov-2017 às 21:06
 -- Versão do servidor: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -49,6 +49,20 @@ CREATE TABLE `clientes` (
 INSERT INTO `clientes` (`cod_cliente`, `nome`, `email`, `cpf`, `sexo`, `ddd`, `telefone`, `endereco`, `bairro`, `cidade`, `estado`) VALUES
 (1, 'cliente 1', 'cliente1@gmail.com', '11111111111', 'Masculino', '81', '988888888', 'rua teste', 'bairro teste', 'cidade teste', 'estado teste');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `filmes`
+--
+
+CREATE TABLE `filmes` (
+  `cod_filme` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `genero` varchar(50) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `preco` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -60,6 +74,12 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`cod_cliente`);
 
 --
+-- Indexes for table `filmes`
+--
+ALTER TABLE `filmes`
+  ADD PRIMARY KEY (`cod_filme`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -68,6 +88,12 @@ ALTER TABLE `clientes`
 --
 ALTER TABLE `clientes`
   MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `filmes`
+--
+ALTER TABLE `filmes`
+  MODIFY `cod_filme` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

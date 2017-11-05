@@ -59,7 +59,7 @@ CREATE TABLE `filmes` (
   `cod_filme` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `genero` varchar(50) NOT NULL,
-  `status` varchar(10) NOT NULL,
+  `status` int(10) NOT NULL,
   `preco` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

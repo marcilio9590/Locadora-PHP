@@ -93,6 +93,8 @@
 </html>
 
 <script>
+    var filmes = [];
+
     function buscarCliente(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -114,9 +116,7 @@
             }
         });  
     }
-</script>
 
-<script>
     function getFuncionario(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -138,10 +138,7 @@
             }
         });  
     }
-</script>
 
-<script>
-   var filmes = [];
     function adicionarFilmes(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -181,7 +178,7 @@
         var $tbody = $( "<tbody></tbody>" );
         for ( var i = 0; i < filmes.length; i++ ) {
             var filme = filmes[i];
-            var $line = $( "<tr>" );
+            var $line = $( "<tr id='filme"+i+"'>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
             $line.append( $( "<td></td>" ).html( filme.nome ) );
             $line.append( $( "<td><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></td>" ));
@@ -197,10 +194,20 @@
 
     function montarinputHidden(filme, arrayFilmes){
         var $form =  $( "#formLocacao" );
-        $form.append($("<input type='hidden' name='codigoFilmes[]' value='"+filme.cod_filme+"'/>"));
+        $form.append($("<input type='hidden' id='hiddenFilme"+filme.cod_filme+"' name='codigoFilmes[]' value='"+filme.cod_filme+"'/>"));
     }
 
-    function removerFilme(filme){
-        console.log(filme);
+    //Ainda falta ajuste para remover o input hidden quando remover um filme da lista, 
+    function removerFilme(index){
+        var e = filmes[index];
+        
+        $( '#filme'+index).remove();
+        $( '#hiddenFilme' + index).remove();
+        
+        console.log($("input[id=hiddenFilme"+e.cod_filme+"]"));
+        $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
+            parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
+        filmes.splice(index,1);
+        montarTabela(filmes);
     }
 </script>

@@ -8,23 +8,23 @@
     $codFilme = 0;
 
     if(isset($_REQUEST['codigoCliente'])){
-        //codigo digitado no campo
         $codCliente = $_REQUEST['codigoCliente'];
-        //realizar busca na base pelo codigo
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
         $res = $conexao->query("select * from clientes where cod_cliente = '+$codCliente+'");
         echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     }
 
-    if(isset($_POST["codFuncionario"])){
-        $codFuncionario = $_POST["codFuncionario"];
+    if(isset($_REQUEST["codFuncionario"])){
+        $codFuncionario = $_REQUEST['codFuncionario'];
+        $con = new ConexaoBD;
+        $conexao = $con->ConnectBD();
+        $res = $conexao->query("select * from funcionarios where cod_funcionario = '+$codFuncionario+'");
+        echo json_encode($res->fetch(PDO::FETCH_ASSOC));
     }
 
     if(isset($_REQUEST["codigoFilme"])){
-        //codigo digitado no campo
         $codFilme = $_REQUEST['codigoFilme'];
-        //realizar busca na base pelo codigo
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
         $res = $conexao->query("select * from filmes where cod_filme = '+$codFilme+'");

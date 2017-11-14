@@ -43,16 +43,16 @@
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Cod. Funcionário:</label>
                                 <div class="col-sm-9">
-                                        <input type="text" style="width:350px;" class="pull-left form-control" name="codFuncionario"/>
+                                        <input type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
                                         <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
-                                        type="submit" name="buscarFuncionario">Pesquisar</button>
+                                    type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
                                 </div>
                             </div>
                             
                             <div style="display:none;" class="form-group" id="divNomeFuncionario">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Nome Funcionário:</label>
                                 <div class="col-sm-9">
-                                    <input style="width:350px;" type="text" disabled="true" class="form-control" id="inputPassword3">
+                                    <input style="width:350px;" type="text" disabled="true" class="form-control" name="nomeFuncionario" id="nomeFuncionario">
                                 </div>
                             </div>
 
@@ -111,6 +111,30 @@
                 }
             },error:function(){
                 alert("ERRO AO BUSCAR CLIENTE");
+            }
+        });  
+    }
+</script>
+
+<script>
+    function getFuncionario(){
+        $.ajax({
+            url: '../controllers/cadastro.locacoes.controller.php',
+            type: 'POST',
+            data: {
+                codFuncionario: $('#codFuncionario').val()
+            },success:function(data){
+                if(data !== "false"){
+                    response = JSON.parse(data);
+                    $("#nomeFuncionario")[0].value = response.nome;
+                    $("#divNomeFuncionario")[0].style.display = 'inherit';
+                    $("#codFuncionario")[0].disabled = true;                    
+                    $("#buscarFuncionario")[0].disabled = true;                    
+                }else{
+                    alert('Código do funcionário incorreto');
+                }
+            },error:function(){
+                alert("ERRO AO BUSCAR FUNCIONARIO");
             }
         });  
     }

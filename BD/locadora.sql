@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 14-Nov-2017 às 01:10
+-- Generation Time: 14-Nov-2017 às 01:25
 -- Versão do servidor: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -73,13 +73,13 @@ CREATE TABLE `funcionarios` (
   `nome` varchar(100) NOT NULL,
   `rua` varchar(50) NOT NULL,
   `cep` varchar(10) NOT NULL,
-  `bairro` int(50) NOT NULL,
-  `cidade` int(50) NOT NULL,
-  `cpf` int(11) NOT NULL,
-  `rg` int(10) NOT NULL,
-  `sexo` int(15) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
+  `cpf` varchar(11) NOT NULL,
+  `rg` varchar(10) NOT NULL,
+  `sexo` varchar(15) NOT NULL,
   `data_nascimento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `telefone` int(15) NOT NULL
+  `telefone` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

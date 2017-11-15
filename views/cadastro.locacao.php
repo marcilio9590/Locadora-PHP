@@ -221,6 +221,8 @@
                 if(data !== "false"){
                    alert(data);
                    window.location="locacao.php"; 
+                }else{
+                    alert("Preencha todo o formulário.");
                 }
             },error:function(){
                 alert("ERRO AO INCLUIR LOCACAO");

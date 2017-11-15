@@ -46,40 +46,51 @@
     if(isset($_REQUEST["requestLocacao"])){
         $obj = $_REQUEST["requestLocacao"];
         $data_atual = date("Y-m-d H:i:s");
-        $cliente = $obj['codigoCliente'];
-        $funcionario = $obj['codigoFuncionario'];
-        $total = $obj['totalLocacao'];
-        $filmes = $obj['filmesSelecionados'];
 
-
-        $con = new ConexaoBD;
-        $conexao = $con->ConnectBD();
-
-        $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
-         VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
-        
-        $res = $conexao->query("SELECT LAST_INSERT_ID()");
-        $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
-
-        try {
-            $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // begin the transaction
-            $conexao->beginTransaction();
-            // our SQL statements
-            for($i = 0; $i < count($filmes); ++$i) {
-                $insertFilmes = "INSERT INTO itens_locacao (cod_locacao,cod_filme) VALUES ($cod_locacao,";
-                $insertFilmes .= $filmes[$i]['cod_filme'];
-                $insertFilmes .= ")";
-                $conexao->exec($insertFilmes);
-            }        
-            // commit the transaction
-            $conexao->commit();
-            echo "Locação Cadastrada Com Sucesso.";
-        } catch(PDOException $e){
-            // roll back the transaction if something failed
-            $conexao->rollback();
+        if(isset($obj['codigoCliente']) && isset( $obj['codigoFuncionario']) && 
+        isset($obj['totalLocacao']) && isset($obj['filmesSelecionados'])){
+            $cliente = $obj['codigoCliente'];
+            $funcionario = $obj['codigoFuncionario'];
+            $total = $obj['totalLocacao'];
+            $filmes = $obj['filmesSelecionados'];
+    
+    
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            try {
+                $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
+                VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
+            } catch (PDOException $e){
+                echo "false";
+            }
+    
+            $res = $conexao->query("SELECT LAST_INSERT_ID()");
+            $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
+    
+            try {
+                $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                // begin the transaction
+                $conexao->beginTransaction();
+                // our SQL statements
+                for($i = 0; $i < count($filmes); ++$i) {
+                    $insertFilmes = "INSERT INTO itens_locacao (cod_locacao,cod_filme) VALUES ($cod_locacao,";
+                    $insertFilmes .= $filmes[$i]['cod_filme'];
+                    $insertFilmes .= ")";
+                    $conexao->exec($insertFilmes);
+                }        
+                // commit the transaction
+                $conexao->commit();
+                echo "Locação Cadastrada Com Sucesso.";
+            } catch(PDOException $e){
+                // roll back the transaction if something failed
+                $conexao->rollback();
+                echo "false";
+            } 
+        }else {
             echo "false";
-        } 
+        }
+
+        
     }
 
 ?>

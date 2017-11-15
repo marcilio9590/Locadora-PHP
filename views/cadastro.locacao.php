@@ -219,7 +219,8 @@
                 requestLocacao: objRequest
             },success:function(data){
                 if(data !== "false"){
-                   console.log(data);
+                   alert(data);
+                   window.location="locacao.php"; 
                 }
             },error:function(){
                 alert("ERRO AO INCLUIR LOCACAO");

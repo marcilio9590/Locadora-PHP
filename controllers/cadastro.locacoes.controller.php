@@ -11,24 +11,36 @@
         $codCliente = $_REQUEST['codigoCliente'];
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
-        $res = $conexao->query("select * from clientes where cod_cliente = '+$codCliente+'");
-        echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        try{
+            $res = $conexao->query("select * from clientes where cod_cliente = '+$codCliente+'");
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        } catch (PDOException $e){
+            echo "false";
+        }
     }
 
     if(isset($_REQUEST["codFuncionario"])){
         $codFuncionario = $_REQUEST['codFuncionario'];
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
-        $res = $conexao->query("select * from funcionarios where cod_funcionario = '+$codFuncionario+'");
-        echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        try{
+            $res = $conexao->query("select * from funcionarios where cod_funcionario = '+$codFuncionario+'");
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        } catch (PDOException $e){
+            echo "false";
+        }
     }
 
     if(isset($_REQUEST["codigoFilme"])){
         $codFilme = $_REQUEST['codigoFilme'];
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
-        $res = $conexao->query("select * from filmes where cod_filme = '+$codFilme+'");
-        echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        try {
+            $res = $conexao->query("select * from filmes where cod_filme = '+$codFilme+'");
+            echo json_encode($res->fetch(PDO::FETCH_ASSOC));
+        } catch (PDOException $e){
+            echo "false";
+        }
     }
 
     if(isset($_REQUEST["requestLocacao"])){
@@ -46,10 +58,28 @@
         $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
          VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
         
-        if($sth){
-            echo true;
-        }
-             
+        $res = $conexao->query("SELECT LAST_INSERT_ID()");
+        $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
+
+        try {
+            $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // begin the transaction
+            $conexao->beginTransaction();
+            // our SQL statements
+            for($i = 0; $i < count($filmes); ++$i) {
+                $insertFilmes = "INSERT INTO itens_locacao (cod_locacao,cod_filme) VALUES ($cod_locacao,";
+                $insertFilmes .= $filmes[$i]['cod_filme'];
+                $insertFilmes .= ")";
+                $conexao->exec($insertFilmes);
+            }        
+            // commit the transaction
+            $conexao->commit();
+            echo "Locação Cadastrada Com Sucesso.";
+        } catch(PDOException $e){
+            // roll back the transaction if something failed
+            $conexao->rollback();
+            echo "false";
+        } 
     }
 
 ?>

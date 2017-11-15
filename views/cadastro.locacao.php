@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                     
-                        <form class="form-horizontal" id="formLocacao" method="post">
+                        <form class="form-horizontal" id="formLocacao">
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Cod. Cliente:</label>
                                 <div class="col-sm-9">
@@ -74,7 +74,8 @@
                          
                             <div class="form-group">
                                 <div class="col-sm-offset-5 col-sm-7">
-                                    <button type="submit" class="btn btn-default">Cadastrar</button>
+                                <button class="pull-left btn btn-default" 
+                                    type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Cadastrar</button>
                                 </div>
                             </div>
 
@@ -150,7 +151,6 @@
                     var response = JSON.parse(data);
                     filmes.push(response);
                     montarTabela(filmes);
-                    montarinputHidden(response,filmes);
                     $("#totalLocacao")[0].value = $("#totalLocacao")[0].value ? 
                     parseFloat($("#totalLocacao")[0].value) + parseFloat(response.preco) :
                     parseFloat(response.preco);
@@ -192,22 +192,39 @@
         $table.appendTo($( "#filmesAdicionados" ));
     }
 
-    function montarinputHidden(filme, arrayFilmes){
-        var $form =  $( "#formLocacao" );
-        $form.append($("<input type='hidden' id='hiddenFilme"+filme.cod_filme+"' name='codigoFilmes[]' value='"+filme.cod_filme+"'/>"));
-    }
-
-    //Ainda falta ajuste para remover o input hidden quando remover um filme da lista, 
     function removerFilme(index){
         var e = filmes[index];
-        
-        $( '#filme'+index).remove();
-        $( '#hiddenFilme' + index).remove();
-        
-        console.log($("input[id=hiddenFilme"+e.cod_filme+"]"));
+        $( '#filme'+index).remove();;
         $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
             parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
         filmes.splice(index,1);
         montarTabela(filmes);
+    }
+
+    function cadastrarLocacao(){
+        var codCliente =  $('#codCliente').val();
+        var codFuncionario =  $('#codFuncionario').val();
+        var total =  $('#totalLocacao').val();
+        var objRequest = {
+            codigoCliente:codCliente,
+            codigoFuncionario:codFuncionario,
+            totalLocacao:total,
+            filmesSelecionados:filmes
+        };
+
+        $.ajax({
+            url: '../controllers/cadastro.locacoes.controller.php',
+            type: 'POST',
+            data: {
+                requestLocacao: objRequest
+            },success:function(data){
+                if(data !== "false"){
+                   console.log(data);
+                }
+            },error:function(){
+                alert("ERRO AO INCLUIR LOCACAO");
+            }
+        }); 
+
     }
 </script>

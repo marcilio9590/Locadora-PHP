@@ -4,14 +4,14 @@
       $index = "index.php";
       $urlCliente = "#";
       $urlFuncionario = "#";
-      $urlFilmes = "#";
+      $urlFilmes = "views/filme.php";
       $urlLocacao = "views/locacao.php";
       $urlDevolucao = "#";
     }else{
       $index = "../index.php";
       $urlCliente = "#";
       $urlFuncionario = "#";
-      $urlFilmes = "#";
+      $urlFilmes = "../views/filme.php";
       $urlLocacao = "../views/locacao.php";
       $urlDevolucao = "#";
     }
@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
               <li><a href="#">Clientes</a></li>
               <li><a href="#">Funcionários</a></li>
-              <li><a href="#">Filmes</a></li>
+              <li><a href="<?php echo $urlFilmes ?>">Filmes</a></li>
               <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Operações<span class="caret"></span></a>
                     <ul class="dropdown-menu">

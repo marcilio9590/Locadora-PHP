@@ -2,14 +2,14 @@
     $endereco = $_SERVER ['REQUEST_URI'];
     if($endereco == "/Locadora-PHP/" || $endereco == "/Locadora-PHP/index.php"){
       $index = "index.php";
-      $urlCliente = "#";
+      $urlCliente = "views/cliente.php";
       $urlFuncionario = "#";
       $urlFilmes = "views/filme.php";
       $urlLocacao = "views/locacao.php";
       $urlDevolucao = "#";
     }else{
       $index = "../index.php";
-      $urlCliente = "#";
+      $urlCliente = "../views/cliente.php";
       $urlFuncionario = "#";
       $urlFilmes = "../views/filme.php";
       $urlLocacao = "../views/locacao.php";
@@ -32,7 +32,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="#">Clientes</a></li>
+              <li><a href="<?php echo $urlCliente ?>">Clientes</a></li>
               <li><a href="#">Funcionários</a></li>
               <li><a href="<?php echo $urlFilmes ?>">Filmes</a></li>
               <li class="dropdown">

@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="cadastro.locacao.php" class="pull-left"> <button class="btn btn-default">Cadastrar cliente</button></a>
+                    <a href="cadastro.cliente.php" class="pull-left"> <button class="btn btn-default">Cadastrar cliente</button></a>
             
                     </div>
                     <div class="col-sm-2"></div>
@@ -31,13 +31,20 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
                         <table class="table table-bordered table-condensed">
-                 
+                        
                             <thead>
                                 <tr>
                                     <th>Código</th>
                                     <th>Nome do Cliente</th>
                                     <th>CPF</th>
                                     <th>Telefone</th>
+
+                                    </td>
+                                				<td>
+                            						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                            		 				<button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                            		 			</td>
+                            		 		</tr>
                                     
                                 </tr>
                             </thead>

@@ -55,7 +55,7 @@
                                 		echo"</td>
                                 				<td>
                             						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                            		 				<button class='btn pull-right' onclick='excluirFilme(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                            		 				<button class='btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
                             		 			</td>
                             		 		</tr>";
                                 		
@@ -71,3 +71,25 @@
         </div>
     </body>
 </html>
+<script>
+
+     function excluirLocacao($codigo_locacao){
+        $.ajax({
+            url: '../controllers/locacoes.controller.php',
+            type: 'POST',
+            data: {
+                deleteLocacao: $codigo_locacao
+            },success:function(data){
+                if(data !== "0"){
+                    alert("Locação excluida com sucesso"); 
+                    location.reload();                 
+                }else{
+                    alert('Erro ao excluir locação');
+                }
+            },error:function(){
+                alert("ERRO AO EXCLUIR LOCAÇÂO");
+            }
+        });  
+    }
+
+</script>

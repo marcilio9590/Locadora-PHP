@@ -38,11 +38,29 @@
                                     <th>Data</th>
                                     <th>Total</th>
                                     <th>Situação</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                
+
+                            <?php
+                                	foreach ($locacoes as $value) {
+                                		echo "<tr><td>".$value['cod_locacao']."</td><td>".$value['nome']."</td><td>".$value['data']."</td><td>".$value['total']."</td><td>";
+                                		if($value['status'] == 0){
+                                				echo "Em Aberto";
+                                			}else{
+                                				echo "Concluida";
+                                			}
+                                		echo"</td>
+                                				<td>
+                            						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                            		 				<button class='btn pull-right' onclick='excluirFilme(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                            		 			</td>
+                            		 		</tr>";
+                                		
+                                	}
+                                ?>
 
                             </tbody>
 

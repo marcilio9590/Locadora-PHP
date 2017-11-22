@@ -149,12 +149,17 @@
             },success:function(data){
                 if(data !== "false"){
                     var response = JSON.parse(data);
-                    filmes.push(response);
-                    montarTabela(filmes);
-                    $("#totalLocacao")[0].value = $("#totalLocacao")[0].value ? 
-                    parseFloat($("#totalLocacao")[0].value) + parseFloat(response.preco) :
-                    parseFloat(response.preco);
-                    $("#codFilme")[0].value = '';
+                    if(response.status === "1"){
+                        filmes.push(response);
+                        montarTabela(filmes);
+                        $("#totalLocacao")[0].value = $("#totalLocacao")[0].value ? 
+                        parseFloat($("#totalLocacao")[0].value) + parseFloat(response.preco) :
+                        parseFloat(response.preco);
+                        $("#codFilme")[0].value = '';
+                    }else{
+                        alert('Filme já encontra-se alugado');
+                        $("#codFilme")[0].value = '';
+                    }
 
                 }else{
                     alert('Código do filme incorreto');

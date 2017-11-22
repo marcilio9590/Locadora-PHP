@@ -21,7 +21,6 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                   <a href="cadastro.locacao.php" class="pull-left"> <button class="btn btn-default">Realizar Devolução</button></a> 
                     <div class="col-sm-2"></div>
                 </div>
                 <br>
@@ -36,7 +35,7 @@
                                     <th>Código locação</th>
                                     <th>Nome do Cliente</th>
                                     <th>Filmes</th>
-                                    <th>Ações</th>
+                                    <th>Ação</th>
                                    
                                 </tr>
                             </thead>
@@ -47,8 +46,7 @@
                                         echo "<tr><td>".$value['cod_locacao']."</td><td>".$value['nome']."</td><td>"."</td>";
                                         echo"</td>
                                                 <td>
-                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                                    <button class='btn pull-right' onclick='excluirLocacoes(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                                                    <button class='btn pull-center' onclick='removerFilme(".$value['cod_locacao'].")'> <span>Efetuar Devolução</span></button>
                                                 </td>
                                             </tr>";
                                        
@@ -63,3 +61,16 @@
         </div>
     </body>
 </html>
+ 
+ <script>
+
+function removerFilme(index){
+        var e = filmes[index];
+        $( '#filme'+index).remove();;
+        $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
+            parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
+        filmes.splice(index,1);
+        montarTabela(filmes);
+    }
+
+ </script>

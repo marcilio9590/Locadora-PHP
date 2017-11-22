@@ -57,26 +57,38 @@
     
             $con = new ConexaoBD;
             $conexao = $con->ConnectBD();
-            try {
-                $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
-                VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
-            } catch (PDOException $e){
-                echo "false";
-            }
+            // try {
+            //     $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
+            //     VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
+            // } catch (PDOException $e){
+            //     echo "false";
+            // }
     
-            $res = $conexao->query("SELECT LAST_INSERT_ID()");
-            $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
+            // $res = $conexao->query("SELECT LAST_INSERT_ID()");
+            // $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
     
             try {
                 $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 // begin the transaction
                 $conexao->beginTransaction();
+
+                $insertLocacao = "INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
+                VALUES ('$cliente','$funcionario','$data_atual','$total',0)";
+                $conexao->exec($insertLocacao);
+
+                $res = $conexao->query("SELECT LAST_INSERT_ID()");
+                $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
+
                 // our SQL statements
                 for($i = 0; $i < count($filmes); ++$i) {
                     $insertFilmes = "INSERT INTO itens_locacao (cod_locacao,cod_filme) VALUES ($cod_locacao,";
                     $insertFilmes .= $filmes[$i]['cod_filme'];
                     $insertFilmes .= ")";
                     $conexao->exec($insertFilmes);
+                    $updateFilme = "UPDATE filmes set status = 0 WHERE cod_filme = :codigo";
+                    $sth = $conexao->prepare($updateFilme);
+                    $sth->bindParam(':codigo', $filmes[$i]['cod_filme']);
+                    $sth->execute();
                 }        
                 // commit the transaction
                 $conexao->commit();

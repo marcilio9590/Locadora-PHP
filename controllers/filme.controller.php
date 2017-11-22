@@ -25,6 +25,15 @@
 	        }
         }
 
-
+ if (isset($_REQUEST["nomeFilme"]) && isset($_REQUEST["generoFilme"]) && isset($_REQUEST["precoFilme"])) {
+            $nome = $_REQUEST['nomeFilme'];
+            $genero = $_REQUEST['generoFilme'];
+            $preco = $_REQUEST['precoFilme'];
+            try {
+                $conexao->query("INSERT INTO filmes(nome, genero, status, preco) VALUES ('$nome','$genero',1,'$preco')");
+            } catch (PDOException $e) {
+                echo "False";
+            }
+        }
 
 ?>

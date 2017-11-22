@@ -33,10 +33,10 @@
     <input id="nomecliente" type="text" name="nomecliente">
    </td>
    <td>
-    <label for="sobrenome">Sobrenome: </label>
+    <label for="telefone">Telefone: </label>
    </td>
    <td align="left">
-    <input id="sobrenomecliente" type="text" name="sobrenome">
+   <input id="ddd" type="text" name="ddd" size="1" maxlength="3">-<input id="telefonecliente" type="text" name="telefone">
    </td>
   </tr>
   
@@ -57,9 +57,9 @@
     <label>Nascimento: </label>
    </td>
    <td align="left">
-    <input type="text" name="dia" size="2" maxlength="2" value="dd"> 
-   <input type="text" name="mes" size="2" maxlength="2" value="mm"> 
-   <input type="text" name="ano" size="4" maxlength="4" value="aaaa">
+    <input id="diacliente" type="text" name="dia" size="2" maxlength="2" value="dd"> 
+   <input id="mescliente" type="text" name="mes" size="2" maxlength="2" value="mm"> 
+   <input id="anocliente" type="text" name="ano" size="4" maxlength="4" value="aaaa">
    </td>
   </tr>
   <tr>
@@ -67,13 +67,13 @@
     <label for="rg">RG: </label>
    </td>
    <td align="left">
-    <input type="text" name="rg" size="13" maxlength="13"> 
+    <input id="rgcliente" type="text" name="rg" size="13" maxlength="13"> 
    </td>
   </tr>
   
   
-<INPUT TYPE="RADIO" NAME="OPCAO" VALUE="op1"> Masculino
-<INPUT TYPE="RADIO" NAME="OPCAO" VALUE="op2"> Femenino 
+<INPUT id="sexomasculino" TYPE="RADIO" NAME="OPCAO" VALUE="op1"> Masculino
+<INPUT id="sexofemenino" TYPE="RADIO" NAME="OPCAO" VALUE="op2"> Femenino 
 
 
   <tr>
@@ -81,7 +81,7 @@
     <label>CPF:</label>
    </td>
    <td align="left">
-    <input type="text" name="cpf" size="9" maxlength="9"> - <input type="text" name="cpf2" size="2" maxlength="2">
+    <input id="cpfcliente" type="text" name="cpf" size="9" maxlength="9"> - <input id="cpf2cliente" type="text" name="cpf2" size="2" maxlength="2">
    </td>
   </tr>
  </table>
@@ -95,16 +95,16 @@
 
   <tr>
    <td>
-    <label for="rua">Rua:</label>
+    <label for="endereço">Rua:</label>
    </td>
    <td align="left">
-    <input type="text" name="rua">
+    <input id="endereçocliente" type="text" name="endereço">
    </td>
    <td>
     <label for="numero">Numero:</label>
    </td>
    <td align="left">
-    <input type="text" name="numero" size="4">
+    <input id="numerocliente" type="text" name="numero" size="4">
    </td>
   </tr>
   <tr>
@@ -112,7 +112,7 @@
     <label for="bairro">Bairro: </label>
    </td>
    <td align="left">
-    <input type="text" name="bairro">
+    <input id="bairrocliente" type="text" name="bairro">
    </td>
   </tr>
   <tr>
@@ -156,25 +156,18 @@
     <label for="cidade">Cidade: </label>
    </td>
    <td align="left">
-    <input type="text" name="cidade">
+    <input id="cidadecliente" type="text" name="cidade">
    </td>
   </tr>
-  <tr>
-   <td>
-    <label for="cep">CEP: </label>
-   </td>
-   <td align="left">
-    <input type="text" name="cep" size="5" maxlength="5"> - <input type="text" name="cep2" size="3" maxlength="3">
-   </td>
-  </tr>
+  
  </table>
 </fieldset>
 <br />
 
 
 <br />
-<input type="submit" value="Cadastrar">
-<input type="reset" value="Limpar">
+<input id="cadastrar" type="submit" value="Cadastrar">
+<input id="limparcliente" type="reset" value="Limpar">
 </form>
                     </div>
                 </div>
@@ -193,8 +186,24 @@
             type: 'POST',
             data: {
                 nomecliente: $('#nomecliente').val(),
-                sobrenomecliente: $('#sobrenomecliente'),
+                ddd: $('#ddd'),
+                telefonecliente: $('#telefonecliente'),
                 emailcliente: $('#emailcliente'),
+                diacliente: $('#diacliente'),
+                mescliente: $('#mescliente'),
+                anocliente: $('#anocliente'),
+                rgcliente: $('#rgcliente'),
+                sexomasculino: $('#sexomasculino'),
+                sexofemenino: $('#sexofemenino'),
+                cpfcliente: $('#cpfcliente'),
+                endereçocliente: $('#endereçocliente'),
+                numerocliente: $('#numerocliente'),
+                bairrocliente: $('#bairrocliente'),
+                cidadecliente: $('#cidadecliente'),
+                cadastrar: $('#cadastrar'),
+                limparcliente: $('#limparcliente')
+
+
                 
             },success:function(data){
                 if(data !== "false"){
@@ -203,7 +212,7 @@
                     alert('Erro ao cadastrar cliente!');
                 }
             },error:function(){
-                alert("Erro ao cadastrar cliente");
+                alert("Erro ao cadastrar cliente!");
             }
         });  
     }

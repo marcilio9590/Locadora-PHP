@@ -38,11 +38,40 @@
                                     <th>Data</th>
                                     <th>Total</th>
                                     <th>Situação</th>
+                                    <th>Filmes</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                
+
+                            <?php
+                                	foreach ($locacoes as $value) {
+                                		echo "<tr><td>".$value['cod_locacao']."</td><td>".$value['nome']."</td><td>".$value['data']."</td><td>".$value['total']."</td><td>";
+                                		if($value['status'] == 0){
+                                				echo "<font color='red'>Em Aberto</font>";
+                                			}else{
+                                				echo "Concluida";
+                                            }
+                                        echo "<td>";
+                                            if(isset($value['filmes'])){
+                                                foreach ($value['filmes'] as $filme) {
+                                                    echo "<font color='blue'>".$filme["nomefilme"]."</font><br>";
+                                                }
+                                            }
+                                        echo "</td>";
+                                        
+                                		echo"</td>
+                                				<td>
+                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>";
+                                                    if($value['status'] == 0){
+                                                        echo"<button class='btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                                                    }
+                                                echo "</td>
+                            		 		</tr>";
+                                		
+                                	}
+                                ?>
 
                             </tbody>
 
@@ -53,3 +82,25 @@
         </div>
     </body>
 </html>
+<script>
+
+     function excluirLocacao($codigo_locacao){
+        $.ajax({
+            url: '../controllers/locacoes.controller.php',
+            type: 'POST',
+            data: {
+                deleteLocacao: $codigo_locacao
+            },success:function(data){
+                if(data !== "0"){
+                    alert("Locação excluida com sucesso"); 
+                    location.reload();                 
+                }else{
+                    alert('Erro ao excluir locação');
+                }
+            },error:function(){
+                alert("ERRO AO EXCLUIR LOCAÇÂO");
+            }
+        });  
+    }
+
+</script>

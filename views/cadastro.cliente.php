@@ -33,10 +33,10 @@
     <input id="nomecliente" type="text" name="nomecliente">
    </td>
    <td>
-    <label for="sobrenome">Sobrenome: </label>
+    <label for="telefone">Telefone: </label>
    </td>
    <td align="left">
-    <input id="sobrenomecliente" type="text" name="sobrenome">
+   <input id="ddd" type="text" name="ddd" size="1" maxlength="3">-<input id="telefonecliente" type="text" name="telefone">
    </td>
   </tr>
   
@@ -72,8 +72,8 @@
   </tr>
   
   
-<INPUT id="masculinocliente" TYPE="RADIO" NAME="OPCAO" VALUE="op1"> Masculino
-<INPUT id="femeninocliente" TYPE="RADIO" NAME="OPCAO" VALUE="op2"> Femenino 
+<INPUT id="sexomasculino" TYPE="RADIO" NAME="OPCAO" VALUE="op1"> Masculino
+<INPUT id="sexofemenino" TYPE="RADIO" NAME="OPCAO" VALUE="op2"> Femenino 
 
 
   <tr>
@@ -95,10 +95,10 @@
 
   <tr>
    <td>
-    <label for="rua">Rua:</label>
+    <label for="endereço">Rua:</label>
    </td>
    <td align="left">
-    <input id="ruacliente" type="text" name="rua">
+    <input id="endereçocliente" type="text" name="endereço">
    </td>
    <td>
     <label for="numero">Numero:</label>
@@ -159,21 +159,14 @@
     <input id="cidadecliente" type="text" name="cidade">
    </td>
   </tr>
-  <tr>
-   <td>
-    <label for="cep">CEP: </label>
-   </td>
-   <td align="left">
-    <input id="cepcliente" type="text" name="cep" size="5" maxlength="5"> - <input id="cep2cliente" type="text" name="cep2" size="3" maxlength="3">
-   </td>
-  </tr>
+  
  </table>
 </fieldset>
 <br />
 
 
 <br />
-<input id="cadastrarcliente" type="submit" value="Cadastrar">
+<input id="cadastrar" type="submit" value="Cadastrar">
 <input id="limparcliente" type="reset" value="Limpar">
 </form>
                     </div>
@@ -193,22 +186,21 @@
             type: 'POST',
             data: {
                 nomecliente: $('#nomecliente').val(),
-                sobrenomecliente: $('#sobrenomecliente'),
+                ddd: $('#ddd'),
+                telefonecliente: $('#telefonecliente'),
                 emailcliente: $('#emailcliente'),
                 diacliente: $('#diacliente'),
                 mescliente: $('#mescliente'),
                 anocliente: $('#anocliente'),
                 rgcliente: $('#rgcliente'),
-                masculinocliente: $('#masculinocliente'),
-                femeninocliente: $('#femeninocliente'),
+                sexomasculino: $('#sexomasculino'),
+                sexofemenino: $('#sexofemenino'),
                 cpfcliente: $('#cpfcliente'),
-                ruacliente: $('#ruacliente'),
+                endereçocliente: $('#endereçocliente'),
                 numerocliente: $('#numerocliente'),
                 bairrocliente: $('#bairrocliente'),
                 cidadecliente: $('#cidadecliente'),
-                cepcliente: $('#cidadecliente'),
-                cep2cliente: $('#cep2cliente'),
-                cadastrarcliente: $('#cadastrarcliente'),
+                cadastrar: $('#cadastrar'),
                 limparcliente: $('#limparcliente')
 
 

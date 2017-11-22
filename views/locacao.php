@@ -54,9 +54,11 @@
                                 			}
                                 		echo"</td>
                                 				<td>
-                            						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                            		 				<button class='btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
-                            		 			</td>
+                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>";
+                                                    if($value['status'] == 0){
+                                                        echo"<button class='btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                                                    }
+                            		 			echo "</td>
                             		 		</tr>";
                                 		
                                 	}

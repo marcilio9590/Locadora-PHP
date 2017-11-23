@@ -38,6 +38,7 @@
                                     <th>Nome do Cliente</th>
                                     <th>CPF</th>
                                     <th>Telefone</th>
+                                    <th>Ações</th>
 
                                     </td>
                                 				<td>

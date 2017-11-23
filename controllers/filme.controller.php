@@ -36,4 +36,31 @@
             }
         }
 
+        if (isset($_REQUEST["nomeFilme"]) && isset($_REQUEST["generoFilme"]) && isset($_REQUEST["precoFilme"])) {
+            $nome = $_REQUEST['nomeFilme'];
+            $genero = $_REQUEST['generoFilme'];
+            $preco = $_REQUEST['precoFilme'];
+            try {
+                $conexao->query("INSERT INTO filmes(nome, genero, status, preco) VALUES ('$nome','$genero',1,'$preco')");
+            } catch (PDOException $e) {
+                echo "False";
+            }
+        }
+
+        if (isset($_REQUEST["nomeFilme"]) && isset($_REQUEST["generoFilme"]) && isset($_REQUEST["precoFilme"])) {
+            $nome = $_REQUEST['nomeFilme'];
+            $genero = $_REQUEST['generoFilme'];
+            $preco = $_REQUEST['precoFilme'];
+            try { 
+                $conexao->query("UPDATE filme SET nomeFilme = '$nome', generoFilme= '$genero', precoFilme = '$preco'  WHERE nome = '' ");
+            } catch (PDOException $e) {
+                echo "False";
+            }
+          /*if(mysql_affected_rows() > 0){
+              echo "Sucesso: Atualizado corretamente!";
+          }else{
+              echo "Aviso: Não foi atualizado!";
+            }*/
+        }
+
 ?>

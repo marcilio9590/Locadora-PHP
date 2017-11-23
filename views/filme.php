@@ -52,12 +52,12 @@
                                 			}else{
                                 				echo "Indisponível";
                                 			}
-                                		echo"</td>
-                                				<td>
-                            						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                            		 				<button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
-                            		 			</td>
-                            		 		</tr>";
+                                		echo
+                                			"<td>
+                            				  <button class='glyphicon glyphicon-pencil' aria-hidden='true' onclick='editarFilme(".$value['nome'].")'></button>
+                            		 		  
+                                              <button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                            		 			</td>";
                                 		
                                 	}
                                 ?>
@@ -66,8 +66,8 @@
 
                         </table>
                     </div>
-                    <div class="col-sm-2"></div>
-                </div>
+                  <div class="col-sm-2"></div>
+                  </div>
         </div>
     </body>
 </html>
@@ -89,6 +89,30 @@
                 }
             },error:function(){
                 alert("ERRO AO EXCLUIR FILME");
+            }
+        });  
+    }
+</script>
+<script type="text/javascript">
+    
+    function editarFilme(codigo){
+        $.ajax({
+            url: '../controllers/filme.controller.php',
+            type: 'POST',
+            data: {
+                nomeFilme: nome
+            },success:function(data){
+                if(){
+                   
+                   
+                    alert('Filme Editado!');
+                    location.reload();  
+                    console.log(data);                
+                }//else{
+                    //alert('Filme não pode ser Editado');
+                }
+            },error:function(){
+                alert("ERRO AO EDITAR O FILME");
             }
         });  
     }

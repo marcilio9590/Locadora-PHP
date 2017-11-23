@@ -64,7 +64,7 @@
                 generoFilme: $('#txtGeneroFilme').val(),
                 precoFilme: $('#txtPrecoFilme').val()
             }, success:function(response){
-                if(response != "false"){
+                if(response == true){
                     alert('Filme cadastrado com sucesso');                   
                 }else{
                     alert('Erro ao cadastrar Filme');

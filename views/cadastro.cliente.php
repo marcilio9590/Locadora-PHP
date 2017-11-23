@@ -207,12 +207,13 @@
                 
             },success:function(data){
                 if(data !== "false"){
-                    alert('Cliente cadastrado com sucesso!')                        
+                    alert('Cliente cadastrado com sucesso!');                       
                 }else{
                     alert('Erro ao cadastrar cliente!');
                 }
             },error:function(){
                 alert("Erro ao cadastrar cliente!");
+            };
             }
         });  
     }

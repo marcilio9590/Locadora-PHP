@@ -108,8 +108,8 @@
                     alert('Filme Editado!');
                     location.reload();  
                     console.log(data);                
-                }//else{
-                    //alert('Filme não pode ser Editado');
+                }else{
+                    alert('Filme não pode ser Editado');
                 }
             },error:function(){
                 alert("ERRO AO EDITAR O FILME");

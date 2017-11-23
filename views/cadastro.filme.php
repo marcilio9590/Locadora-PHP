@@ -62,15 +62,16 @@
             data: {
                 nomeFilme: $('#txtNomeFilme').val(),
                 generoFilme: $('#txtGeneroFilme').val(),
-                precoFilme: $('#txtPrecoFilme').val()
+                precoFilme: $('#txtPrecoFilme').val(),
+                cadastrarFilme: true
             }, success:function(response){
+              console.log(response);
                 if(response == true){
                     alert('Filme cadastrado com sucesso');                   
                 }else{
                     alert('Erro ao cadastrar Filme');
                 }
             }, error:function(response){
-                console.log(response);
                 alert("ERRO AO CADASTRAR FILME");
             }
         });  

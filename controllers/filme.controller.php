@@ -12,7 +12,7 @@
         }
 
         if(isset($_REQUEST['codigoFilme'])){
-        	$codigo =$_REQUEST['codigoFilme'];
+        	$codigo = $_REQUEST['codigoFilme'];
 			$con = new ConexaoBD;
 	        $conexao = $con->ConnectBD();
 	        try {
@@ -25,19 +25,20 @@
 	        }
         }
 
-     if (isset($_REQUEST["nomeFilme"]) && isset($_REQUEST["generoFilme"]) && isset($_REQUEST["precoFilme"])) {
+     if (isset($_REQUEST["cadastrarFilme"])) {
             $nome = $_REQUEST['nomeFilme'];
             $genero = $_REQUEST['generoFilme'];
             $preco = $_REQUEST['precoFilme'];
             try {
-                $conexao->query("INSERT INTO filmes(nome, genero, status, preco) VALUES ('$nome','$genero',1,'$preco')");
+                $conexao->query("INSERT INTO filmes(nome, genero, status, preco) VALUES ($nome,$genero,1,$preco)");
+                echo "true";
             } catch (PDOException $e) {
                 echo "False";
             }
         }
 
 
-        if (isset($_REQUEST["nomeFilme"]) && isset($_REQUEST["generoFilme"]) && isset($_REQUEST["precoFilme"])) {
+        if (isset($_REQUEST["editarFilme"])) {
             $nome = $_REQUEST['nomeFilme'];
             $genero = $_REQUEST['generoFilme'];
             $preco = $_REQUEST['precoFilme'];

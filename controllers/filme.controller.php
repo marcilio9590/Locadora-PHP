@@ -1,7 +1,7 @@
 <?php
 		require_once '../conexao/conexaoBD.php';
 
-		$listaFilmes;
+        $listaFilmes;        
         $con = new ConexaoBD;
         $conexao = $con->ConnectBD();
         try {
@@ -9,6 +9,8 @@
             $listaFilmes = $res->fetchAll();
         } catch (PDOException $e){
             echo "false";
+        } finally{
+            $conexao = null;
         }
 
         if(isset($_REQUEST['codigoFilme'])){
@@ -22,18 +24,28 @@
                 echo $count;
 	        } catch (PDOException $e){
 	            echo "false";
-	        }
+	        } finally{
+                $conexao = null;
+            }
         }
 
      if (isset($_REQUEST["cadastrarFilme"])) {
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
             $nome = $_REQUEST['nomeFilme'];
             $genero = $_REQUEST['generoFilme'];
             $preco = $_REQUEST['precoFilme'];
             try {
-                $conexao->query("INSERT INTO filmes(nome, genero, status, preco) VALUES ($nome,$genero,1,$preco)");
-                echo "true";
+                $retorno = $conexao->prepare("INSERT INTO filmes(nome, genero, status, preco) VALUES (:nome,:genero,1,:preco)");
+                $retorno->bindParam(':nome', $nome);
+                $retorno->bindParam(':genero', $genero);
+                $retorno->bindParam(':preco', $preco);
+                $flag = $retorno->execute();
+                echo $flag;
             } catch (PDOException $e) {
                 echo "False";
+            } finally{
+                $conexao = null;
             }
         }
 

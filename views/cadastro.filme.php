@@ -22,30 +22,28 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                                <form method="post" action="">
-                                    <table border="0" class="table">
-                                      <tr>
-                                             <td>Nome do Filme :</td>
-                                           <td><input type="text" id="txtNomeFilme"></td>
-                                      </tr>
-                                      <tr>
-                                             <td>Genero:</td>
-                                           <td><input type="text" id="txtGeneroFilme"></td>
-                                      </tr>
-                                      <tr>
-                                             <td>Preço:</td> 
-                                           <td><input type="double" id="txtPrecoFilme"></td>
-                                      </tr>
-                                          
-                                      <!-- <tr>
-                                              <td>Status:</td>
-                                           <td><input type="number" id="txtStatusFilme"></td>
-                                      </tr>-->
-                                       
-                                      
-                                    </table>
-                                    <button onclick="cadastrarFilme()" class="btn btn-default">Salvar</button>
-                                </form>
+                        <table border="0" class="table">
+                            <tr>
+                                    <td>Nome do Filme :</td>
+                                <td><input type="text" id="txtNomeFilme"></td>
+                            </tr>
+                            <tr>
+                                    <td>Genero:</td>
+                                <td><input type="text" id="txtGeneroFilme"></td>
+                            </tr>
+                            <tr>
+                                    <td>Preço:</td> 
+                                <td><input type="double" id="txtPrecoFilme"></td>
+                            </tr>
+                                
+                            <!-- <tr>
+                                    <td>Status:</td>
+                                <td><input type="number" id="txtStatusFilme"></td>
+                            </tr>-->
+                            
+                            
+                        </table>
+                        <button class="btn btn-default" type="button" onclick="cadastrarFilme()">Salvar</button>
                     </div>
                    
                </div>
@@ -65,9 +63,9 @@
                 precoFilme: $('#txtPrecoFilme').val(),
                 cadastrarFilme: true
             }, success:function(response){
-              console.log(response);
-                if(response == true){
-                    alert('Filme cadastrado com sucesso');                   
+                if(response.trim() == "1"){
+                    alert('Filme cadastrado com sucesso');
+                    location.reload();                   
                 }else{
                     alert('Erro ao cadastrar Filme');
                 }

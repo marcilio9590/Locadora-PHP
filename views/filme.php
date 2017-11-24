@@ -102,9 +102,7 @@
             data: {
                 nomeFilme: nome
             },success:function(data){
-                if(){
-                   
-                   
+                if(data == true){
                     alert('Filme Editado!');
                     location.reload();  
                     console.log(data);                

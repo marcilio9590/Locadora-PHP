@@ -74,23 +74,25 @@
 <script type="text/javascript">
 	
 	function excluirFilme(codigo){
-        $.ajax({
-            url: '../controllers/filme.controller.php',
-            type: 'POST',
-            data: {
-                codigoFilme: codigo
-            },success:function(data){
-                if(data !== "0"){
-                    alert('Filme Excluido');
-                    location.reload();  
-                    console.log(data);                
-                }else{
-                    alert('Filme não pode ser excluido pois encontra-se cadastrado em uma ou mais locações.');
+        if(confirm('Deseja realmente excluir este filme?')){
+            $.ajax({
+                url: '../controllers/filme.controller.php',
+                type: 'POST',
+                data: {
+                    codigoFilme: codigo
+                },success:function(data){
+                    if(data !== "0"){
+                        alert('Filme Excluido');
+                        location.reload();  
+                        console.log(data);                
+                    }else{
+                        alert('Filme não pode ser excluido pois encontra-se cadastrado em uma ou mais locações.');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR FILME");
                 }
-            },error:function(){
-                alert("ERRO AO EXCLUIR FILME");
-            }
-        });  
+            });
+        }  
     }
 </script>
 <script type="text/javascript">

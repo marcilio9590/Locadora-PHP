@@ -3,14 +3,14 @@
     if($endereco == "/locadora-php/" || $endereco == "/locadora-php/index.php"){
       $index = "index.php";
       $urlCliente = "views/cliente.php";
-      $urlFuncionario = "views/funcionario";
+      $urlFuncionario = "views/funcionario.php";
       $urlFilmes = "views/filme.php";
       $urlLocacao = "views/locacao.php";
       $urlDevolucao = "views/devolucao.php";
     }else{
       $index = "../index.php";
       $urlCliente = "../views/cliente.php";
-      $urlFuncionario = "../views/funcionario";
+      $urlFuncionario = "../views/funcionario.php";
       $urlFilmes = "../views/filme.php";
       $urlLocacao = "../views/locacao.php";
       $urlDevolucao = "../views/devolucao.php";

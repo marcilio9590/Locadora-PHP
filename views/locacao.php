@@ -38,7 +38,7 @@
                                     <th>Data</th>
                                     <th>Total</th>
                                     <th>Situação</th>
-                                    <th>Filmes</th>
+                                    <th>Código - Nome Filme</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -56,16 +56,18 @@
                                         echo "<td>";
                                             if(isset($value['filmes'])){
                                                 foreach ($value['filmes'] as $filme) {
-                                                    echo "<font color='blue'>".$filme["nomefilme"]."</font><br>";
+                                                    echo "<font color='grenn'>".$filme["cod_filme"]."</font> - <font color='blue'>".$filme["nomefilme"]."</font><br>";
                                                 }
                                             }
                                         echo "</td>";
                                         
                                 		echo"</td>
-                                				<td>
-                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>";
+                                				<td>";
+                                                    echo "<button title='Editar' class='btn-primary btn pull-left' onclick='editarLocacao(".json_encode($value).")'>
+                                                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                                            </button>";
                                                     if($value['status'] == 0){
-                                                        echo"<button class='btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                                                        echo"<button title='Excluir' class='btn-danger btn pull-right' onclick='excluirLocacao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
                                                     }
                                                 echo "</td>
                             		 		</tr>";
@@ -84,23 +86,46 @@
 </html>
 <script>
 
-     function excluirLocacao($codigo_locacao){
-        $.ajax({
-            url: '../controllers/locacoes.controller.php',
-            type: 'POST',
-            data: {
-                deleteLocacao: $codigo_locacao
-            },success:function(data){
-                if(data !== "0"){
-                    alert("Locação excluida com sucesso"); 
-                    location.reload();                 
-                }else{
-                    alert('Erro ao excluir locação');
+     function excluirLocacao(codigo_locacao){
+        if(confirm('Deseja realmente excluir esta locação?')){
+            $.ajax({
+                url: '../controllers/locacoes.controller.php',
+                type: 'POST',
+                data: {
+                    deleteLocacao: codigo_locacao
+                },success:function(data){
+                    if(data !== "0"){
+                        alert("Locação excluida com sucesso"); 
+                        location.reload();                 
+                    }else{
+                        alert('Erro ao excluir locação');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR LOCAÇÂO");
                 }
-            },error:function(){
-                alert("ERRO AO EXCLUIR LOCAÇÂO");
-            }
-        });  
+            });  
+        }
+    }
+
+    function editarLocacao(item){
+        // console.log(item);
+        $.ajax({
+                url: '../controllers/locacoes.controller.php',
+                type: 'POST',
+                data: {
+                    codigoLocacao:item.cod_locacao,
+                    nomeCliente:item.nome,
+                    codigoCliente:item.cod_cliente,
+                    nomeFuncionario:item.nomeFuncionario,
+                    total:item.total,
+                    filmes:item.filmes,
+                    salvarDadosEditar: true
+                },success:function(data){
+                    window.location.replace('edicao.locacao.php');
+                },error:function(){
+                    alert("Erro ao editar.");
+                }
+            }); 
     }
 
 </script>

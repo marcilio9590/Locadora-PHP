@@ -26,16 +26,20 @@
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Cod. Cliente:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
+                                    <input disabled="true" value="<?php echo $locacaoEditar['codigoCliente']?>" type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
                                     <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
+                                    <button style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-danger btn-xs" 
+                                    type="button" id="btnRemoverCliente">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
 
-                            <div style="display:none;" id="divNomeCliente" class="form-group">
+                            <div id="divNomeCliente" class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Nome Cliente:</label>
                                 <div class="col-sm-9">
-                                    <input style="width:350px;" type="text" disabled="true" class="form-control" id="nomeCliente">
+                                    <input value="<?php echo $locacaoEditar['nomeCliente']?>" style="width:350px;" type="text" disabled="true" class="form-control" id="nomeCliente">
                                 </div>
                             </div> 
 
@@ -43,16 +47,20 @@
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Cod. Funcionário:</label>
                                 <div class="col-sm-9">
-                                        <input type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
+                                        <input disabled="true" value="<?php echo $locacaoEditar['codigoFuncionario']?>" type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
                                         <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
+                                    <button style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-danger btn-xs" 
+                                    type="button" id="btnRemoverFuncionario">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
                             
-                            <div style="display:none;" class="form-group" id="divNomeFuncionario">
+                            <div class="form-group" id="divNomeFuncionario">
                                 <label for="inputPassword3" class="col-sm-3 control-label">Nome Funcionário:</label>
                                 <div class="col-sm-9">
-                                    <input style="width:350px;" type="text" disabled="true" class="form-control" name="nomeFuncionario" id="nomeFuncionario">
+                                    <input value="<?php echo $locacaoEditar['nomeFuncionario']?>" style="width:350px;" type="text" disabled="true" class="form-control" name="nomeFuncionario" id="nomeFuncionario">
                                 </div>
                             </div>
 
@@ -68,7 +76,7 @@
                             <div class="form-group">
 								<label for="inputPassword3" class="col-sm-3 control-label">Total:</label>
 								<div class="col-sm-9">
-                                    <input disabled type="text" style="width:350px;" class="pull-left form-control" id="totalLocacao" name="totalLocacao"/>
+                                    <input value="<?php echo $locacaoEditar['total']?>" disabled type="text" style="width:350px;" class="pull-left form-control" id="totalLocacao" name="totalLocacao"/>
 								</div>
 							</div>
                          
@@ -94,8 +102,8 @@
 </html>
 
 <script>
-    var filmes = [];
-
+    var filmes = <?php echo json_encode($locacaoEditar['filmes']) ?>;
+    montarTabela(filmes);
     function buscarCliente(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -185,7 +193,7 @@
             var filme = filmes[i];
             var $line = $( "<tr id='filme"+i+"'>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
-            $line.append( $( "<td></td>" ).html( filme.nome ) );
+            $line.append( $( "<td></td>" ).html( filme.nomefilme ) );
             $line.append( $( "<td><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );

@@ -117,6 +117,7 @@
                     nomeCliente:item.nome,
                     codigoCliente:item.cod_cliente,
                     nomeFuncionario:item.nomeFuncionario,
+                    codigoFuncionario:item.cod_funcionario,
                     total:item.total,
                     filmes:item.filmes,
                     salvarDadosEditar: true

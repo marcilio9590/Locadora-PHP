@@ -32,25 +32,33 @@
                  
                             <thead>
                                 <tr>
-                                    <th>Código locação</th>
                                     <th>Nome do Cliente</th>
-                                    <th>Filmes</th>
-                                    <th>Ação</th>
-                                   
+                                    <th>Filme Alugado</th>
+                                    <th>Data e Hora</th>
+                                    <th>Cod Locação</th>
+                                    <th>Valor</th>
+                                    <th>Efetuar Devolução</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                   <?php
                                     foreach ($itens_locacao as $value) {
-                                        echo "<tr><td>".$value['cod_locacao']."</td><td>".$value['nome']."</td><td>"."</td>";
-                                        echo"</td>
-                                                <td>
-                                                    <button class='btn pull-center' onclick='removerFilme(".$value['cod_locacao'].")'> <span>Efetuar Devolução</span></button>
-                                                </td>
-                                            </tr>";
+                                        echo "<tr><td>".$value['nome']."</td><td>".$value['nomefilme']."</td><td>".$value['data']."</td><td>".$value['cod_locacao']."</td><td>".$value['total']."</td><td>";
+                                        if($value['status'] == 0){
+                                                
+                                            }else{
+                                                echo "Concluida";
+
+                                            }
                                        
-                                    }
+               echo "<button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+                                                </td>";
+                                                    }                    
+                                    
+                                    
+                                       
+                                    
                                 ?>
                             </tbody>
 
@@ -62,15 +70,27 @@
     </body>
 </html>
  
- <script>
-
-function removerFilme(index){
-        var e = filmes[index];
-        $( '#filme'+index).remove();;
-        $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
-            parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
-        filmes.splice(index,1);
-        montarTabela(filmes);
+ <script type="text/javascript">
+    
+    function excluirLocacao(codigo){
+        if(confirm('Deseja realmente excluir este filme?')){
+            $.ajax({
+                url: '../controllers/devolucao.controller.php',
+                type: 'POST',
+                data: {
+                    codigoFilme: codigo
+                },success:function(data){
+                    if(data !== "0"){
+                        alert('Filme Excluido');
+                        location.reload();  
+                        console.log(data);                
+                    }else{
+                        alert('Filme não pode ser excluido pois encontra-se cadastrado em uma ou mais locações.');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR FILME");
+                }
+            });
+        }  
     }
-
- </script>
+</script>

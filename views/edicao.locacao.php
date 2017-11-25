@@ -29,9 +29,9 @@
                                     <input disabled="true" value="<?php echo $locacaoEditar['codigoCliente']?>" type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
                                     <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
-                                    <button style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-danger btn-xs" 
+                                    <button title="Editar Cliente" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
                                     type="button" id="btnRemoverCliente">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
                                 </div>
                             </div>
@@ -50,9 +50,9 @@
                                         <input disabled="true" value="<?php echo $locacaoEditar['codigoFuncionario']?>" type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
                                         <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
-                                    <button style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-danger btn-xs" 
+                                    <button title="Editar Funcionario" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
                                     type="button" id="btnRemoverFuncionario">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-5 col-sm-7">
                                 <button class="pull-left btn btn-default" 
-                                    type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Cadastrar</button>
+                                    type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Salvar</button>
                                 </div>
                             </div>
 
@@ -103,7 +103,7 @@
 
 <script>
     var filmes = <?php echo json_encode($locacaoEditar['filmes']) ?>;
-    montarTabela(filmes);
+    montarTabelaBase(filmes);
     function buscarCliente(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -178,6 +178,38 @@
         });  
     }
 
+    function montarTabelaBase(filmes){
+        var $table = $("<table class='text-center table table-striped table-bordered table-condensed'></table>" );
+        var $thead = $( "<thead></thead>" );
+        var $cabecalho = $( "<tr></tr>" );
+        $cabecalho.append("<td><b>Código</b></td>");
+        $cabecalho.append("<td><b>Nome</b></td>");
+        $cabecalho.append("<td><b>Ações</b></td>");
+        $thead.append($cabecalho);
+        $table.append( $thead );
+        
+        var $tbody = $( "<tbody></tbody>" );
+        for ( var i = 0; i < filmes.length; i++ ) {
+            var filme = filmes[i];
+            var $line = $( "<tr id='filme"+i+"'>" );
+            $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
+            $line.append( $( "<td></td>" ).html( filme.nomefilme ) );
+            var parametro = [];
+            parametro.push(i);
+            parametro.push(filme.codigoitemlocacao);
+            parametro.push(filme.cod_filme);
+            parametro.push(filme.cod_locacao);
+            $line.append( $( "<td><button class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' onclick='removerFilmeBase("+parametro+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
+            $line.append( $( "</tr>" ));
+            $tbody.append( $line );
+        }
+
+        $table.append( $tbody );
+        $table.appendTo( document.body );
+        $( "#filmesAdicionados" ).empty();
+        $table.appendTo($( "#filmesAdicionados" ));
+    }
+
     function montarTabela(filmes){
         var $table = $("<table class='text-center table table-striped table-bordered table-condensed'></table>" );
         var $thead = $( "<thead></thead>" );
@@ -194,7 +226,7 @@
             var $line = $( "<tr id='filme"+i+"'>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
             $line.append( $( "<td></td>" ).html( filme.nomefilme ) );
-            $line.append( $( "<td><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></td>" ));
+            $line.append( $( "<td><button class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );
         }
@@ -212,6 +244,58 @@
             parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
         filmes.splice(index,1);
         montarTabela(filmes);
+    }
+
+    function removerFilmeBase(index,codigoitemlocacao,cod_filme,codigoLocacao){
+        if(filmes.length === 1){
+            if(confirm('A locação será excluir. Deseja continuar?')){
+                $.ajax({
+                url: '../controllers/locacoes.controller.php',
+                type: 'POST',
+                data: {
+                    deleteLocacao: codigoLocacao
+                },success:function(data){
+                    if(data !== "0"){
+                        alert("Locação excluida com sucesso"); 
+                        window.location="locacao.php";                
+                    }else{
+                        alert('Erro ao excluir locação');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR LOCAÇÂO");
+                }
+            });
+            }
+        }else{
+            excluirFilmeLocacaoBase(codigoitemlocacao,cod_filme,codigoLocacao);
+            var e = filmes[index];
+            $( '#filme'+index).remove();;
+            $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
+                parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
+            filmes.splice(index,1);
+            montarTabela(filmes);
+        }
+    }
+
+    function excluirFilmeLocacaoBase(codigoitemlocacao,cod_filme,codigoLocacao){
+        return $.ajax({
+            url: '../controllers/locacoes.controller.php',
+            type: 'POST',
+            data: {
+                codigoitem: codigoitemlocacao,
+                codigoFilme:cod_filme,
+                codigoLocacao:codigoLocacao,
+                excluirFilmeLocacao:true
+            },success:function(data){
+                if(data !== "false"){
+                   alert('Filme removido');
+                }else{
+                    alert("Erro ao excluir filme");
+                }
+            },error:function(){
+                alert("ERRO AO EXCLUIR FILME");
+            }
+        }); 
     }
 
     function cadastrarLocacao(){

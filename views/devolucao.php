@@ -52,7 +52,7 @@
 
                                             }
                                        
-               echo "<button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+                                                echo "<button class='btn pull-right' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
                                                 </td>";
                                                     }                    
                                     
@@ -70,10 +70,10 @@
     </body>
 </html>
  
- <script type="text/javascript">
+<script type="text/javascript">
     
-    function excluirLocacao(codigo){
-        if(confirm('Deseja realmente excluir este filme?')){
+    function efetuarDevolucao(codigo){
+        if(confirm('Deseja realmente devolver este filme?')){
             $.ajax({
                 url: '../controllers/devolucao.controller.php',
                 type: 'POST',
@@ -81,14 +81,14 @@
                     codigoFilme: codigo
                 },success:function(data){
                     if(data !== "0"){
-                        alert('Filme Excluido');
+                        alert('Filme devolvido com sucesso');
                         location.reload();  
                         console.log(data);                
                     }else{
-                        alert('Filme não pode ser excluido pois encontra-se cadastrado em uma ou mais locações.');
+                        alert('Filme não pode ser devolvido pois encontra-se cadastrado em uma ou mais locações.');
                     }
                 },error:function(){
-                    alert("ERRO AO EXCLUIR FILME");
+                    alert("ERRO AO DEVOLVER FILME");
                 }
             });
         }  

@@ -38,7 +38,7 @@
                                     <th>Data</th>
                                     <th>Total</th>
                                     <th>Situação</th>
-                                    <th>Código - Nome Filme</th>
+                                    <th>Código - Nome do Filme</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -51,7 +51,7 @@
                                 		if($value['status'] == 0){
                                 				echo "<font color='red'>Em Aberto</font>";
                                 			}else{
-                                				echo "Entregue";
+                                				echo "<font color='green'>Entregue</font>";
                                             }
                                         echo "<td>";
                                             if(isset($value['filmes'])){

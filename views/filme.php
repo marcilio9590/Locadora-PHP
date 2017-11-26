@@ -48,9 +48,9 @@
                                 	foreach ($listaFilmes as $value) {
                                 		echo "<tr><td>".$value['cod_filme']."</td><td>".$value['nome']."</td><td>".$value['genero']."</td><td>".$value['preco']."</td><td>";
                                 		if($value['status'] == 1){
-                                				echo "Disponível";
+                                				echo "<font color='green'>Disponível</font>";
                                 			}else{
-                                				echo "Indisponível";
+                                				echo "<font color='red'>Indisponível</font>";
                                 			}
                                 		echo
                                 			"<td>

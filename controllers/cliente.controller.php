@@ -25,7 +25,7 @@
              $telefonecliente        = $_REQUEST['telefone'];
              $emailcliente = $_REQUEST['email'];
              $ddd = $_REQUEST['ddd'];
-             $estadocliente = $_re]['estado'];
+             $estadocliente = $_REQUEST['estado'];
  
              try {
                  $retorno = $conexao->prepare("INSERT INTO cliente(cod_cliente, nome, endereco, email, bairro, cidade, cpf, ddd, sexo, estado, telefone)

@@ -33,7 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>Nome do Cliente</th>
-                                    <th>Filme Alugado</th>
+                                    <th>Código - Nome Filme</th>
                                     <th>Data e Hora</th>
                                     <th>Cod Locação</th>
                                     <th>Valor</th>
@@ -44,15 +44,20 @@
                             <tbody>
                                   <?php
                                     foreach ($itens_locacao as $value) {
-                                                echo "<tr><td>".$value['nome']."</td><td>".$value['nomefilme']."</td><td>".$value['data']."</td><td>".$value['cod_locacao']."</td><td>".$value['total']."</td><td>";
+                                            echo "<tr><td>".$value['nome']."</td><td>";
+                                            //.$value['nomefilme'].
+                                             foreach ($value['filmes'] as $value2) { 
+                                            echo "<font color='green'>".$value2['cod_filme']." </font> - <font color='blue'>".$value2['nomefilme']." </font><br>";
+                                            } 
+                                            echo "</td><td>".$value['data']."</td><td>".$value['cod_locacao']."</td><td>".$value['total']."</td><td>";
                                         if($value['status'] == 0){
                                                 
-                                       }else{
-                                                echo "Concluida";
+                                     }else{
+                                            echo "Concluida";
 
                                             }
                                        
-                                                echo "<button class='btn pull-right' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+                                             echo "<button class='btn pull-right btn-success' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-check' aria-hidden='true'></span></button>
                                                 </td>";
                                                     }                                                         
                                     

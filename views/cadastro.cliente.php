@@ -50,30 +50,14 @@
    </td>
   </tr>
   
+
+
+
   
   
-  <tr>
-   <td>
-    <label>Nascimento: </label>
-   </td>
-   <td align="left">
-    <input id="diacliente" type="text" name="dia" size="2" maxlength="2" value="dd"> 
-   <input id="mescliente" type="text" name="mes" size="2" maxlength="2" value="mm"> 
-   <input id="anocliente" type="text" name="ano" size="4" maxlength="4" value="aaaa">
-   </td>
-  </tr>
-  <tr>
-   <td>
-    <label for="rg">RG: </label>
-   </td>
-   <td align="left">
-    <input id="rgcliente" type="text" name="rg" size="13" maxlength="13"> 
-   </td>
-  </tr>
   
-  
-<INPUT id="sexomasculino" TYPE="RADIO" NAME="OPCAO" VALUE="op1"> Masculino
-<INPUT id="sexofemenino" TYPE="RADIO" NAME="OPCAO" VALUE="op2"> Femenino 
+  <INPUT id="sexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino"> Masculino
+  <INPUT id="sexo" TYPE="RADIO" NAME="OPCAO" VALUE="feminino"> Femenino 
 
 
   <tr>
@@ -95,17 +79,13 @@
 
   <tr>
    <td>
-    <label for="endereço">Rua:</label>
+    <label for="endereco">Rua:</label>
    </td>
    <td align="left">
-    <input id="endereçocliente" type="text" name="endereço">
+    <input id="enderecocliente" type="text" name="endereco">
    </td>
    <td>
-    <label for="numero">Numero:</label>
-   </td>
-   <td align="left">
-    <input id="numerocliente" type="text" name="numero" size="4">
-   </td>
+
   </tr>
   <tr>
    <td>
@@ -120,7 +100,7 @@
     <label for="estado">Estado:</label>
    </td>
    <td align="left">
-    <select name="estado"> 
+    <select id="estado" name="estado"> 
     <option value="ac">Acre</option> 
     <option value="al">Alagoas</option> 
     <option value="am">Amazonas</option> 
@@ -166,7 +146,7 @@
 
 
 <br />
-<input id="cadastrar" type="submit" value="Cadastrar">
+<input id="cadastrar" onlick="cadastrarCliente()" type="submit" value="Cadastrar">
 <input id="limparcliente" type="reset" value="Limpar">
 </form>
                     </div>
@@ -180,39 +160,33 @@
 <script>
     var filmes = [];
 
-    function cadastrarCliente(){
+    function cadastrarcliente(){
         $.ajax({
             url: '../controllers/cliente.controller.php',
             type: 'POST',
             data: {
                 nomecliente: $('#nomecliente').val(),
-                ddd: $('#ddd'),
-                telefonecliente: $('#telefonecliente'),
-                emailcliente: $('#emailcliente'),
-                diacliente: $('#diacliente'),
-                mescliente: $('#mescliente'),
-                anocliente: $('#anocliente'),
-                rgcliente: $('#rgcliente'),
-                sexomasculino: $('#sexomasculino'),
-                sexofemenino: $('#sexofemenino'),
-                cpfcliente: $('#cpfcliente'),
-                endereçocliente: $('#endereçocliente'),
-                numerocliente: $('#numerocliente'),
-                bairrocliente: $('#bairrocliente'),
-                cidadecliente: $('#cidadecliente'),
-                cadastrar: $('#cadastrar'),
-                limparcliente: $('#limparcliente')
-
+                ddd: $('#ddd').val(),
+                telefonecliente: $('#telefonecliente').val(),
+                emailcliente: $('#emailcliente').val(),                
+                sexo: $('#sexo').val(),
+                cpfcliente: $('#cpfcliente').val(),
+                enderecocliente: $('#enderecocliente').val(),
+                bairrocliente: $('#bairrocliente').val(),
+                cidadecliente: $('#cidadecliente').val(),
+				estadocliente: $('#estado').val(),
+				salvardados: true
 
                 
-            },success:function(data){
-                if(data !== "false"){
-                    alert('Cliente cadastrado com sucesso!');                       
+            },success:function(response){
+                if(response.trim() == "1"){
+                    alert('Cliente Cadastrado');
+                    location.reload();                   
                 }else{
-                    alert('Erro ao cadastrar cliente!');
+                    alert('Erro ao cadastrar');
                 }
-            },error:function(){
-                alert("Erro ao cadastrar cliente!");
+            }, error:function(response){
+                alert("ERRO AO CADASTRAR");
             };
             }
         });  

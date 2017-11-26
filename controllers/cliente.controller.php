@@ -1,11 +1,11 @@
 <?php
         require_once '../conexao/conexaoBD.php';
-		 $clientes;        
+		 $funcionarios;        
          $con = new ConexaoBD;
          $conexao = $con->ConnectBD();
          try {
              $res = $conexao->query("select * from clientes");
-             $clientes = $res->fetchAll();
+             $funcionarios = $res->fetchAll();
          } catch (PDOException $e){
              echo "false";
          } finally{

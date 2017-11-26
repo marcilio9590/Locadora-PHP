@@ -32,6 +32,7 @@
             try {
                 $retorno = $conexao->prepare("INSERT INTO funcionarios(cod_funcionario, nome, rua, cep, bairro, cidade, cpf, rg, sexo, data_nascimento, telefone)
                  VALUES (:cod_funcionario,:nome,:rua,:cep,:bairro,:cidade,:cpf,:rg,:sexo,:data_nascimento,:telefone)");
+
                 $retorno->bindParam(':cod_funcionario', $cod_Funcionario);
                 $retorno->bindParam(':nome', $nomeFuncionario);
                 $retorno->bindParam(':rua', $ruaFuncionario);
@@ -51,5 +52,24 @@
                 $conexao = null;
             }
         }
+
+        if (isset($_REQUEST["editarFuncionario"])) {
+            $cod_Funcionario = $_REQUEST['cod_funcionario'];
+            $nomeFuncionario = $_REQUEST['nomeFuncionario'];
+            $ruaFuncionario = $_REQUEST['ruaFuncionario'];
+            $cepFuncionario = $_REQUEST['cepFuncionario'];
+            $bairroFuncionario = $_REQUEST['bairroFuncionario'];
+            $cidadeFuncionario = $_REQUEST['cidadeFuncionario'];
+            $cpfFuncionario = $_REQUEST['cpfFuncionario'];
+            $rgFuncionario = $_REQUEST['rgFuncionario'];
+            $sexoFuncionario = $_REQUEST['sexoFuncionario'];
+            $data_nascimentoFuncionario = $_REQUEST['data_nascimento'];
+            $telefoneFuncionario = $_REQUEST['telefoneFuncionario'];
+            try { 
+                $conexao->query("UPDATE funcionarios SET cod_funcionario = '$cod_Funcionario', nomeFuncionario= '$nomeFuncionario', ruaFuncionario = '$ruaFuncionario', cepFuncionario = '$cepFuncionario', bairroFuncionario = '$bairroFuncionario', cidadeFuncionario = '$cidadeFuncionario', cpfFuncionario = '$cpfFuncionario', rgFuncionario= '$rgFuncionario', sexoFuncionario = '$sexoFuncionario', data_nascimento = '$data_nascimentoFuncionario', telefone = '$telefoneFuncionario'  WHERE cod_funcionario = '' ");
+            } catch (PDOException $e) {
+                echo "False";
+        }
+    }
 
 ?>  

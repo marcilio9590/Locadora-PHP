@@ -1,9 +1,10 @@
 <?php
+        require_once '../conexao/conexaoBD.php';
 		 $funcionarios;        
          $con = new ConexaoBD;
          $conexao = $con->ConnectBD();
          try {
-             $res = $conexao->query("select * from cliente");
+             $res = $conexao->query("select * from clientes");
              $funcionarios = $res->fetchAll();
          } catch (PDOException $e){
              echo "false";
@@ -12,7 +13,7 @@
          }
  
             
-      if (isset($_REQUEST["cadastrarcliente"])) {
+      if (isset($_REQUEST["salvardados"])) {
              $con = new ConexaoBD;
              $conexao = $con->ConnectBD();
              $cod_cliente   = $_REQUEST['cod_funcionario'];

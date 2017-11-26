@@ -19,7 +19,6 @@
                 </div>
 
                     <div class="col-sm-12">
-                    <form action="Script_do_Formulario.php" method="post">
 
 <!-- DADOS PESSOAIS-->
 <fieldset>
@@ -146,9 +145,8 @@
 
 
 <br />
-<input id="cadastrar" onlick="cadastrarCliente()" type="submit" value="Cadastrar">
-<input id="limparcliente" type="reset" value="Limpar">
-</form>
+<button class="pull-left btn btn-default" type="button" id="btnCadastrar" onclick="cadastrarcliente()">Cadastrar</button>
+<input class="btn btn-default" id="limparcliente" type="reset" value="Limpar">
                     </div>
                 </div>
 
@@ -176,8 +174,6 @@
                 cidadecliente: $('#cidadecliente').val(),
 				estadocliente: $('#estado').val(),
 				salvardados: true
-
-                
             },success:function(response){
                 if(response.trim() == "1"){
                     alert('Cliente Cadastrado');
@@ -187,7 +183,6 @@
                 }
             }, error:function(response){
                 alert("ERRO AO CADASTRAR");
-            };
             }
         });  
     }

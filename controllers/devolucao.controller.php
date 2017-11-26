@@ -18,4 +18,23 @@
             echo "false";
     }
 
+    if(isset($_REQUEST['realizarDevolucao'])){
+
+     $codigoLocacao = $_REQUEST['codigoLocacao'];
+
+     try {
+                 $retorno = $conexao->prepare("UPDATE locacoes SET  status = 1 WHERE cod_locacao = :cod");
+                 $retorno->bindParam(':cod', $codigoLocacao);
+                 
+                 $flag = $retorno->execute();
+                 echo $flag;
+             } catch (PDOException $e) {
+                 echo "False";
+             } finally{
+                 $conexao = null;
+             }
+
+
+    }
+
 ?>

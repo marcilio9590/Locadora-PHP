@@ -44,20 +44,17 @@
                             <tbody>
                                   <?php
                                     foreach ($itens_locacao as $value) {
-                                        echo "<tr><td>".$value['nome']."</td><td>".$value['nomefilme']."</td><td>".$value['data']."</td><td>".$value['cod_locacao']."</td><td>".$value['total']."</td><td>";
+                                                echo "<tr><td>".$value['nome']."</td><td>".$value['nomefilme']."</td><td>".$value['data']."</td><td>".$value['cod_locacao']."</td><td>".$value['total']."</td><td>";
                                         if($value['status'] == 0){
                                                 
-                                            }else{
+                                       }else{
                                                 echo "Concluida";
 
                                             }
                                        
                                                 echo "<button class='btn pull-right' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
                                                 </td>";
-                                                    }                    
-                                    
-                                    
-                                       
+                                                    }                                                         
                                     
                                 ?>
                             </tbody>
@@ -78,7 +75,8 @@
                 url: '../controllers/devolucao.controller.php',
                 type: 'POST',
                 data: {
-                    codigoFilme: codigo
+                    codigoFilme: codigo,
+                    realizarDevolucao: true
                 },success:function(data){
                     if(data !== "0"){
                         alert('Filme devolvido com sucesso');

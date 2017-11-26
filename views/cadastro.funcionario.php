@@ -68,7 +68,7 @@
 
                              <tr>
                                     <td>Data Admissão:</td>
-                                <td><input type="datetime" id="txtData"></td>
+                                <td><input type="datetime" id="txtData" <?php echo date("d/m/Y"); ?></td>
                             </tr>
 
                              <tr>
@@ -92,7 +92,7 @@
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
             data: {
-                codFuncionario:  $('#txtCodFuncionario').val(),
+                cod_Funcionario:  $('#txtCodFuncionario').val(),
                 nomeFuncionario: $('#txtNome').val(),
                 ruaFuncionario:  $('#txtRua').val(),
                 cepFuncionario:  $('#txtCep').val(),
@@ -113,6 +113,27 @@
                 }
             }, error:function(response){
                 alert("ERRO AO CADASTRAR");
+            }
+        });  
+    }
+
+
+     function editarFuncionario(cod){
+        $.ajax({
+            url: '../controllers/funcionario.controller.php',
+            type: 'POST',
+            data: {
+                cod_Funcionario: cod_Funcionario
+            },success:function(data){
+                if(data == true){
+                    alert('#!');
+                    location.reload();  
+                    console.log(data);                
+                }else{
+                    alert('#');
+                }
+            },error:function(){
+                alert("#");
             }
         });  
     }

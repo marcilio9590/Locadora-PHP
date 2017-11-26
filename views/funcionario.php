@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="funcionario.php" class="pull-left"> <button class="btn btn-default">Cadastrar Funcionário</button></a>
+                    <a href="cadastro.funcionario.php" class="pull-left"> <button class="btn btn-default">Cadastrar Novo Funcionário</button></a>
                     <div class="col-sm-2"></div>
                 </div>
                 <br>

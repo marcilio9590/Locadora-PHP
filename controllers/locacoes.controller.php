@@ -111,16 +111,15 @@
     }
     
     function atualizarLocacaoSession($codigoFilme){
-        // foreach ($_SESSION['locacaoEditar'] as  $value) {
-            $value = $_SESSION['locacaoEditar'];
-            for ($i=0; $i < count($value['filmes']); $i++) { 
-                $value2 = $value['filmes'][$i];
-                if($value2['cod_filme'] == $codigoFilme){
-                    $_SESSION['locacaoEditar']['total'] = floatval($_SESSION['locacaoEditar']['total']) - floatval($_SESSION['locacaoEditar']['filmes'][$i]['preco']);
-                    unset($_SESSION['locacaoEditar']['filmes'][$i]);
-                }
+        $value = $_SESSION['locacaoEditar'];
+        for ($i=0; $i < count($value['filmes']); $i++) { 
+            $value2 = $value['filmes'][$i];
+            if($value2['cod_filme'] == $codigoFilme){
+                $_SESSION['locacaoEditar']['total'] = floatval($_SESSION['locacaoEditar']['total']) - floatval($_SESSION['locacaoEditar']['filmes'][$i]['preco']);
+                unset($_SESSION['locacaoEditar']['filmes'][$i]);
             }
         }
+    }
 
   
 

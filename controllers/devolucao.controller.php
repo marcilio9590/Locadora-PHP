@@ -19,23 +19,18 @@
     }
 
     if(isset($_REQUEST['realizarDevolucao'])){
-
      $codigoLocacao = $_REQUEST['codigoLocacao'];
-
      try {
                  $retorno = $conexao->prepare("UPDATE locacoes SET  status = 1 WHERE cod_locacao = :cod");
                  $retorno->bindParam(':cod', $codigoLocacao);
 
-
                  $flag = $retorno->execute();
                  if($flag==true){
 
-
                  $conexao->exec("UPDATE filmes f INNER JOIN itens_locacao il on f.cod_filme = il.cod_filme 
-                    where il.cod_locacao = $codigoLocacao");
+                    set f.status = 1 where il.cod_locacao = $codigoLocacao");
                  
                  $conexao->commit();
-
 
                  }
                  echo $flag;

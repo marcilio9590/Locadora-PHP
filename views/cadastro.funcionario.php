@@ -23,10 +23,7 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
                         <table border="0" class="table">
-                            <tr>
-                                    <td>Código do Funcionário:</td>
-                                <td><input type="number" id="txtCodFuncionario"></td>
-                            </tr>
+
                             <tr>
                                     <td>Nome do funcionário:</td>
                                 <td><input type="text" id="txtNome"></td>
@@ -68,7 +65,7 @@
 
                              <tr>
                                     <td>Data Admissão:</td>
-                                <td><input type="datetime" id="txtData" <?php echo date("d/m/Y"); ?></td>
+                                <td><input type="datetime" id="txtData" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
                             </tr>
 
                              <tr>

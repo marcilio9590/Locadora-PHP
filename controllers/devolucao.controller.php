@@ -13,7 +13,9 @@
         inner join clientes c on l.cod_cliente = c.cod_cliente 
         left join itens_locacao il on il.cod_locacao = l.cod_locacao 
         left join filmes f on f.cod_filme = il.cod_filme WHERE l.status=0");
-            $itens_locacao = $res->fetchAll();
+            $locacoesNaoFormatado = $res->fetchAll();
+            $arrayFormatado = montarArrayLocacoes($locacoesNaoFormatado);
+            $itens_locacao = montarArrayFilmes($arrayFormatado,$locacoesNaoFormatado);
         } catch (PDOException $e){
             echo "false";
     }
@@ -40,7 +42,44 @@
                  $conexao = null;
              }
 
-
     }
+
+    function montarArrayLocacoes($arrayNaoFormatado){
+        $arrayLocal = array();
+        foreach ($arrayNaoFormatado as $value) {
+            $existe = false;
+            if(count($arrayLocal) == 0){
+                array_push($arrayLocal, $value);
+            }else{
+                foreach ($arrayLocal as $value2) {
+                    if($value['cod_locacao'] === $value2['cod_locacao']){
+                        $existe = true;
+                    }
+                }
+                if($existe == false){
+                    array_push($arrayLocal, $value);
+                }
+            }
+        }
+        return $arrayLocal;
+    }
+
+    function montarArrayFilmes($arrayFormatado, $arrayNaoFormatado){
+        for ($i=0; $i < count($arrayFormatado); $i++) { 
+            $value = $arrayFormatado[$i];
+            for ($j=0; $j < count($arrayNaoFormatado); $j++) { 
+                $value2 = $arrayNaoFormatado[$j];
+                if($value['cod_locacao'] === $value2['cod_locacao']){
+                        if(isset($arrayFormatado[$i]['filmes'])){
+                            array_push($arrayFormatado[$i]['filmes'], $value2);
+                        }else{
+                            $arrayFormatado[$i]['filmes'] = array($value2);
+                        }
+                }
+            }
+        }
+        return $arrayFormatado;
+    }
+
 
 ?>

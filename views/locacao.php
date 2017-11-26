@@ -51,7 +51,7 @@
                                 		if($value['status'] == 0){
                                 				echo "<font color='red'>Em Aberto</font>";
                                 			}else{
-                                				echo "Concluida";
+                                				echo "Entregue";
                                             }
                                         echo "<td>";
                                             if(isset($value['filmes'])){

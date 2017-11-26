@@ -75,7 +75,7 @@
                 url: '../controllers/devolucao.controller.php',
                 type: 'POST',
                 data: {
-                    codigoFilme: codigo,
+                    codigoLocacao: codigo,
                     realizarDevolucao: true
                 },success:function(data){
                     if(data !== "0"){

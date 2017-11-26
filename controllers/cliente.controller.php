@@ -28,7 +28,7 @@
              $estadocliente = $_REQUEST['estadocliente'];
  
              try {
-                 $retorno = $conexao->prepare("INSERT INTO cliente( nome, endereco, email, bairro, cidade, cpf, ddd, sexo, estado, telefone)
+                 $retorno = $conexao->prepare("INSERT INTO clientes( nome, endereco, email, bairro, cidade, cpf, ddd, sexo, estado, telefone)
                   VALUES (:nome,:endereco,:email,:bairro,:cidade,:cpf,:ddd,:sexo,:estado,:telefone)");
                  $retorno->bindParam(':nome', $nomecliente);
                  $retorno->bindParam(':endereco', $enderecocliente);

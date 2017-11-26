@@ -1,4 +1,4 @@
-<?php require_once('../controllers/locacoes.controller.php'); ?>
+<?php require_once('../controllers/cliente.controller.php'); ?>
 
 <html>
     <head>
@@ -39,23 +39,23 @@
                                     <th>CPF</th>
                                     <th>Telefone</th>
                                     <th>Ações</th>
-
-                                    </td>
-                                				<td>
-                            						<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                            		 				<button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
-                            		 			</td>
-                            		 		</tr>
-                                    
                                 </tr>
                             </thead>
 
-                            <tbody>
-                            
-                                
 
+
+                                <!-- <td>
+                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                    <button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
+                                </td> -->
+                                <tbody>
+                                <?php
+                                foreach ($clientes as $value) {
+                                        echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                        <button class='btn pull-right' onclick='excluirFilme(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
+                                    }
+                                 ?>
                             </tbody>
-
                         </table>
                     </div>
                     <div class="col-sm-2"></div>

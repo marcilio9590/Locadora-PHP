@@ -1,11 +1,11 @@
 <?php
         require_once '../conexao/conexaoBD.php';
-		 $funcionarios;        
+		 $clientes;        
          $con = new ConexaoBD;
          $conexao = $con->ConnectBD();
          try {
              $res = $conexao->query("select * from clientes");
-             $funcionarios = $res->fetchAll();
+             $clientes = $res->fetchAll();
          } catch (PDOException $e){
              echo "false";
          } finally{
@@ -28,7 +28,7 @@
              $estadocliente = $_REQUEST['estadocliente'];
  
              try {
-                 $retorno = $conexao->prepare("INSERT INTO cliente( nome, endereco, email, bairro, cidade, cpf, ddd, sexo, estado, telefone)
+                 $retorno = $conexao->prepare("INSERT INTO clientes( nome, endereco, email, bairro, cidade, cpf, ddd, sexo, estado, telefone)
                   VALUES (:nome,:endereco,:email,:bairro,:cidade,:cpf,:ddd,:sexo,:estado,:telefone)");
                  $retorno->bindParam(':nome', $nomecliente);
                  $retorno->bindParam(':endereco', $enderecocliente);

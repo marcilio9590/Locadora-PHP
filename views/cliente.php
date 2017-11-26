@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="../controllers/cliente.controller.php" class="pull-left"> <button class="btn btn-default">Cadastrar cliente</button></a>
+                    <a href="cadastro.cliente.php" class="pull-left"> <button class="btn btn-default">Cadastrar cliente</button></a>
             
                     </div>
                     <div class="col-sm-2"></div>

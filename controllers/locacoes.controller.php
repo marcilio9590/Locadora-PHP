@@ -22,6 +22,8 @@
         $locacoes = montarArrayFilmes($arrayFormatado,$locacoesNaoFormatado);
     } catch (PDOException $e){
         echo "false";
+    } finally{
+        $conexao = null;
     }
 
 
@@ -84,6 +86,8 @@
         } catch (PDOException $e){
             $conexao->rollBack();
             echo "false";
+        } finally{
+            $conexao = null;
         }
     }
     
@@ -107,6 +111,8 @@
         } catch (PDOException $e){
             $conexao->rollBack();
             echo "false";
+        } finally{
+            $conexao = null;
         }
     }
     
@@ -121,7 +127,48 @@
         }
     }
 
-  
+    if(isset($_REQUEST['editarLocacao'])){
+        $obj = $_REQUEST["requestLocacao"];
+        $con = new ConexaoBD;
+        $conexao = $con->ConnectBD();
+        try {
+            $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conexao->beginTransaction();
+            
+            $retorno = $conexao->prepare("UPDATE locacoes SET cod_cliente = :codCli,
+            cod_funcionario = :codFunc, total = :total WHERE cod_locacao = :codLocacao");
+            $retorno->bindParam(':codCli', $obj['codigoCliente']);
+            $retorno->bindParam(':codFunc', $obj['codigoFuncionario']);
+            $retorno->bindParam(':total', $obj['totalLocacao']);
+            $retorno->bindParam(':codLocacao', $obj['codigoLocacao']);
+            $flag =  $retorno->execute();
+            
+            if(isset($obj['filmes'])){
+                $cod_locacao = $obj['codigoLocacao'];
+                $filmes = $obj['filmes'];
+                for($i = 0; $i < count($filmes); ++$i) {
+                    $insertFilmes = "INSERT INTO itens_locacao (cod_locacao,cod_filme) VALUES ($cod_locacao,";
+                    $insertFilmes .= $filmes[$i]['cod_filme'];
+                    $insertFilmes .= ")";
+                    $conexao->exec($insertFilmes);
+                    $updateFilme = "UPDATE filmes set status = 0 WHERE cod_filme = :codigo";
+                    $sth = $conexao->prepare($updateFilme);
+                    $sth->bindParam(':codigo', $filmes[$i]['cod_filme']);
+                    $sth->execute();
+                }        
+            }
+            // commit the transaction
+            $conexao->commit();
+            echo "Locação Alterada Com Sucesso.";
+
+        } catch (PDOException $e){
+            $conexao->rollBack();
+            echo "false";
+        } finally{
+            $conexao = null;
+        }
+        
+    }
 
 
 ?>

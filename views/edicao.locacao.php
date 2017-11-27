@@ -83,7 +83,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-5 col-sm-7">
                                 <button class="pull-left btn btn-default" 
-                                    type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Salvar</button>
+                                    type="button" id="btnCadastrar" onclick="salvarEdicao()">Salvar</button>
                                 </div>
                             </div>
 
@@ -103,6 +103,7 @@
 
 <script>
     var filmes = <?php echo json_encode($locacaoEditar['filmes']) ?>;
+    var codLocacao = filmes[0].cod_locacao;
     var novosfilmes = [];
     montarTabelaBase(filmes);
 
@@ -317,7 +318,7 @@
         }); 
     }
 
-    function cadastrarLocacao(){
+    function salvarEdicao(){
         var codCliente =  $('#codCliente').val();
         var codFuncionario =  $('#codFuncionario').val();
         var total =  $('#totalLocacao').val();
@@ -325,14 +326,17 @@
             codigoCliente:codCliente,
             codigoFuncionario:codFuncionario,
             totalLocacao:total,
-            filmesSelecionados:filmes
+            codigoLocacao: codLocacao,
+            filmes:novosfilmes,
+            editarLocacao:true
         };
 
         $.ajax({
-            url: '../controllers/cadastro.locacoes.controller.php',
+            url: '../controllers/locacoes.controller.php',
             type: 'POST',
             data: {
-                requestLocacao: objRequest
+                requestLocacao: objRequest,
+                editarLocacao:true
             },success:function(data){
                 if(data !== "false"){
                    alert(data);
@@ -353,7 +357,5 @@
         $(nome).val("");
         $(codigo).prop("disabled", false);
     }
-
-
 
 </script>

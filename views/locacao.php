@@ -47,7 +47,7 @@
 
                             <?php
                                 	foreach ($locacoes as $value) {
-                                		echo "<tr><td>".$value['cod_locacao']."</td><td>".$value['nome']."</td><td>".$value['data']."</td><td>".$value['total']."</td><td>";
+                                		echo "<tr><td>".$value['cod_locacao']."</td><td title='Telefone: ".$value['telefone']."'>".$value['nome']."</td><td>".$value['data']."</td><td>".$value['total']."</td><td>";
                                 		if($value['status'] == 0){
                                 				echo "<font color='red'>Em Aberto</font>";
                                 			}else{
@@ -56,7 +56,7 @@
                                         echo "<td>";
                                             if(isset($value['filmes'])){
                                                 foreach ($value['filmes'] as $filme) {
-                                                    echo "<font color='grenn'>".$filme["cod_filme"]."</font> - <font color='blue'>".$filme["nomefilme"]."</font><br>";
+                                                    echo "<font color='green'>".$filme["cod_filme"]."</font> - <font color='blue'>".$filme["nomefilme"]."</font><br>";
                                                 }
                                             }
                                         echo "</td>";

@@ -29,8 +29,8 @@
                                     <input disabled="true" value="<?php echo $locacaoEditar['codigoCliente']?>" type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
                                     <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
-                                    <button title="Editar Cliente" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
-                                    type="button" id="btnRemoverCliente">
+                                    <button onclick="alterar(event)" title="Alterar Cliente" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
+                                    type="button" id="btnalterarCliente">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
                                 </div>
@@ -50,7 +50,7 @@
                                         <input disabled="true" value="<?php echo $locacaoEditar['codigoFuncionario']?>" type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
                                         <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
                                     type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
-                                    <button title="Editar Funcionario" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
+                                    <button onclick="alterar(event)" title="Alterar Funcionario" style="margin-left:5px; margin-top:5px; padding:3px;" class="pull-left btn btn-primary btn-xs" 
                                     type="button" id="btnRemoverFuncionario">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
@@ -103,7 +103,9 @@
 
 <script>
     var filmes = <?php echo json_encode($locacaoEditar['filmes']) ?>;
+    var novosfilmes = [];
     montarTabelaBase(filmes);
+
     function buscarCliente(){
         $.ajax({
             url: '../controllers/cadastro.locacoes.controller.php',
@@ -149,33 +151,50 @@
     }
 
     function adicionarFilmes(){
-        $.ajax({
-            url: '../controllers/cadastro.locacoes.controller.php',
-            type: 'POST',
-            data: {
-                codigoFilme: $('#codFilme').val()
-            },success:function(data){
-                if(data !== "false"){
-                    var response = JSON.parse(data);
-                    if(response.status === "1"){
-                        filmes.push(response);
-                        montarTabela(filmes);
-                        $("#totalLocacao")[0].value = $("#totalLocacao")[0].value ? 
-                        parseFloat($("#totalLocacao")[0].value) + parseFloat(response.preco) :
-                        parseFloat(response.preco);
-                        $("#codFilme")[0].value = '';
-                    }else{
-                        alert('Filme já encontra-se alugado');
-                        $("#codFilme")[0].value = '';
-                    }
+        if(verificarDuplicidade()){
+            alert('Filme já inserido na locação')
+        }else{
+            $.ajax({
+                url: '../controllers/cadastro.locacoes.controller.php',
+                type: 'POST',
+                data: {
+                    codigoFilme: $('#codFilme').val()
+                },success:function(data){
+                    if(data !== "false"){
+                        var response = JSON.parse(data);
+                        if(response.status === "1"){
+                            filmes.push(response);
+                            novosfilmes.push(response);
+                            montarTabela(filmes);
+                            $("#totalLocacao")[0].value = $("#totalLocacao")[0].value ? 
+                            parseFloat($("#totalLocacao")[0].value) + parseFloat(response.preco) :
+                            parseFloat(response.preco);
+                            $("#codFilme")[0].value = '';
+                        }else{
+                            alert('Filme já encontra-se alugado');
+                            $("#codFilme")[0].value = '';
+                        }
 
-                }else{
-                    alert('Código do filme incorreto');
+                    }else{
+                        alert('Código do filme incorreto');
+                    }
+                },error:function(){
+                    alert("ERRO AO BUSCAR FILME");
                 }
-            },error:function(){
-                alert("ERRO AO BUSCAR FILME");
-            }
-        });  
+            }); 
+        } 
+    }
+
+    function verificarDuplicidade(){
+        var flag = false;
+        if(filmes.length !== 0){
+            filmes.forEach(e => {
+                if(parseInt(e.cod_filme) === parseInt($('#codFilme').val())){
+                    flag = true;
+                }
+            });
+        }
+        return flag;
     }
 
     function montarTabelaBase(filmes){
@@ -199,7 +218,7 @@
             parametro.push(filme.codigoitemlocacao);
             parametro.push(filme.cod_filme);
             parametro.push(filme.cod_locacao);
-            $line.append( $( "<td><button class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' onclick='removerFilmeBase("+parametro+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
+            $line.append( $( "<td><button onclick='removerFilmeBase("+parametro+")' class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );
         }
@@ -225,8 +244,8 @@
             var filme = filmes[i];
             var $line = $( "<tr id='filme"+i+"'>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
-            $line.append( $( "<td></td>" ).html( filme.nomefilme ) );
-            $line.append( $( "<td><button class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
+            $line.append( $( "<td></td>" ).html( filme.nome ) );
+            $line.append( $( "<td><button onclick='removerFilme("+i+")' class='btn btn-danger btn-sm' tilte='Remover filme'><span style='cursor:pointer;' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );
         }
@@ -325,6 +344,16 @@
                 alert("ERRO AO INCLUIR LOCACAO");
             }
         }); 
-
     }
+
+    function alterar(event){
+        var codigo = "#"+event.toElement.parentElement.parentElement.firstElementChild.id; 
+        var nome = "#"+event.toElement.parentElement.parentElement.parentElement.nextElementSibling.children[1].firstElementChild.id;
+        $(codigo).val("");
+        $(nome).val("");
+        $(codigo).prop("disabled", false);
+    }
+
+
+
 </script>

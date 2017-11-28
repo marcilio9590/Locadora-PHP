@@ -57,15 +57,6 @@
     
             $con = new ConexaoBD;
             $conexao = $con->ConnectBD();
-            // try {
-            //     $sth = $conexao->query("INSERT INTO locacoes(cod_cliente, cod_funcionario, data, total, status)
-            //     VALUES ('$cliente','$funcionario','$data_atual','$total',0)");
-            // } catch (PDOException $e){
-            //     echo "false";
-            // }
-    
-            // $res = $conexao->query("SELECT LAST_INSERT_ID()");
-            // $cod_locacao = $res->fetch(PDO::FETCH_ASSOC)['LAST_INSERT_ID()'];
     
             try {
                 $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

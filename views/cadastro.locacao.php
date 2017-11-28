@@ -202,7 +202,7 @@
             var $line = $( "<tr id='filme"+i+"'>" );
             $line.append( $( "<td></td>" ).html( filme.cod_filme ) );
             $line.append( $( "<td></td>" ).html( filme.nome ) );
-            $line.append( $( "<td><span style='cursor:pointer;' onclick='removerFilme("+i+")' class='glyphicon glyphicon-remove' aria-hidden='true'></span></td>" ));
+            $line.append( $( "<td><button class='btn btn-danger btn-sm' onclick='removerFilme("+i+")'><span style='cursor:pointer;' class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>" ));
             $line.append( $( "</tr>" ));
             $tbody.append( $line );
         }

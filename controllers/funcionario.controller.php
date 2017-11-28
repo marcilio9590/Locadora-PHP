@@ -52,6 +52,10 @@
             }
         }
 
+        if(isset($_REQUEST['editarDados'])){
+            
+        }
+
         /*if (isset($_REQUEST["editarFuncionario"])) {
             $cod_Funcionario = $_REQUEST['cod_funcionario'];
             $nomeFuncionario = $_REQUEST['nomeFuncionario'];

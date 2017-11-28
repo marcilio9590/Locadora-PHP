@@ -87,6 +87,11 @@
     var funcionarios = [];
     
      function salvarDados(){
+         if($('#txtNome').val() != ""){
+
+         }else{
+             alert('Preencha todos os campos');
+         }
         $.ajax({
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
@@ -105,7 +110,7 @@
             }, success:function(response){
                 if(response.trim() == "1"){
                     alert('Funcionário Cadastrado');
-                    location.reload();                   
+                    window.location="funcionario.php";                    
                 }else{
                     alert('Erro ao cadastrar');
                 }

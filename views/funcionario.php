@@ -28,7 +28,7 @@
                 
                 <div class="row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-8">
                         <table class="table table-bordered table-condensed"><br>
                  
                             <thead>
@@ -42,6 +42,7 @@
                                     <th>Rg</th>
                                     <th>Data Admissão</th>
                                     <th>Telefone</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
 
@@ -49,6 +50,9 @@
                                 <?php
                                 foreach ($funcionarios as $value) {
                                         echo "<tr><td>".$value['cod_funcionario']."</td><td>".$value['nome']."</td><td>".$value['rua']."</td><td>".$value['bairro']."</td><td>".$value['cidade']."</td><td>".$value['cpf']."</td><td>".$value['rg']."</td><td>".$value['data_admissao']."</td><td>".$value['telefone']."</td>
+                                        <td>
+                                        <a href='edicao.funcionario.php?codFuncionario=".$value['cod_funcionario']."'><button class='btn pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                        <button class='btn pull-right' onclick='excluircliente(".$value['cod_funcionario'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                                         </tr>";
                                     }
                                  ?>
@@ -56,7 +60,7 @@
 
                         </table>
                     </div>
-                    <div class="col-sm-2"></div>
+                    <!-- <div class="col-sm-1"></div> -->
                 </div>
         </div>
     </body>

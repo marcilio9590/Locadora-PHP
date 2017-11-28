@@ -65,15 +65,15 @@
 
                              <tr>
                                     <td>Data Admissão:</td>
-                                <td><input type="datetime" id="txtData" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
+                                <td><input type="datetime" id="txtDataAdmissao" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
                             </tr>
 
                              <tr>
                                     <td>Telefone:</td>
-                                <td><input type="tel" id="txtTelefone"></td>
+                                <td><input type="number" id="txtTelefone"></td>
                             </tr>
                         </table>
-                        <button class="btn btn-default" type="button" onclick="salvarDados()">Salvar Dados</button>
+                        <button title='Salvar' class="pull-left btn btn-default" type="button" id="btnSalvar" onclick="salvarDados()">Salvar</button>
                         <br>
                     </div>
                    
@@ -83,23 +83,24 @@
 </html>
 
 <script>
+
+    var funcionarios = [];
     
      function salvarDados(){
         $.ajax({
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
             data: {
-                cod_Funcionario:  $('#txtCodFuncionario').val(),
-                nomeFuncionario: $('#txtNome').val(),
-                ruaFuncionario:  $('#txtRua').val(),
-                cepFuncionario:  $('#txtCep').val(),
-                bairroFuncionario : $('#txtBairro').val(),
-                cidadeFuncionario: $('#txtCidade').val(),
-                cpfFuncionario: $('#txtCpf').val(),
-                rgFuncionario: $('#txtRg').val(),
-                sexoFuncionario: $('#txtSexo').val(),
-                data_nascimentoFuncionario: $('#txtData').val(),
-                telefoneFuncionario: $('#txtTelefone').val(),
+                nomefuncionarios:   $('txtNome').val(),
+                ruafuncionarios:    $('txtRua').val(),
+                cepfuncionarios:    $('txtCep').val(),
+                bairrofuncionarios: $('txtBairro').val(),
+                cidadefuncionarios: $('txtCidade').val(),
+                cpffuncionarios:    $('txtCpf').val(),
+                rgfuncionarios:     $('txtRg').val(),
+                sexofuncionarios:   $('txtSexo').val(),
+                data_admissaos: $('txtData').val(),
+                telefonefuncionarios: $('txtTelefone').val(),
                 salvarDados: true
             }, success:function(response){
                 if(response.trim() == "1"){
@@ -110,27 +111,6 @@
                 }
             }, error:function(response){
                 alert("ERRO AO CADASTRAR");
-            }
-        });  
-    }
-
-
-     function editarFuncionario(cod){
-        $.ajax({
-            url: '../controllers/funcionario.controller.php',
-            type: 'POST',
-            data: {
-                cod_Funcionario: cod_Funcionario
-            },success:function(data){
-                if(data == true){
-                    alert('#!');
-                    location.reload();  
-                    console.log(data);                
-                }else{
-                    alert('#');
-                }
-            },error:function(){
-                alert("#");
             }
         });  
     }

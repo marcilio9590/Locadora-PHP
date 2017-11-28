@@ -57,7 +57,7 @@
 
                                             }
                                        
-                                             echo "<button class='btn pull-right btn-success' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-check' aria-hidden='true'></span></button>
+                                             echo "<button title='Confirmar' class='btn pull-right btn-success' onclick='efetuarDevolucao(".$value['cod_locacao'].")'> <span class='glyphicon glyphicon-check' aria-hidden='true'></span></button>
                                                 </td>";
                                                     }                                                         
                                     

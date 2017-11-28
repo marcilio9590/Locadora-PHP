@@ -98,6 +98,8 @@
     if(isset($_REQUEST['excluirFilmeLocacao'])){
         $codigoFilme =  $_REQUEST['codigoFilme'];
         $codigolocacao = $_REQUEST['codigoLocacao'];
+        $con = new ConexaoBD;
+        $conexao = $con->ConnectBD();
         try {
             $retorno = $conexao->prepare("DELETE from itens_locacao where codigo = :codigo");
             $retorno->bindParam(':codigo', $_REQUEST['codigoitem']);

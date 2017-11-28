@@ -172,11 +172,11 @@
                 enderecocliente: $('#enderecocliente').val(),
                 bairrocliente: $('#bairrocliente').val(),
                 cidadecliente: $('#cidadecliente').val(),
-				estadocliente: $('#estado').val(),
-				salvardados: true
+				        estadocliente: $('#estado').val(),
+				        salvardados: true
             },success:function(response){
                 if(response.trim() == "1"){
-                    alert('Cliente Cadastrado');
+                   alert('Cliente Cadastrado');
                     location.reload();                   
                 }else{
                     alert('Erro ao cadastrar');

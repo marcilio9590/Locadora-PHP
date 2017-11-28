@@ -91,17 +91,17 @@
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
             data: {
-                nomefuncionarios:   $('txtNome').val(),
-                ruafuncionarios:    $('txtRua').val(),
-                cepfuncionarios:    $('txtCep').val(),
-                bairrofuncionarios: $('txtBairro').val(),
-                cidadefuncionarios: $('txtCidade').val(),
-                cpffuncionarios:    $('txtCpf').val(),
-                rgfuncionarios:     $('txtRg').val(),
-                sexofuncionarios:   $('txtSexo').val(),
-                data_admissaos: $('txtData').val(),
-                telefonefuncionarios: $('txtTelefone').val(),
-                salvarDados: true
+                nomefuncionarios:   $('#txtNome').val(),
+                ruafuncionarios:    $('#txtRua').val(),
+                cepfuncionarios:    $('#txtCep').val(),
+                bairrofuncionarios: $('#txtBairro').val(),
+                cidadefuncionarios: $('#txtCidade').val(),
+                cpffuncionarios:    $('#txtCpf').val(),
+                rgfuncionarios:     $('#txtRg').val(),
+                sexofuncionarios:   $('#txtSexo').val(),
+                data_admissaos:     $('#txtDataAdmissao').val(),
+                telefonefuncionarios: $('#txtTelefone').val(),
+                cadastrarDados: true
             }, success:function(response){
                 if(response.trim() == "1"){
                     alert('Funcionário Cadastrado');

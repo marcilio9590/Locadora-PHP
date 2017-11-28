@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Nov-2017 às 03:29
+-- Generation Time: 29-Nov-2017 às 00:12
 -- Versão do servidor: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -33,13 +33,6 @@ CREATE TABLE `clientes` (
   `estado` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `clientes`
---
-
-INSERT INTO `clientes` (`cod_cliente`, `nome`, `email`, `cpf`, `sexo`, `ddd`, `telefone`, `endereco`, `bairro`, `cidade`, `estado`) VALUES
-(1, 'cliente 1', 'cliente1@gmail.com', '11111111111', 'Masculino', '81', '988888888', 'rua teste', 'bairro teste', 'cidade teste', 'estado teste');
-
 -- --------------------------------------------------------
 
 --
@@ -60,7 +53,12 @@ CREATE TABLE `filmes` (
 
 INSERT INTO `filmes` (`cod_filme`, `nome`, `genero`, `status`, `preco`) VALUES
 (1, 'Lagoa Azul', 'Romance', 1, '3.50'),
-(2, 'Lagoa Azul 2', 'Romance', 1, '2.00');
+(2, 'Lagoa Azul 2', 'Romance', 1, '3.00'),
+(4, 'adsfasdf', 'asdfasdf', 1, '2.00'),
+(5, 'teste', 'asdfasdf', 1, '5.00'),
+(6, 'asdfasdf', 'asdfasdf', 1, '3.00'),
+(7, 'testando', 'asdasd', 1, '2.00'),
+(8, 'asdfasdf', 'asdfasdf', 1, '2.00');
 
 -- --------------------------------------------------------
 
@@ -78,7 +76,7 @@ CREATE TABLE `funcionarios` (
   `cpf` varchar(11) NOT NULL,
   `rg` varchar(10) NOT NULL,
   `sexo` varchar(15) NOT NULL,
-  `data_nascimento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `data_admissao` varchar(10) DEFAULT NULL,
   `telefone` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -86,8 +84,8 @@ CREATE TABLE `funcionarios` (
 -- Extraindo dados da tabela `funcionarios`
 --
 
-INSERT INTO `funcionarios` (`cod_funcionario`, `nome`, `rua`, `cep`, `bairro`, `cidade`, `cpf`, `rg`, `sexo`, `data_nascimento`, `telefone`) VALUES
-(1, 'Funcionario Teste', 'hgdfhjgf', 'hgfghf', 'hgfhgf', 'hgfhgf', 'hgfhgf', 'hgfhgf', 'hgfhgf', '2017-11-14 00:31:00', '654654654');
+INSERT INTO `funcionarios` (`cod_funcionario`, `nome`, `rua`, `cep`, `bairro`, `cidade`, `cpf`, `rg`, `sexo`, `data_admissao`, `telefone`) VALUES
+(1, 'Funcionario 1', '321321', '321321321', '321321', '321321', '321321', '321321', '321321', '28/11/2017', '321321');
 
 -- --------------------------------------------------------
 
@@ -100,17 +98,6 @@ CREATE TABLE `itens_locacao` (
   `cod_filme` int(11) NOT NULL,
   `cod_locacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `itens_locacao`
---
-
-INSERT INTO `itens_locacao` (`codigo`, `cod_filme`, `cod_locacao`) VALUES
-(4, 2, 29),
-(5, 1, 29),
-(6, 2, 30),
-(7, 1, 30),
-(8, 1, 31);
 
 -- --------------------------------------------------------
 
@@ -126,43 +113,6 @@ CREATE TABLE `locacoes` (
   `total` decimal(10,2) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `locacoes`
---
-
-INSERT INTO `locacoes` (`cod_locacao`, `cod_cliente`, `cod_funcionario`, `data`, `total`, `status`) VALUES
-(1, 1, 1, '2017-11-15 03:50:23', '3.50', 0),
-(2, 1, 1, '2017-11-15 03:55:41', '3.50', 0),
-(3, 1, 1, '2017-11-15 03:56:07', '3.50', 0),
-(4, 1, 1, '2017-11-14 23:58:03', '2.00', 0),
-(5, 1, 1, '2017-11-15 00:03:20', '2.00', 0),
-(6, 1, 1, '2017-11-15 00:03:32', '2.00', 0),
-(7, 1, 1, '2017-11-15 00:03:50', '2.00', 0),
-(8, 1, 1, '2017-11-15 00:04:07', '2.00', 0),
-(9, 1, 1, '2017-11-15 00:06:22', '3.50', 0),
-(10, 1, 1, '2017-11-15 00:06:54', '3.50', 0),
-(11, 1, 1, '2017-11-15 00:08:15', '2.00', 0),
-(12, 1, 1, '2017-11-15 00:08:42', '2.00', 0),
-(13, 1, 1, '2017-11-15 00:58:08', '2.00', 0),
-(14, 1, 1, '2017-11-15 00:58:47', '2.00', 0),
-(15, 1, 1, '2017-11-15 00:58:52', '2.00', 0),
-(16, 1, 1, '2017-11-15 00:58:59', '2.00', 0),
-(17, 1, 1, '2017-11-15 00:59:07', '2.00', 0),
-(18, 1, 1, '2017-11-15 00:59:34', '2.00', 0),
-(19, 1, 1, '2017-11-15 00:59:54', '3.50', 0),
-(20, 1, 1, '2017-11-15 01:00:46', '3.50', 0),
-(21, 1, 1, '2017-11-15 01:01:36', '3.50', 0),
-(22, 1, 1, '2017-11-15 01:02:03', '5.50', 0),
-(23, 1, 1, '2017-11-15 01:04:41', '5.50', 0),
-(24, 1, 1, '2017-11-15 01:09:32', '5.50', 0),
-(25, 1, 1, '2017-11-15 01:09:59', '5.50', 0),
-(26, 1, 1, '2017-11-15 01:10:39', '5.50', 0),
-(27, 1, 1, '2017-11-15 01:11:01', '5.50', 0),
-(28, 1, 1, '2017-11-15 01:11:37', '5.50', 0),
-(29, 1, 1, '2017-11-15 01:14:20', '5.50', 0),
-(30, 1, 1, '2017-11-15 01:26:12', '5.50', 0),
-(31, 1, 1, '2017-11-15 01:28:54', '3.50', 0);
 
 --
 -- Indexes for dumped tables
@@ -210,13 +160,13 @@ ALTER TABLE `locacoes`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `filmes`
 --
 ALTER TABLE `filmes`
-  MODIFY `cod_filme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cod_filme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `funcionarios`
@@ -228,13 +178,13 @@ ALTER TABLE `funcionarios`
 -- AUTO_INCREMENT for table `itens_locacao`
 --
 ALTER TABLE `itens_locacao`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `locacoes`
 --
 ALTER TABLE `locacoes`
-  MODIFY `cod_locacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `cod_locacao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

@@ -16,7 +16,7 @@
         
 
            
-     if (isset($_REQUEST["salvarDados"])) {
+     if (isset($_REQUEST["cadastrarDados"])) {
             $con = new ConexaoBD;
             $conexao = $con->ConnectBD();
             $nomefuncionario   = $_REQUEST['nomefuncionarios'];
@@ -27,22 +27,22 @@
             $cpffuncionario    = $_REQUEST['cpffuncionarios'];
             $rgfuncionario     = $_REQUEST['rgfuncionarios'];
             $sexofuncionario   = $_REQUEST['sexofuncionarios'];
-            $data_admissao = $_REQUEST['data_nascimentofuncionarios'];
+            $data_admissao = $_REQUEST['data_admissaos'];
             $telefonefuncionario        = $_REQUEST['telefonefuncionarios'];
 
             try {
-                $retorno = $conexao->prepare("INSERT INTO funcionarios( nome, rua, cep, bairro, cidade, cpf, rg, sexo, data_nascimento, telefone)
-                 VALUES (:nome,:rua,:cep,:bairro,:cidade,:cpf,:rg,:sexo,:data_nascimento,:telefone)");
-                $retorno->bindParam(':nome', $nomeFuncionario);
-                $retorno->bindParam(':rua', $ruaFuncionario);
-                $retorno->bindParam(':cep', $cepFuncionario);
-                $retorno->bindParam(':bairro', $bairroFuncionario);
-                $retorno->bindParam(':cidade', $cidadeFuncionario);
-                $retorno->bindParam(':cpf', $cpfFuncionario);
-                $retorno->bindParam(':rg', $rgFuncionario);
-                $retorno->bindParam(':sexo', $sexoFuncionario);
-                $retorno->bindParam(':data_nascimento', new datetime($data_admissao));
-                $retorno->bindParam(':telefone', $telefoneFuncionario);
+                $retorno = $conexao->prepare("INSERT INTO funcionarios( nome, rua, cep, bairro, cidade, cpf, rg, sexo,data_admissao, telefone)
+                 VALUES (:nome,:rua,:cep,:bairro,:cidade,:cpf,:rg,:sexo,:data_admissao,:telefone)");
+                $retorno->bindParam(':nome', $nomefuncionario);
+                $retorno->bindParam(':rua', $ruafuncionario);
+                $retorno->bindParam(':cep', $cepfuncionario);
+                $retorno->bindParam(':bairro', $bairrofuncionario);
+                $retorno->bindParam(':cidade', $cidadefuncionario);
+                $retorno->bindParam(':cpf', $cpffuncionario);
+                $retorno->bindParam(':rg', $rgfuncionario);
+                $retorno->bindParam(':sexo', $sexofuncionario);
+                $retorno->bindParam(':data_admissao', $data_admissao);
+                $retorno->bindParam(':telefone', $telefonefuncionario);
                 $flag = $retorno->execute();
                 echo $flag;
             } catch (PDOException $e) {

@@ -52,7 +52,7 @@
                                 <?php
                                 foreach ($clientes as $value) {
                                         echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                        <button class='btn pull-right' onclick='excluirFilme(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
+                                        <button class='btn pull-right' onclick='excluircliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
                                     }
                                  ?>
                             </tbody>
@@ -63,3 +63,55 @@
         </div>
     </body>
 </html>
+<script type="text/javascript">
+	
+	function excluircliente(codigo_cliente){
+        if(confirm('Deseja realmente excluir este cliente?')){
+            $.ajax({
+                url: '../controllers/cliente.controller.php',
+                type: 'POST',
+                data: {
+                    deletecliente: codigo_cliente
+                },success:function(data){
+                    if(data !== "0"){
+                        alert("Cliente excluido com sucesso!"); 
+                        location.reload();                 
+                    }else{
+                        alert('Erro ao excluir cliente!');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR CLIENTE!");
+                }
+            });  
+        }
+    }
+    
+    function editarCliente(item){
+        // console.log(item);
+        $.ajax({
+                url: '../controllers/cliente.controller.php',
+                type: 'POST',
+                data: {
+                    codigoLocacao:item.cod_cliente,
+                    nomeCliente:item.nome,
+                    codigoCliente:item.cod_cliente,
+                    cpfcliente:item.cpfcliente,
+                    ddd:item.ddd,
+                    emailcliente:item.emailcliente,
+                    ederecocliente:item.enderecocliente,
+					bairrocliente: item.bairrocliente,
+					cidadecliente: item.cidadecliente,
+					estadocliente: item.estadocliente,
+					sexo: item.sexo,
+					telefonecliente: item.telefonecliente,
+					
+                    salvarDadosEditar: true
+                },success:function(data){
+                    window.location.replace('edicao.cliente.php');
+                },error:function(){
+                    alert("Erro ao editar.");
+                }
+            }); 
+    }
+
+</script>

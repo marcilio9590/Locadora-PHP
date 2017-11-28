@@ -11,6 +11,22 @@
          } finally{
              $conexao = null;
          }
+
+         if(isset($_REQUEST['deletecliente'])){
+        	$codigo = $_REQUEST['deletecliente'];
+			$con = new ConexaoBD;
+	        $conexao = $con->ConnectBD();
+	        try {
+                $del = $conexao->prepare("DELETE FROM clientes WHERE cod_cliente = $codigo");
+                $del->execute();
+                $count = $del->rowCount();
+                echo $count;
+	        } catch (PDOException $e){
+	            echo "false";
+	        } finally{
+                $conexao = null;
+            }
+        }
  
             
       if (isset($_REQUEST["salvardados"])) {
@@ -48,4 +64,25 @@
                  $conexao = null;
              }
          }
+
+         
+
+         if (isset($_REQUEST["editarcliente"])) {
+            $nomecliente = $_REQUEST['nomecliente'];
+            $endereco = $_REQUEST['enderecocliente'];
+            $ddd = $_REQUEST['ddd'];
+            $bairrocliente = $_REQUEST['bairrocliente'];
+            $cidadecliente = $_REQUEST['cidadecliente'];
+            $cpfcliente = $_REQUEST['cpfcliente'];
+            $estadocliente = $_REQUEST['estadocliente'];
+            $sexo = $_REQUEST['sexo'];
+            $emailcliente = $_REQUEST['emailcliente'];
+            $telefonecliente = $_REQUEST['telefonecliente'];
+            try { 
+                $conexao->query("UPDATE clientes SET nomecliente = '$nomecliente', enderecocliente = '$enderecocliente', ddd = '$ddd', bairrocliente = '$bairrocliente', cidadecliente = '$cidadecliente', cpfcliente = '$cpfcliente', emailcliente= '$emailcliente', sexo = '$sexo', estadocliente = '$estadocliente', telefonecliente = '$telefonecliente'  WHERE cod_cliente = '' ");
+            } catch (PDOException $e) {
+                echo "False";
+        }
+    }
+
 ?>

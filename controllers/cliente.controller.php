@@ -12,8 +12,8 @@
              $conexao = null;
          }
 
-         if(isset($_REQUEST['codigocliente'])){
-        	$codigo = $_REQUEST['codigocliente'];
+         if(isset($_REQUEST['deletecliente'])){
+        	$codigo = $_REQUEST['deletecliente'];
 			$con = new ConexaoBD;
 	        $conexao = $con->ConnectBD();
 	        try {

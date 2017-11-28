@@ -52,7 +52,7 @@
                                 <?php
                                 foreach ($clientes as $value) {
                                         echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                        <button class='btn pull-right' onclick='excluirFilme(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
+                                        <button class='btn pull-right' onclick='excluircliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
                                     }
                                  ?>
                             </tbody>
@@ -74,13 +74,13 @@
                     deletecliente: codigo_cliente
                 },success:function(data){
                     if(data !== "0"){
-                        alert("Cliente excluido com sucesso"); 
+                        alert("Cliente excluido com sucesso!"); 
                         location.reload();                 
                     }else{
-                        alert('Erro ao excluir cliente');
+                        alert('Erro ao excluir cliente!');
                     }
                 },error:function(){
-                    alert("ERRO AO EXCLUIR CLIENTE");
+                    alert("ERRO AO EXCLUIR CLIENTE!");
                 }
             });  
         }

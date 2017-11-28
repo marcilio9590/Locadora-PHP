@@ -187,5 +187,25 @@
         });  
     }
 
+    function editarcliente(cod){
+        $.ajax({
+            url: '../controllers/cliente.controller.php',
+            type: 'POST',
+            data: {
+                cod_cliente: cod_cliente
+            },success:function(data){
+                if(data == true){
+                    alert('#!');
+                    location.reload();  
+                    console.log(data);                
+                }else{
+                    alert('#');
+                }
+            },error:function(){
+                alert("#");
+            }
+        });  
+    }
+
     
 </script>

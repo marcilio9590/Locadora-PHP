@@ -87,7 +87,7 @@
     var funcionarios = [];
     
      function salvarDados(){
-         if($('#txtNome').val() != ""){
+         if($('#txtNome').val() != "0")&&($('#txtRua').val() != "0"){
 
          }else{
              alert('Preencha todos os campos');

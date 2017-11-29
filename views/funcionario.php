@@ -51,8 +51,8 @@
                                 foreach ($funcionarios as $value) {
                                         echo "<tr><td>".$value['cod_funcionario']."</td><td>".$value['nome']."</td><td>".$value['rua']."</td><td>".$value['bairro']."</td><td>".$value['cidade']."</td><td>".$value['cpf']."</td><td>".$value['rg']."</td><td>".$value['data_admissao']."</td><td>".$value['telefone']."</td>
                                         <td>
-                                        <a href='edicao.funcionario.php?codFuncionario=".$value['cod_funcionario']."'><button class='btn pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
-                                        <button class='btn pull-right' onclick='excluircliente(".$value['cod_funcionario'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
+                                        <a href='edicao.funcionario.php?codFuncionario=".$value['cod_funcionario']."'><button title='Editar' class='btn pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                        <button title='Excluir' class='btn pull-right' onclick='excluirFuncionario(".$value['cod_funcionario'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                                         </tr>";
                                     }
                                  ?>
@@ -66,3 +66,27 @@
     </body>
 </html>
   
+  <script>
+
+function excluirFuncionario(codigo_funcionario){
+        if(confirm('Deseja realmente excluir este funcionário?')){
+            $.ajax({
+                url: '../controllers/funcionario.controller.php',
+                type: 'POST',
+                data: {
+                    deleteFuncionario: codigo_funcionario
+                },success:function(data){
+                    if(data !== "0"){
+                        alert("Funcionário excluido com sucesso!"); 
+                        location.reload();                 
+                    }else{
+                        alert('Erro ao excluir funcionário!');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR FUNCIONÁRIO!");
+                }
+            });  
+        }
+    }
+
+  </script>

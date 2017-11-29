@@ -13,6 +13,22 @@
             $conexao = null;
         }
 
+         if(isset($_REQUEST['deleteFuncionario'])){
+            $codigo = $_REQUEST['deleteFuncionario'];
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            try {
+                $del = $conexao->prepare("DELETE FROM funcionarios WHERE cod_funcionario = $codigo");
+                $del->execute();
+                $count = $del->rowCount();
+                echo $count;
+            } catch (PDOException $e){
+                echo "false";
+            } finally{
+                $conexao = null;
+            }
+        }
+
         
 
            
@@ -55,25 +71,4 @@
         if(isset($_REQUEST['editarDados'])){
             
         }
-
-        /*if (isset($_REQUEST["editarFuncionario"])) {
-            $cod_Funcionario = $_REQUEST['cod_funcionario'];
-            $nomeFuncionario = $_REQUEST['nomeFuncionario'];
-            $ruaFuncionario = $_REQUEST['ruaFuncionario'];
-            $cepFuncionario = $_REQUEST['cepFuncionario'];
-            $bairroFuncionario = $_REQUEST['bairroFuncionario'];
-            $cidadeFuncionario = $_REQUEST['cidadeFuncionario'];
-            $cpfFuncionario = $_REQUEST['cpfFuncionario'];
-            $rgFuncionario = $_REQUEST['rgFuncionario'];
-            $sexoFuncionario = $_REQUEST['sexoFuncionario'];
-            $data_nascimentoFuncionario = $_REQUEST['data_nascimento'];
-            $telefoneFuncionario = $_REQUEST['telefoneFuncionario'];
-            try { 
-                $conexao->query("UPDATE funcionarios SET cod_funcionario = '$cod_Funcionario', nomeFuncionario= '$nomeFuncionario', ruaFuncionario = '$ruaFuncionario', cepFuncionario = '$cepFuncionario',
-                 bairroFuncionario = '$bairroFuncionario', cidadeFuncionario = '$cidadeFuncionario', cpfFuncionario = '$cpfFuncionario', rgFuncionario= '$rgFuncionario', sexoFuncionario = '$sexoFuncionario', data_nascimento = '$data_nascimentoFuncionario', telefone = '$telefoneFuncionario'  WHERE cod_funcionario = '' ");
-            } catch (PDOException $e) {
-                echo "False";
-        }
-    }*/
-
 ?>  

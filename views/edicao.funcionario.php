@@ -118,13 +118,13 @@ require_once '../conexao/conexaoBD.php';
                 editarDados: true
             }, success:function(response){
                 if(response.trim() == "1"){
-                    alert('Funcionário Editado');
+                    alert('Funcionário Cadastrado');
                     location.reload();                   
                 }else{
-                    alert('Erro ao editar');
+                    alert('Erro ao Cadastrar');
                 }
             }, error:function(response){
-                alert("ERRO AO EDITAR");
+                alert("ERRO AO CADASTRAR");
             }
         });  
     }

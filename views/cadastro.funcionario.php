@@ -87,11 +87,7 @@
     var funcionarios = [];
     
      function salvarDados(){
-         if($('#txtNome').val() != "0")&&($('#txtRua').val() != "0"){
-
-         }else{
-             alert('Preencha todos os campos');
-         }
+         
         $.ajax({
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
@@ -119,6 +115,7 @@
             }
         });  
     }
+
 
 </script>
 

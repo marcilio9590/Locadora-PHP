@@ -21,10 +21,11 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="cadastro.filme.php" class="pull-left"> <button class="btn btn-default">Cadastrar Filme</button></a>
+                    <a href="cadastros.filme.php" class="pull-left"> <button class="btn btn-default">Cadastrar Filme</button></a>
                     </div>
                     <div class="col-sm-2"></div>
                 </div>
+                  
                 <br>
                 <div class="row">
                     <div class="col-sm-2"></div>
@@ -45,22 +46,22 @@
                             <tbody>
                                 
                                 <?php
-                                	foreach ($listaFilmes as $value) {
-                                		echo "<tr><td>".$value['cod_filme']."</td><td>".$value['nome']."</td><td>".$value['genero']."</td><td>".$value['preco']."</td><td>";
-                                		if($value['status'] == 1){
-                                				echo "<font color='green'>Disponível</font>";
-                                			}else{
-                                				echo "<font color='red'>Indisponível</font>";
-                                			}
-                                		echo
-                                			"<td>
-                            				  <button title='Editar' class='glyphicon glyphicon-pencil' aria-hidden='true' onclick='editarFilme(".$value['nome'].")'></button>
-                            		 		  
+                                    foreach ($listaFilmes as $value) {
+                                        echo "<tr><td>".$value['cod_filme']."</td><td>".$value['nome']."</td><td>".$value['genero']."</td><td>".$value['preco']."</td><td>";
+                                        if($value['status'] == 1){
+                                                echo "<font color='green'>Disponível</font>";
+                                            }else{
+                                                echo "<font color='red'>Indisponível</font>";
+                                            }
+                                        echo
+                                            "<td>
+                                              <a href='edicao.filme.php?codFilme=".$value['cod_filme']."'> <button title='Editar' class='btn pull-left'onclick='editarDados'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                              
                                               <button title='Excluir' class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
-                            		 			</td>";
-                                		
-                                	}
-                                ?>
+                                                </td>";
+                                        
+                                    }
+                                //?>
 
                             </tbody>
 
@@ -73,8 +74,8 @@
 </html>
 
 <script>
-	
-	function excluirFilme(codigo){
+    
+    function excluirFilme(codigo){
         if(confirm('Deseja realmente excluir este filme?')){
             $.ajax({
                 url: '../controllers/filme.controller.php',

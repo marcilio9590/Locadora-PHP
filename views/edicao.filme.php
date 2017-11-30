@@ -1,3 +1,16 @@
+
+<?php 
+require_once '../conexao/conexaoBD.php';
+    $con = new ConexaoBD;
+    $conexao = $con->ConnectBD();
+    if(isset($_GET['codFilme'])){
+        $cod = $_GET['codFilme'];
+        $res = $conexao->query("SELECT * from filmes where cod_filme = $cod");
+        $filme = $res->fetchAll()[0];
+    }
+
+?>
+
 <?php require_once('../controllers/filme.controller.php'); ?>
 
 <html>
@@ -13,7 +26,7 @@
         </div>
         <div class="container-fluid"> 
                 <div class="row">
-                    <div class="col-sm-4"><h1><label>Edição de Filmes</label></h1></div>
+                 <div class="col-sm-6"><h2><label> Edição do Funcionário - <?php echo $filme['nome']?></label></h2></div>
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4"></div>
                 </div>
@@ -33,37 +46,28 @@
                      
 
                             <tbody>
-                                
-                                 <tr>
-                                    <td>Nome do Filme:</td>
-                                <td><input value="<?php echo $funcionario['nome'] ?>" type="text" id="txtNome"></td>
-                            </tr>
-                            <tr>
-                                    <td>Genero Do Filme:</td> 
-                                <td><input type="text" id="txtRua"></td>
+                              <table> 
+                                 <form action="filme.controller.php" method="POST">
+                                <input name="cod_filme" type="hidden" >
+                                  <tr>
+                                    <td>Nome do Filme:</td> 
+                                <td><input value="<?php echo $filme['nome'] ?>" type="text" id="txtNome"></td>
                             </tr>
                                 
                             <tr>
-                                    <td>Preço Do Filme:</td>
-                                <td><input type="number" id="txtCep"></td>
+                                    <td>Genero do Filme:</td>
+                                <td><input type="text" id="txtGenero"></td>
                             </tr>
                             
                              <tr>
-                              
-                             
-
-
-                                     
-
-                                 <<?php 
-                                   if() {
-
-
-
-
-                                   }
-
-                                  ?>
+                                    <td>Preço do Filme:</td>
+                                <td><input type="number" id="txtPreco"></td>
+                            </tr>
+                                
+                                </table> 
+                            <button title='Salvar' class="pull-left btn btn-default" type="button" id="btnSalvar" onclick="salvarDados()">Salvar</button>
+                          
+                           </form>
                             </tbody>
 
                         </table>
@@ -76,24 +80,29 @@
  
 
  <script>
- function editarFilme(){
+  var editarFilme = [0];
+    var codigo = <?php echo $editarFilme['cod_filme'];?>
+    
+     function salvarDados(){
         $.ajax({
             url: '../controllers/filme.controller.php',
             type: 'POST',
             data: {
-                nomeFilme: ('#txtNomeFilme').val(),
-                generoFilme: ('#txtGeneroFilme').val(),
-                precoFilme: ('#txtPrecoFilme').val(),
-                editarFilme: true
+                codigoFilme:  codigo;
+                nomefuncionarios:   $('#txtNome').val(),
+                ruafuncionarios:    $('#txtGenero').val(),
+                cepfuncionarios:    $('#txtPreco').val(),
+               
+                editarDados: true
             }, success:function(response){
-              console.log(response);
-                if(response == true){
-                    alert('Filme cadastrado com sucesso');                   
+                if(response.trim() == "1"){
+                    alert('Funcionário Cadastrado');
+                    location.reload();                   
                 }else{
-                    alert('Erro ao cadastrar Filme');
+                    alert('Erro ao Cadastrar');
                 }
             }, error:function(response){
-                alert("ERRO AO CADASTRAR FILME");
+                alert("ERRO AO CADASTRAR");
             }
         });  
     }

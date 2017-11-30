@@ -1,5 +1,5 @@
 <?php
-		require_once '../conexao/conexaoBD.php';
+        require_once '../conexao/conexaoBD.php';
 
         $listaFilmes;        
         $con = new ConexaoBD;
@@ -14,17 +14,17 @@
         }
 
         if(isset($_REQUEST['codigoFilme'])){
-        	$codigo = $_REQUEST['codigoFilme'];
-			$con = new ConexaoBD;
-	        $conexao = $con->ConnectBD();
-	        try {
+            $codigo = $_REQUEST['codigoFilme'];
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            try {
                 $del = $conexao->prepare("DELETE FROM filmes WHERE cod_filme = $codigo");
                 $del->execute();
                 $count = $del->rowCount();
                 echo $count;
-	        } catch (PDOException $e){
-	            echo "false";
-	        } finally{
+            } catch (PDOException $e){
+                echo "false";
+            } finally{
                 $conexao = null;
             }
         }
@@ -48,9 +48,37 @@
                 $conexao = null;
             }
         }
+ 
 
 
-        if (isset($_REQUEST["editarFilme"])) {
+       /*isset($_REQUEST["editarFilme"])) {
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            $cod_filme = $_POST['codFilme'];
+            $nome = $_POST['nome'];
+            $genero = $_POST['genero'];
+            $preco = $_POST['preco'];          
+         if(mysql_query("UPDATE filmes SET nome='$nome', genero='$genero' preco=' $preco'  WHERE codFilme='cod_filme' " )){
+             
+             echo "Filme Editado Com Sucesso!";
+         }
+         else{
+             echo mysql_error();
+             exit;
+         }*/
+        
+
+
+
+
+
+
+
+
+
+
+
+       /* if (isset($_REQUEST["editarFilme"])) {
             $nome = $_REQUEST['nomeFilme'];
             $genero = $_REQUEST['generoFilme'];
             $preco = $_REQUEST['precoFilme'];
@@ -64,6 +92,7 @@
           }else{
               echo "Aviso: Não foi atualizado!";
             }*/
-        }
+        //}
 
-?>  
+?>     
+        

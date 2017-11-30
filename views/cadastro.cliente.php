@@ -177,7 +177,7 @@
             },success:function(response){
                 if(response.trim() == "1"){
                    alert('Cliente Cadastrado');
-                    location.reload();                   
+                   window.location="cliente.php";                   
                 }else{
                     alert('Erro ao cadastrar');
                 }

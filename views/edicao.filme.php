@@ -1,16 +1,3 @@
-
-<?php 
-require_once '../conexao/conexaoBD.php';
-    $con = new ConexaoBD;
-    $conexao = $con->ConnectBD();
-    if(isset($_GET['codFilme'])){
-        $cod = $_GET['codFilme'];
-        $res = $conexao->query("SELECT * from filmes where cod_filme = $cod");
-        $filme = $res->fetchAll()[0];
-    }
-
-?>
-
 <?php require_once('../controllers/filme.controller.php'); ?>
 
 <html>
@@ -26,7 +13,7 @@ require_once '../conexao/conexaoBD.php';
         </div>
         <div class="container-fluid"> 
                 <div class="row">
-                 <div class="col-sm-6"><h2><label> Edição do Funcionário - <?php echo $filme['nome']?></label></h2></div>
+                 <div class="col-sm-6"><h2><label> Edição do Filme - <?php echo $filme['nome']?></label></h2></div>
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4"></div>
                 </div>
@@ -56,12 +43,12 @@ require_once '../conexao/conexaoBD.php';
                                 
                             <tr>
                                     <td>Genero do Filme:</td>
-                                <td><input type="text" id="txtGenero"></td>
+                                <td><input value="<?php echo $filme['genero'] ?>" type="text" id="txtGenero"></td>
                             </tr>
                             
                              <tr>
                                     <td>Preço do Filme:</td>
-                                <td><input type="number" id="txtPreco"></td>
+                                <td><input value="<?php echo $filme['preco'] ?>" type="number" id="txtPreco"></td>
                             </tr>
                                 
                                 </table> 
@@ -80,30 +67,31 @@ require_once '../conexao/conexaoBD.php';
  
 
  <script>
-  var editarFilme = [0];
-    var codigo = <?php echo $editarFilme['cod_filme'];?>
-    
+    var codigo = <?php echo $_GET['codFilme']?>;
      function salvarDados(){
-        $.ajax({
-            url: '../controllers/filme.controller.php',
-            type: 'POST',
-            data: {
-                codigoFilme:  codigo;
-                nomefuncionarios:   $('#txtNome').val(),
-                ruafuncionarios:    $('#txtGenero').val(),
-                cepfuncionarios:    $('#txtPreco').val(),
-               
-                editarDados: true
-            }, success:function(response){
-                if(response.trim() == "1"){
-                    alert('Funcionário Cadastrado');
-                    location.reload();                   
-                }else{
-                    alert('Erro ao Cadastrar');
+        if($('#txtNome').val() != "" && $('#txtGenero').val() != "" && $('#txtPreco').val() != ""){
+            $.ajax({
+                url: '../controllers/filme.controller.php',
+                type: 'POST',
+                data: {
+                    codigoFilmeEdicao:        codigo,
+                    nomeFilme:   $('#txtNome').val(),
+                    generoFilme:    $('#txtGenero').val(),
+                    precoFilme:    $('#txtPreco').val(),
+                    editarDados: true
+                }, success:function(response){
+                    if(response != "False"){
+                        alert("Filme Editado com Sucesso");
+                        window.location="filme.php";                   
+                    }else{
+                        alert('Erro ao Editar');
+                    }
+                }, error:function(response){
+                    alert("ERRO AO EDITAR");
                 }
-            }, error:function(response){
-                alert("ERRO AO CADASTRAR");
-            }
-        });  
+            });  
+        } else {
+            alert('Preencha todos os campos.')
+        }
     }
 </script>

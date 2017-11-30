@@ -49,50 +49,43 @@
             }
         }
  
-
-
-       /*isset($_REQUEST["editarFilme"])) {
+        if(isset($_GET['codFilme'])){
             $con = new ConexaoBD;
             $conexao = $con->ConnectBD();
-            $cod_filme = $_POST['codFilme'];
-            $nome = $_POST['nome'];
-            $genero = $_POST['genero'];
-            $preco = $_POST['preco'];          
-         if(mysql_query("UPDATE filmes SET nome='$nome', genero='$genero' preco=' $preco'  WHERE codFilme='cod_filme' " )){
-             
-             echo "Filme Editado Com Sucesso!";
-         }
-         else{
-             echo mysql_error();
-             exit;
-         }*/
-        
-
-
-
-
-
-
-
-
-
-
-
-       /* if (isset($_REQUEST["editarFilme"])) {
-            $nome = $_REQUEST['nomeFilme'];
-            $genero = $_REQUEST['generoFilme'];
-            $preco = $_REQUEST['precoFilme'];
-            try { 
-                $conexao->query("UPDATE filme SET nome = '$nome', genero= '$genero', preco = '$preco'  WHERE nome = '' ");
+            $cod = $_GET['codFilme'];
+            try{
+                $res = $conexao->query("SELECT * from filmes where cod_filme = $cod");
+                $filme = $res->fetchAll()[0];
             } catch (PDOException $e) {
                 echo "False";
+            } finally{
+                $conexao = null;
             }
-          /*if(mysql_affected_rows() > 0){
-              echo "Sucesso: Atualizado corretamente!";
-          }else{
-              echo "Aviso: Não foi atualizado!";
-            }*/
-        //}
+        }
+
+       if(isset($_REQUEST["editarDados"])) {
+            $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            $cod_filme = $_REQUEST['codigoFilmeEdicao'];
+            $nome = $_REQUEST['nomeFilme'];
+            $genero = $_REQUEST['generoFilme'];
+            $preco = $_REQUEST['precoFilme'];          
+             
+            try{
+                $retorno = $conexao->prepare("UPDATE filmes SET nome=:nome, genero=:genero,preco=:preco WHERE cod_filme = :codigo" );
+                $retorno->bindParam(':nome', $nome);
+                $retorno->bindParam(':genero', $genero);
+                $retorno->bindParam(':preco', $preco);
+                $retorno->bindParam(':codigo', $cod_filme);
+                $retorno->execute();
+                echo "Filme Editado Com Sucesso!";
+            }catch (PDOException $e) {
+                echo "False";
+            } finally{
+                $conexao = null;
+            } 
+        }
+
 
 ?>     
         

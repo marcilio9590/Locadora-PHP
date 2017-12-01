@@ -168,7 +168,7 @@
                 telefonecliente: $('#telefonecliente').val(),
                 emailcliente: $('#emailcliente').val(),                
                 sexo: $('#sexo').val(),
-                cpfcliente: $('#cpfcliente').val(),
+                cpfcliente: $('#cpfcliente').val()+ $('#cpf2cliente').val(),
                 enderecocliente: $('#enderecocliente').val(),
                 bairrocliente: $('#bairrocliente').val(),
                 cidadecliente: $('#cidadecliente').val(),

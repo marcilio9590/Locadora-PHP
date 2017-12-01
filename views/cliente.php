@@ -51,8 +51,8 @@
                                 <tbody>
                                 <?php
                                 foreach ($clientes as $value) {
-                                        echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                        <button class='btn pull-right' onclick='excluircliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
+                                        echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><a href='edicao.cliente.php?codCliente=".$value['cod_cliente']."'><button class='btn btn-default pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                        <button class='btn btn-default pull-right' onclick='excluircliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
                                     }
                                  ?>
                             </tbody>

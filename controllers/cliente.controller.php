@@ -85,4 +85,18 @@
         }
     }
 
+    if(isset($_GET['codCliente'])){
+        $con = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            $cod = $_GET['codCliente'];
+            try{
+                $res = $conexao->query("SELECT * from clientes where cod_cliente = $cod");
+                $cliente = $res->fetchAll()[0];
+            } catch (PDOException $e) {
+                echo "False";
+            } finally{
+                $conexao = null;
+            }
+    }
+
 ?>

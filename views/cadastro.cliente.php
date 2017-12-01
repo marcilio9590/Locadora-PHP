@@ -35,7 +35,7 @@
     <label for="telefone">Telefone: </label>
    </td>
    <td align="left">
-   <input id="ddd" type="text" name="ddd" size="1" maxlength="3">-<input id="telefonecliente" type="text" name="telefone">
+   <input id="telefonecliente" type="text" name="telefone">
    </td>
   </tr>
   
@@ -64,7 +64,7 @@
     <label>CPF:</label>
    </td>
    <td align="left">
-    <input id="cpfcliente" type="text" name="cpf" size="9" maxlength="9"> - <input id="cpf2cliente" type="text" name="cpf2" size="2" maxlength="2">
+    <input id="cpfcliente" type="text" name="cpf" size="9" maxlength="9"> 
    </td>
   </tr>
  </table>

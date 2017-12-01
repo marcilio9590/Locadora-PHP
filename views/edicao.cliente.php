@@ -35,7 +35,7 @@
     <label for="telefone">Telefone: </label>
    </td>
    <td align="left">
-   <input id="ddd" value="<?php echo $cliente['ddd'] ?>" type="text" name="ddd" size="1" maxlength="3">-<input id="telefonecliente" value="<?php echo $cliente['telefone'] ?>" type="text" name="telefone">
+   <input id="telefonecliente" value="<?php echo $cliente['telefone'] ?>" type="text" name="telefone">
    </td>
   </tr>
   
@@ -59,7 +59,7 @@
     <label>CPF:</label>
    </td>
    <td align="left">
-    <input id="cpfcliente" value="<?php echo $cliente['cpf'] ?>" type="text" name="cpf" size="9" maxlength="9"> - <input id="cpf2cliente" value="<?php echo $cliente['cpf2'] ?>" type="text" name="cpf2" size="2" maxlength="2">
+    <input id="cpfcliente" value="<?php echo $cliente['cpf'] ?>" type="text" name="cpf" size="9" maxlength="9"> 
    </td>
   </tr>
  </table>
@@ -99,29 +99,29 @@
     <option <?php echo ($cliente['estado']== 'al') ? 'seleted':'' ?> value="al">Alagoas</option> 
     <option <?php echo ($cliente['estado']== 'am') ? 'seleted':'' ?> value="am">Amazonas</option> 
     <option <?php echo ($cliente['estado']== 'ap') ? 'seleted':'' ?> value="ap">Amapá</option> 
-    <option value="ba">Bahia</option> 
-    <option value="ce">Ceará</option> 
-    <option value="df">Distrito Federal</option> 
-    <option value="es">Espírito Santo</option> 
-    <option value="go">Goiás</option> 
-    <option value="ma">Maranhão</option> 
-    <option value="mt">Mato Grosso</option> 
-    <option value="ms">Mato Grosso do Sul</option> 
-    <option value="mg">Minas Gerais</option> 
-    <option value="pa">Pará</option> 
-    <option value="pb">Paraíba</option> 
-    <option value="pr">Paraná</option> 
-    <option value="pe">Pernambuco</option> 
-    <option value="pi">Piauí</option> 
-    <option value="rj">Rio de Janeiro</option> 
-    <option value="rn">Rio Grande do Norte</option> 
-    <option value="ro">Rondônia</option> 
-    <option value="rs">Rio Grande do Sul</option> 
-    <option value="rr">Roraima</option> 
-    <option value="sc">Santa Catarina</option> 
-    <option value="se">Sergipe</option> 
-    <option value="sp">São Paulo</option> 
-    <option value="to">Tocantins</option> 
+    <option <?php echo ($cliente['estado']== 'ba') ? 'seleted':'' ?> value="ba">Bahia</option> 
+    <option <?php echo ($cliente['estado']== 'ce') ? 'seleted':'' ?> value="ce">Ceará</option> 
+    <option <?php echo ($cliente['estado']== 'df') ? 'seleted':'' ?> value="df">Distrito Federal</option> 
+    <option <?php echo ($cliente['estado']== 'es') ? 'seleted':'' ?> value="es">Espírito Santo</option> 
+    <option <?php echo ($cliente['estado']== 'go') ? 'seleted':'' ?> value="go">Goiás</option> 
+    <option <?php echo ($cliente['estado']== 'ma') ? 'seleted':'' ?> value="ma">Maranhão</option> 
+    <option <?php echo ($cliente['estado']== 'mt') ? 'seleted':'' ?> value="mt">Mato Grosso</option> 
+    <option <?php echo ($cliente['estado']== 'ms') ? 'seleted':'' ?> value="ms">Mato Grosso do Sul</option> 
+    <option <?php echo ($cliente['estado']== 'mg') ? 'seleted':'' ?> value="mg">Minas Gerais</option> 
+    <option <?php echo ($cliente['estado']== 'pa') ? 'seleted':'' ?> value="pa">Pará</option> 
+    <option <?php echo ($cliente['estado']== 'pb') ? 'seleted':'' ?> value="pb">Paraíba</option> 
+    <option <?php echo ($cliente['estado']== 'pr') ? 'seleted':'' ?> value="pr">Paraná</option> 
+    <option <?php echo ($cliente['estado']== 'pe') ? 'seleted':'' ?> value="pe">Pernambuco</option> 
+    <option <?php echo ($cliente['estado']== 'pi') ? 'seleted':'' ?> value="pi">Piauí</option> 
+    <option <?php echo ($cliente['estado']== 'rj') ? 'seleted':'' ?> value="rj">Rio de Janeiro</option> 
+    <option <?php echo ($cliente['estado']== 'rn') ? 'seleted':'' ?> value="rn">Rio Grande do Norte</option> 
+    <option <?php echo ($cliente['estado']== 'ro') ? 'seleted':'' ?> value="ro">Rondônia</option> 
+    <option <?php echo ($cliente['estado']== 'rs') ? 'seleted':'' ?> value="rs">Rio Grande do Sul</option> 
+    <option <?php echo ($cliente['estado']== 'rr') ? 'seleted':'' ?> value="rr">Roraima</option> 
+    <option <?php echo ($cliente['estado']== 'sc') ? 'seleted':'' ?> value="sc">Santa Catarina</option> 
+    <option <?php echo ($cliente['estado']== 'se') ? 'seleted':'' ?> value="se">Sergipe</option> 
+    <option <?php echo ($cliente['estado']== 'sp') ? 'seleted':'' ?> value="sp">São Paulo</option> 
+    <option <?php echo ($cliente['estado']== 'to') ? 'seleted':'' ?> value="to">Tocantins</option> 
    </select>
    </td>
   </tr>
@@ -154,14 +154,7 @@
     var filmes = [];
 
     function editarcliente(){
-      /*if($('#nomecliente').val() != "" && $('#ddd').val() != "" && ){
-
-      } else {
-        alert("Preencha todos os campos")
-      }
-*/
-
-
+      if($('#nomecliente').val() != "" && $('#ddd').val() != "" && $('#telefonecliente').val() !="" && $('#emailcliente').val() !="" &&  $('#sexo').val() !="" && $('#cpfcliente').val() !="" && $('#enderecocliente').val() !="" && $('#bairrocliente').val() !="" && $('#cidadecliente').val() !="" && $('#estado').val() !="" ){
         $.ajax({
             url: '../controllers/cliente.controller.php',
             type: 'POST',
@@ -177,24 +170,19 @@
                 cidadecliente: $('#cidadecliente').val(),
                         estadocliente: $('#estado').val(),
                         salvardados: true
-            },success:function(response){
-                if(response.trim() == "1"){
-                   alert('Cliente editado');
-                   window.location="cliente.php";                   
-                }else{
-                    alert('Erro ao editar');
+                    }, success:function(response){
+                    if(response != "False"){
+                        alert("Cliente Editado com Sucesso");
+                        window.location="cliente.php";                   
+                    }else{
+                        alert('Erro ao Editar');
+                    }
+                }, error:function(response){
+                    alert("ERRO AO EDITAR");
                 }
-            }, error:function(response){
-                alert("ERRO AO EDITAR");
-            }
-        });  
-
-
-
-        
+            });  
+        } else {
+            alert('Preencha todos os campos.')
+        }
     }
-
-
-    
-    
 </script>

@@ -119,7 +119,7 @@ require_once '../conexao/conexaoBD.php';
                 telefonefuncionarios: $('#txtTelefone').val(),
                 editarFuncionario: true
             }, success:function(response){
-                if(response.trim() == "1"){
+                if(response != "False"){
                     alert('Funcionário Editado com Sucesso');
                     location.reload();  
                     window.location="funcionario.php";                  

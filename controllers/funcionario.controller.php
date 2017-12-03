@@ -83,7 +83,7 @@
             
             try {
                 $retorno = $conexao->prepare("UPDATE funcionarios SET nome=:nome, rua=:rua, cep=:cep,
-                    bairro=:bairro, cidade=:cidade, cpf=:cpf, rg=:rg, sexo=:sexo, data_admissao=:data_admissao, telefone=:telefone WHERE cod_funcionario=:$cod_func");
+                    bairro=:bairro, cidade=:cidade, cpf=:cpf, rg=:rg, sexo=:sexo, data_admissao=:data_admissao, telefone=:telefone WHERE cod_funcionario=:codigo2");
                 $retorno->bindParam(':codigo2', $cod_func);
                 $retorno->bindParam(':nome', $nomefuncionario);
                 $retorno->bindParam(':rua', $ruafuncionario);
@@ -96,7 +96,7 @@
                 $retorno->bindParam(':data_admissao', $data_admissao);
                 $retorno->bindParam(':telefone', $telefonefuncionario);
                 $retorno->execute();
-                echo "Cliente editado com sucesso!";
+                echo "Funcionario editado com sucesso!";
             } catch (PDOException $e){
                 echo "false";
             } finally{

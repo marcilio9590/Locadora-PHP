@@ -35,12 +35,7 @@
                                     <td>Preço:</td> 
                                 <td><input type="double" id="txtPrecoFilme"></td>
                             </tr>
-                                
-                            <!-- <tr>
-                                    <td>Status:</td>
-                                <td><input type="number" id="txtStatusFilme"></td>
-                            </tr>-->
-                            
+                                                           
                             
                         </table>
                         <button class="btn btn-default" type="button" onclick="cadastrarFilme()">Salvar</button>

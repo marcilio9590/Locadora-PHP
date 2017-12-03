@@ -7,7 +7,6 @@ require_once '../conexao/conexaoBD.php';
         $res = $conexao->query("SELECT * from funcionarios where cod_funcionario = $cod");
         $funcionario = $res->fetchAll()[0];
     }
-
 ?>
 
 <?php require_once('../controllers/funcionario.controller.php'); ?>
@@ -42,37 +41,37 @@ require_once '../conexao/conexaoBD.php';
                             </tr>
                             <tr>
                                     <td>Rua:</td> 
-                                <td><input type="text" id="txtRua"></td>
+                                <td><input value="<?php echo $funcionario['rua'] ?>" type="text" id="txtRua"></td>
                             </tr>
                                 
                             <tr>
                                     <td>Cep:</td>
-                                <td><input type="number" id="txtCep"></td>
+                                <td><input value="<?php echo $funcionario['cep'] ?>" type="number" id="txtCep"></td>
                             </tr>
                             
                              <tr>
                                     <td>Bairro:</td>
-                                <td><input type="text" id="txtBairro"></td>
+                                <td><input value="<?php echo $funcionario['bairro'] ?>" type="text" id="txtBairro"></td>
                             </tr>
                             
                              <tr>
                                     <td>Cidade:</td>
-                                <td><input type="text" id="txtCidade"></td>
+                                <td><input value="<?php echo $funcionario['cidade'] ?>" type="text" id="txtCidade"></td>
                             </tr>
 
                              <tr>
                                     <td>Cpf:</td>
-                                <td><input type="number" id="txtCpf"></td>
+                                <td><input value="<?php echo $funcionario['cpf'] ?>" type="number" id="txtCpf"></td>
                             </tr>
 
                              <tr>
                                     <td>Rg:</td>
-                                <td><input type="number" id="txtRg"></td>
+                                <td><input value="<?php echo $funcionario['rg'] ?>" type="number" id="txtRg"></td>
                             </tr>
 
                             <tr>
                                     <td>Sexo:</td>
-                                <td><input type="text" id="txtSexo"></td>
+                                <td><input value="<?php echo $funcionario['sexo'] ?>" type="text" id="txtSexo"></td>
                             </tr>
 
                              <tr>
@@ -82,10 +81,10 @@ require_once '../conexao/conexaoBD.php';
 
                              <tr>
                                     <td>Telefone:</td>
-                                <td><input type="number" id="txtTelefone"></td>
+                                <td><input value="<?php echo $funcionario['telefone'] ?>" type="number" id="txtTelefone"></td>
                             </tr>
                         </table>
-                        <button title='Salvar' class="pull-left btn btn-default" type="button" id="btnSalvar" onclick="salvarDados()">Salvar</button>
+                        <button title='Editar' class="pull-left btn btn-default" type="button" id="btnEditar" onclick="editarDados()">Salvar</button>
                         <br>
                     </div>
                    
@@ -95,16 +94,19 @@ require_once '../conexao/conexaoBD.php';
 </html>
 
 <script>
-
     var funcionarios = [];
     var codigo = <?php echo $funcionario['cod_funcionario'];?>
     
-     function salvarDados(){
+     function editarDados(){
+
+         if($('#txtNome').val() != "" && $('#txtRua').val() != "" && $('#txtCep').val() != "" && $('#txtBairro').val() != "" && $('#txtCidade').val() != "" &&
+            $('#txtCpf').val() != "" &&  $('#txtRg').val() != "" &&  $('#txtSexo').val() != "" && $('#txtDataAdmissao').val() != "" &&  $('#txtTelefone').val() != ""){
+
         $.ajax({
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
             data: {
-                codigoFuncionario:  codigo,
+                cod_func:  codigo,
                 nomefuncionarios:   $('#txtNome').val(),
                 ruafuncionarios:    $('#txtRua').val(),
                 cepfuncionarios:    $('#txtCep').val(),
@@ -115,19 +117,20 @@ require_once '../conexao/conexaoBD.php';
                 sexofuncionarios:   $('#txtSexo').val(),
                 data_admissaos:     $('#txtDataAdmissao').val(),
                 telefonefuncionarios: $('#txtTelefone').val(),
-                editarDados: true
+                editarFuncionario: true
             }, success:function(response){
                 if(response.trim() == "1"){
-                    alert('Funcionário Cadastrado');
-                    location.reload();                   
+                    alert('Funcionário Editado com Sucesso');
+                    location.reload();  
+                    window.location="funcionario.php";                  
                 }else{
-                    alert('Erro ao Cadastrar');
+                    alert('Erro ao Editar');
                 }
             }, error:function(response){
-                alert("ERRO AO CADASTRAR");
+                alert("ERRO AO EDITAR");
             }
         });  
     }
+}
 
 </script>
-

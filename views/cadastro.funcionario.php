@@ -83,7 +83,6 @@
 </html>
 
 <script>
-
     var funcionarios = [];
     
      function salvarDados(){
@@ -115,7 +114,5 @@
             }
         });  
     }
-
-
 </script>
 

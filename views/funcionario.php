@@ -51,7 +51,7 @@
                                 foreach ($funcionarios as $value) {
                                         echo "<tr><td>".$value['cod_funcionario']."</td><td>".$value['nome']."</td><td>".$value['rua']."</td><td>".$value['bairro']."</td><td>".$value['cidade']."</td><td>".$value['cpf']."</td><td>".$value['rg']."</td><td>".$value['data_admissao']."</td><td>".$value['telefone']."</td>
                                         <td>
-                                        <a href='edicao.funcionario.php?codFuncionario=".$value['cod_funcionario']."'><button title='Editar' class='btn pull-left'onclick='editarDados'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                        <a href='edicao.funcionario.php?codFuncionario=".$value['cod_funcionario']."'><button title='Editar' class='btn pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
                                         <button title='Excluir' class='btn pull-right' onclick='excluirFuncionario(".$value['cod_funcionario'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                                         </tr>";
                                     }
@@ -89,21 +89,5 @@ function excluirFuncionario(codigo_funcionario){
         }
     }
 
-
-/*function editarDados(){
-         if($('#txtNome').val() != "" &&
-            $('#txtRua').val() != "" &&
-            $('#txtCep').val() != "" &&
-            $('#txtBairro').val() != "" &&
-            $('#txtCidade').val() != "" &&
-            $('#txtCpf').val() != "" &&
-            $('#txtRg').val() != "" &&
-            $('#txtSexo').val() != "" &&
-            $('#txtDataAdmissao').val() != "" && 
-            $('#txtTelefone').val() != "")
-
-         }else{
-             alert('Preencha todos os campos');
-         }  */
-
+         
   </script>

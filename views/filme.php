@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="cadastros.filme.php" class="pull-left"> <button class="btn btn-default">Cadastrar Filme</button></a>
+                    <a href="cadastro.filme.php" class="pull-left"> <button class="btn btn-default">Cadastrar Filme</button></a>
                     </div>
                     <div class="col-sm-2"></div>
                 </div>

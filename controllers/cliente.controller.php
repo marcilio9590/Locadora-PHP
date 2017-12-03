@@ -13,8 +13,8 @@
          }
 
          if(isset($_REQUEST['deleteCliente'])){
-        	$codigo = $_REQUEST['deleteCliente'];
-			$con = new ConexaoBD;
+        	$codigo  = $_REQUEST['deleteCliente'];
+			$con     = new ConexaoBD;
 	        $conexao = $con->ConnectBD();
 	        try {
                 $del = $conexao->prepare("DELETE FROM clientes WHERE cod_cliente = $codigo");
@@ -61,5 +61,40 @@
                  $conexao = null;
              }
          }
+
+         if(isset($_REQUEST["editarCliente"])){
+            $con     = new ConexaoBD;
+            $conexao = $con->ConnectBD();
+            $cod_cli         = $_REQUEST['cod_cli'];
+            $clienteNome     = $_REQUEST['nomeCliente'];
+            $clienteEmail    = $_REQUEST['emailCliente'];
+            $clienteCpf      = $_REQUEST['cpfCliente'];
+            $clienteSexo     = $_REQUEST['sexoCliente'];
+            $clienteTelefone = $_REQUEST['telefoneCliente'];
+            $clienteEndereco = $_REQUEST['enderecoCliente'];
+            $clienteBairro   = $_REQUEST['bairroCliente'];
+            $clienteCidade   = $_REQUEST['cidadeCliente'];
+            $clienteEstado   = $_REQUEST['estadoCliente'];
+            
+            try {
+                $retorno = $conexao->prepare("UPDATE clientes SET nome=:nome, email=:email, cpf=:cpf, sexo=:sexo, telefone=:telefone, endereco=:endereco, bairro=:bairro, cidade=:cidade, estado=:estado WHERE cod_cliente=:codcli");
+                $retorno->bindParam(':codcli', $cod_cli);
+                $retorno->bindParam(':nome', $clienteNome);
+                $retorno->bindParam(':email', $clienteEmail);
+                $retorno->bindParam(':cpf', $clienteCpf);
+                $retorno->bindParam(':sexo', $clienteSexo);
+                $retorno->bindParam(':telefone', $clienteTelefone);
+                $retorno->bindParam(':endereco', $clienteEndereco);
+                $retorno->bindParam(':bairro', $clienteBairro);
+                $retorno->bindParam(':cidade', $clienteCidade);
+                $retorno->bindParam(':estado', $clienteEstado);
+                $retorno->execute();
+                echo "Cliente editado com sucesso!";
+            } catch (PDOException $e){
+                echo "false";
+            } finally{
+                $conexao = null;
+            }
+        }
 
 ?>

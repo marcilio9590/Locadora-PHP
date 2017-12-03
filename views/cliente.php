@@ -45,8 +45,8 @@
                                 <tbody>
                                 <?php
                                 foreach ($clientes as $value) {
-                                        echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><a href='edicao.cliente.php?codCliente=".$value['cod_cliente']."'><button class='btn btn-default pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
-                                        <button class='btn btn-default pull-right' onclick='excluircliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
+                                        echo "<tr><td>".$value['cod_cliente']."</td><td>".$value['nome']."</td><td>".$value['cpf']."</td><td>".$value['telefone']."</td><td><a href='edicao.cliente.php?codCliente=".$value['cod_cliente']."'><button title='Editar' class='btn btn-default pull-left'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></a>
+                                        <button title='Excluir' class='btn default pull-right' onclick='excluirCliente(".$value['cod_cliente'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td></tr>";
                                     }
                                  ?>
                             </tbody>
@@ -57,3 +57,29 @@
         </div>
     </body>
 </html>
+
+
+<script>
+    
+    function excluirCliente(codigo_cliente){
+        if(confirm('Deseja realmente excluir este cliente?')){
+            $.ajax({
+                url: '../controllers/cliente.controller.php',
+                type: 'POST',
+                data: {
+                    deleteCliente: codigo_cliente
+                },success:function(data){
+                    if(data !== "0"){
+                        alert("Cliente excluido com sucesso!"); 
+                        location.reload();                 
+                    }else{
+                        alert('Erro ao excluir cliente!');
+                    }
+                },error:function(){
+                    alert("ERRO AO EXCLUIR CLIENTE!");
+                }
+            });  
+        }
+    }
+
+</script>

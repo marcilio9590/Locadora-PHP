@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
-                    <a href="cadastro.cliente.php" class="pull-left"> <button class="btn btn-default">Cadastrar cliente</button></a>
+                    <a href="cadastro.cliente.php" class="pull-left"> <button class="btn btn-default">Cadastrar Novo Cliente</button></a>
             
                     </div>
                     <div class="col-sm-2"></div>
@@ -41,13 +41,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-
-
-
-                                <!-- <td>
-                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
-                                    <button class='btn pull-right' onclick='excluirFilme(".$value['cod_filme'].")'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>
-                                </td> -->
+                            
                                 <tbody>
                                 <?php
                                 foreach ($clientes as $value) {
@@ -63,55 +57,3 @@
         </div>
     </body>
 </html>
-<script type="text/javascript">
-	
-	function excluircliente(codigo_cliente){
-        if(confirm('Deseja realmente excluir este cliente?')){
-            $.ajax({
-                url: '../controllers/cliente.controller.php',
-                type: 'POST',
-                data: {
-                    deletecliente: codigo_cliente
-                },success:function(data){
-                    if(data !== "0"){
-                        alert("Cliente excluido com sucesso!"); 
-                        location.reload();                 
-                    }else{
-                        alert('Erro ao excluir cliente!');
-                    }
-                },error:function(){
-                    alert("ERRO AO EXCLUIR CLIENTE!");
-                }
-            });  
-        }
-    }
-    
-    function editarCliente(item){
-        // console.log(item);
-        $.ajax({
-                url: '../controllers/cliente.controller.php',
-                type: 'POST',
-                data: {
-                    codigoLocacao:item.cod_cliente,
-                    nomeCliente:item.nome,
-                    codigoCliente:item.cod_cliente,
-                    cpfcliente:item.cpfcliente,
-                    ddd:item.ddd,
-                    emailcliente:item.emailcliente,
-                    ederecocliente:item.enderecocliente,
-					bairrocliente: item.bairrocliente,
-					cidadecliente: item.cidadecliente,
-					estadocliente: item.estadocliente,
-					sexo: item.sexo,
-					telefonecliente: item.telefonecliente,
-					
-                    salvarDadosEditar: true
-                },success:function(data){
-                    window.location.replace('edicao.cliente.php');
-                },error:function(){
-                    alert("Erro ao editar.");
-                }
-            }); 
-    }
-
-</script>

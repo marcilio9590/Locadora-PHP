@@ -32,7 +32,7 @@
         
            
         if (isset($_REQUEST["cadastrarDados"])) {
-            $con = new ConexaoBD;
+            $con     = new ConexaoBD;
             $conexao = $con->ConnectBD();
             $nomefuncionario   = $_REQUEST['nomefuncionarios'];
             $ruafuncionario    = $_REQUEST['ruafuncionarios'];

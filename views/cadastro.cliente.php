@@ -1,4 +1,4 @@
-<?php require_once('../controllers/cadastro.locacoes.controller.php'); ?>
+<?php require_once('../controllers/cliente.controller.php'); ?>
 
 <html>
     <head>
@@ -19,161 +19,110 @@
                 </div>
 
                     <div class="col-sm-12">
+ <table border="0" class="table">
 
-<!-- DADOS PESSOAIS-->
-<fieldset>
- <legend>Dados Pessoais</legend>
- <table class="table"cellspacing="6">
-  <tr>
-   <td>
-    <label for="nome">Nome: </label>
-   </td>
-   <td align="left">
-    <input id="nomecliente" type="text" name="nomecliente">
-   </td>
-   <td>
-    <label for="telefone">Telefone: </label>
-   </td>
-   <td align="left">
-   <input id="telefonecliente" type="text" name="telefone">
-   </td>
-  </tr>
-  
-  <table class="table" cellspacing="6">
-  <tr>
-   <td>
-    <label for="email">E-mail: </label>
-   </td>
-   <td align="left">
-    <input id="emailcliente" type="text" name="email">
-   </td>
-  </tr>
-  
+                            <tr>
+                                <td>Nome do Cliente:</td>
+                                <td><input type="text" id="txtNome"></td>
+                            </tr>
 
+                            <tr>
+                                <td>Email:</td>
+                                <td><input type="text" id="txtEmail"></td>
+                            </tr>
 
+                            <tr>
+                                    <td>Cpf:</td>
+                                <td><input type="number" id="txtCpf"></td>
+                            </tr>
 
-  
-  
-  
-  <INPUT id="sexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino"> Masculino
-  <INPUT id="sexo" TYPE="RADIO" NAME="OPCAO" VALUE="feminino"> Femenino 
+                            <tr>
+                                    <td>Telefone:</td> 
+                                <td><input type="number" id="txtTelefone"></td>
+                            </tr>
+                                
+                            <tr>
+                                    <td>Endereço:</td>
+                                <td><input type="text" id="txtEndereco"></td>
+                            </tr>
 
+                            <tr>
+                                    <td>Bairro:</td>
+                                <td><input type="text" id="txtBairro"></td>
+                            </tr>
 
-  <tr>
-   <td>
-    <label>CPF:</label>
-   </td>
-   <td align="left">
-    <input id="cpfcliente" type="text" name="cpf" size="9" maxlength="9"> 
-   </td>
-  </tr>
+                             <tr>
+                                    <td>Cidade:</td>
+                                <td><input type="text" id="txtCidade"></td>
+                            </tr>
+                     
+                            <tr>
+                                    <td>Estado:</td>
+                                <td>
+                               <select id="txtEstado" name="estado"> 
+                               <option value="ac">Acre</option> 
+                               <option value="al">Alagoas</option> 
+                               <option value="am">Amazonas</option> 
+                               <option value="ap">Amapá</option> 
+                               <option value="ba">Bahia</option> 
+                               <option value="ce">Ceará</option> 
+                               <option value="df">Distrito Federal</option> 
+                               <option value="es">Espírito Santo</option> 
+                               <option value="go">Goiás</option> 
+                               <option value="ma">Maranhão</option> 
+                               <option value="mt">Mato Grosso</option> 
+                               <option value="ms">Mato Grosso do Sul</option> 
+                               <option value="mg">Minas Gerais</option> 
+                               <option value="pa">Pará</option> 
+                               <option value="pb">Paraíba</option> 
+                               <option value="pr">Paraná</option> 
+                               <option value="pe" selected>Pernambuco</option> 
+                               <option value="pi">Piauí</option> 
+                               <option value="rj">Rio de Janeiro</option> 
+                               <option value="rn">Rio Grande do Norte</option> 
+                               <option value="ro">Rondônia</option> 
+                               <option value="rs">Rio Grande do Sul</option> 
+                               <option value="rr">Roraima</option> 
+                               <option value="sc">Santa Catarina</option> 
+                               <option value="se">Sergipe</option> 
+                               <option value="sp">São Paulo</option> 
+                               <option value="to">Tocantins</option> 
+                               </select></td>
+                            </tr>
+
+                            <table>
+                            <tr>
+                               Sexo: <input id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino" checked> Masculino
+                                     <input id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="feminino"> Feminino
+                            </tr>
+                            </table>
  </table>
-</fieldset>
+ <br>
 
-<br />
-<!-- ENDEREÇO -->
-<fieldset>
- <legend>Dados de Endereço</legend>
- <table class="table" cellspacing="10">
-
-  <tr>
-   <td>
-    <label for="endereco">Rua:</label>
-   </td>
-   <td align="left">
-    <input id="enderecocliente" type="text" name="endereco">
-   </td>
-   <td>
-
-  </tr>
-  <tr>
-   <td>
-    <label for="bairro">Bairro: </label>
-   </td>
-   <td align="left">
-    <input id="bairrocliente" type="text" name="bairro">
-   </td>
-  </tr>
-  <tr>
-   <td>
-    <label for="estado">Estado:</label>
-   </td>
-   <td align="left">
-    <select id="estado" name="estado"> 
-    <option value="ac">Acre</option> 
-    <option value="al">Alagoas</option> 
-    <option value="am">Amazonas</option> 
-    <option value="ap">Amapá</option> 
-    <option value="ba">Bahia</option> 
-    <option value="ce">Ceará</option> 
-    <option value="df">Distrito Federal</option> 
-    <option value="es">Espírito Santo</option> 
-    <option value="go">Goiás</option> 
-    <option value="ma">Maranhão</option> 
-    <option value="mt">Mato Grosso</option> 
-    <option value="ms">Mato Grosso do Sul</option> 
-    <option value="mg">Minas Gerais</option> 
-    <option value="pa">Pará</option> 
-    <option value="pb">Paraíba</option> 
-    <option value="pr">Paraná</option> 
-    <option value="pe">Pernambuco</option> 
-    <option value="pi">Piauí</option> 
-    <option value="rj">Rio de Janeiro</option> 
-    <option value="rn">Rio Grande do Norte</option> 
-    <option value="ro">Rondônia</option> 
-    <option value="rs">Rio Grande do Sul</option> 
-    <option value="rr">Roraima</option> 
-    <option value="sc">Santa Catarina</option> 
-    <option value="se">Sergipe</option> 
-    <option value="sp">São Paulo</option> 
-    <option value="to">Tocantins</option> 
-   </select>
-   </td>
-  </tr>
-  <tr>
-   <td>
-    <label for="cidade">Cidade: </label>
-   </td>
-   <td align="left">
-    <input id="cidadecliente" type="text" name="cidade">
-   </td>
-  </tr>
-  
- </table>
-</fieldset>
-<br />
-
-
-<br />
-<button class="pull-left btn btn-default" type="button" id="btnCadastrar" onclick="cadastrarcliente()">Cadastrar</button>
-<input class="btn btn-default" id="limparcliente" type="reset" value="Limpar">
-                    </div>
-                </div>
-
-
-        </div>
+<button title='Cadastrar' class="pull-left btn btn-default" type="button" id="btnCadastrar" onclick="cadastrarCliente()">Cadastrar</button>
+         </div>        
     </body>
 </html>
 
 <script>
-    var filmes = [];
 
-    function cadastrarcliente(){
+    var clientes = [];
+
+    function cadastrarCliente(){
         $.ajax({
             url: '../controllers/cliente.controller.php',
             type: 'POST',
             data: {
-                nomecliente: $('#nomecliente').val(),
-                ddd: $('#ddd').val(),
-                telefonecliente: $('#telefonecliente').val(),
-                emailcliente: $('#emailcliente').val(),                
-                sexo: $('#sexo').val(),
-                cpfcliente: $('#cpfcliente').val()+ $('#cpf2cliente').val(),
-                enderecocliente: $('#enderecocliente').val(),
-                bairrocliente: $('#bairrocliente').val(),
-                cidadecliente: $('#cidadecliente').val(),
-				        estadocliente: $('#estado').val(),
-				        salvardados: true
+                nomeCliente:     $('#txtNome').val(),
+                emailCliente:    $('#txtEmail').val(),
+                cpfCliente:      $('#txtCpf').val(),
+                sexo:            $('#txtSexo').val(),
+                telefoneCliente: $('#txtTelefone').val(),                 
+                enderecoCliente: $('#txtEndereco').val(),
+                bairroCliente:   $('#txtBairro').val(),
+                cidadeCliente:   $('#txtCidade').val(),
+                estadoCliente:   $('#txtEstado').val(),
+				        salvarDados: true
             },success:function(response){
                 if(response.trim() == "1"){
                    alert('Cliente Cadastrado');
@@ -186,8 +135,5 @@
             }
         });  
     }
-
-
-    
     
 </script>

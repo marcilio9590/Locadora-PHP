@@ -13,7 +13,7 @@
         </div>
         <div class="container-fluid"> 
                 <div class="row">
-                    <div class="col-sm-4"><h1><label>Devolução</label></h1></div>
+                    <div class="col-sm-4"><h1><label>Devoluções</label></h1></div>
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4"></div>
                 </div>

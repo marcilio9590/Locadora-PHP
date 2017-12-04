@@ -103,7 +103,7 @@ require_once '../conexao/conexaoBD.php';
 
                             <table>
                             <tr>
-                               Sexo: <input value="<?php echo $clienteEdicao['sexo'] ?>" id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino" checked> Masculino
+                               Sexo: <input value="<?php echo $clienteEdicao['sexo'] ?>" id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino"> Masculino
                                      <input value="<?php echo $clienteEdicao['sexo'] ?>" id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="feminino"> Feminino
                             </tr>
                             </table>

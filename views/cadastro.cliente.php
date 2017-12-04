@@ -92,7 +92,7 @@
 
                             <table>
                             <tr>
-                               Sexo: <input id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino" checked> Masculino
+                               Sexo: <input id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="masculino"> Masculino
                                      <input id="txtSexo" TYPE="RADIO" NAME="OPCAO" VALUE="feminino"> Feminino
                             </tr>
                             </table>

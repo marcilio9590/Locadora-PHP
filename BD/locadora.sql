@@ -25,7 +25,6 @@ CREATE TABLE `clientes` (
   `email` varchar(50) NOT NULL,
   `cpf` varchar(11) NOT NULL,
   `sexo` varchar(10) NOT NULL,
-  `ddd` varchar(10) NOT NULL,
   `telefone` varchar(15) NOT NULL,
   `endereco` varchar(100) NOT NULL,
   `bairro` varchar(100) NOT NULL,

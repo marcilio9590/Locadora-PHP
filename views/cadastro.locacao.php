@@ -1,96 +1,96 @@
 <?php require_once('../controllers/cadastro.locacoes.controller.php'); ?>
 
 <html>
-    <head>
-        <script src="../resources/bootstrap/js/jquery.min.js"></script>
-        <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css" />
-        <title>Locadora de filmes 1.0</title>
-    </head>
-    <body>
-        <div>
-            <?php require_once('menu.php'); ?>
+<head>
+    <script src="../resources/bootstrap/js/jquery.min.js"></script>
+    <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css" />
+    <title>Locadora de filmes 1.0</title>
+</head>
+<body>
+    <div>
+        <?php require_once('menu.php'); ?>
+    </div>
+    <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-sm-4"><h1><label>Nova Locação</label></h1></div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"></div>
         </div>
-        <div class="container-fluid"> 
-                <div class="row">
-                    <div class="col-sm-4"><h1><label>Nova Locação</label></h1></div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4"></div>
-                </div>
 
-                <br>
-                <div class="row">
-                    <div class="col-sm-6">
-                    
-                        <form class="form-horizontal" id="formLocacao">
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-3 control-label">Cod. Cliente:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
-                                    <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
-                                    type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
-                                </div>
-                            </div>
-
-                            <div style="display:none;" id="divNomeCliente" class="form-group">
-                                <label for="inputPassword3" class="col-sm-3 control-label">Nome Cliente:</label>
-                                <div class="col-sm-9">
-                                    <input style="width:350px;" type="text" disabled="true" class="form-control" id="nomeCliente">
-                                </div>
-                            </div> 
-
-
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-3 control-label">Cod. Funcionário:</label>
-                                <div class="col-sm-9">
-                                        <input type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
-                                        <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
-                                    type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
-                                </div>
-                            </div>
-                            
-                            <div style="display:none;" class="form-group" id="divNomeFuncionario">
-                                <label for="inputPassword3" class="col-sm-3 control-label">Nome Funcionário:</label>
-                                <div class="col-sm-9">
-                                    <input style="width:350px;" type="text" disabled="true" class="form-control" name="nomeFuncionario" id="nomeFuncionario">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-								<label for="inputPassword3" class="col-sm-3 control-label">Cod. Filme:</label>
-								<div class="col-sm-9">
-                                    <input type="text" style="width:350px;" class="pull-left form-control" name="codFilme" id="codFilme"/>
-                                    <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
-                                    type="button" id="btnPesquisarFilmes" onclick="adicionarFilmes()">Adicionar</button>
-								</div>
-							</div>
-
-                            <div class="form-group">
-								<label for="inputPassword3" class="col-sm-3 control-label">Total:</label>
-								<div class="col-sm-9">
-                                    <input disabled type="text" style="width:350px;" class="pull-left form-control" id="totalLocacao" name="totalLocacao"/>
-								</div>
-							</div>
-                         
-                            <div class="form-group">
-                                <div class="col-sm-offset-5 col-sm-7">
-                                <button class="pull-left btn btn-default" 
-                                    type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Cadastrar</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    
+        <br>
+        <div class="row">
+            <div class="col-sm-6">
+                
+                <form class="form-horizontal" id="formLocacao">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Cod. Cliente:</label>
+                        <div class="col-sm-9">
+                            <input type="text" style="width:350px;" class="pull-left form-control" name="codCliente" id="codCliente"/>
+                            <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                            type="button" id="btnPesquisarCliente" onclick="buscarCliente()">Pesquisar</button>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                    <div id="filmesAdicionados"></div>
+
+                    <div style="display:none;" id="divNomeCliente" class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Nome Cliente:</label>
+                        <div class="col-sm-9">
+                            <input style="width:350px;" type="text" disabled="true" class="form-control" id="nomeCliente">
+                        </div>
+                    </div> 
+
+
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Cod. Funcionário:</label>
+                        <div class="col-sm-9">
+                            <input type="text" style="width:350px;" class="pull-left form-control" id="codFuncionario" name="codFuncionario"/>
+                            <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                            type="button" id="buscarFuncionario" onclick="getFuncionario()">Pesquisar</button>
+                        </div>
                     </div>
-                    <div class="col-sm-2"></div>
-                </div>
+                    
+                    <div style="display:none;" class="form-group" id="divNomeFuncionario">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Nome Funcionário:</label>
+                        <div class="col-sm-9">
+                            <input style="width:350px;" type="text" disabled="true" class="form-control" name="nomeFuncionario" id="nomeFuncionario">
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Cod. Filme:</label>
+                        <div class="col-sm-9">
+                            <input type="text" style="width:350px;" class="pull-left form-control" name="codFilme" id="codFilme"/>
+                            <button style="margin-left:5px; margin-top:5px;" class="pull-left btn btn-default btn-xs" 
+                            type="button" id="btnPesquisarFilmes" onclick="adicionarFilmes()">Adicionar</button>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Total:</label>
+                        <div class="col-sm-9">
+                            <input disabled type="text" style="width:350px;" class="pull-left form-control" id="totalLocacao" name="totalLocacao"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-7">
+                            <button class="pull-left btn btn-default" 
+                            type="button" id="btnCadastrar" onclick="cadastrarLocacao()">Cadastrar</button>
+                        </div>
+                    </div>
+
+                </form>
+                
+            </div>
+            <div class="col-sm-4">
+                <div id="filmesAdicionados"></div>
+            </div>
+            <div class="col-sm-2"></div>
         </div>
-    </body>
+
+
+    </div>
+</body>
 </html>
 
 <script>
@@ -217,7 +217,7 @@
         var e = filmes[index];
         $( '#filme'+index).remove();;
         $("#totalLocacao")[0].value = $("#totalLocacao")[0].value && parseFloat($("#totalLocacao")[0].value) > 0 ? 
-            parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
+        parseFloat($("#totalLocacao")[0].value) - parseFloat(e.preco) : '' ;
         filmes.splice(index,1);
         montarTabela(filmes);
     }
@@ -242,13 +242,13 @@
                 if(data !== "false"){
                    alert(data);
                    window.location="locacao.php"; 
-                }else{
-                    alert("Preencha todo o formulário.");
-                }
-            },error:function(){
-                alert("ERRO AO INCLUIR LOCACAO");
+               }else{
+                alert("Preencha todo o formulário.");
             }
-        }); 
+        },error:function(){
+            alert("ERRO AO INCLUIR LOCACAO");
+        }
+    }); 
 
     }
 </script>

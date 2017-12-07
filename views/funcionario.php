@@ -19,16 +19,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-8">
+                    <div style="margin-left:85px;" class="col-sm-12">
                     <a href="cadastro.funcionario.php" class="pull-left"> <button class="btn btn-default">Cadastrar Novo Funcionário</button></a>
-                    <div class="col-sm-2"></div>
                 </div>
                 <br>
                 
                 <div class="row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-2"></div>
+                    <div style="margin-left:100px;" class="col-sm-10">
                         <table class="table table-bordered table-condensed"><br>
                  
                             <thead>

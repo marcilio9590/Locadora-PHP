@@ -33,7 +33,7 @@
 
                             <tr>
                                     <td>Cpf:</td>
-                                <td><input type="number" maxlength="11" id="txtCpf"></td>
+                                <td><input type="text" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="txtCpf"></td>
                             </tr>
 
                             <tr>

@@ -50,12 +50,12 @@
 
                              <tr>
                                     <td>Cpf:</td>
-                                <td><input type="number" maxlength="11" id="txtCpf"></td>
+                                <td><input type="text" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="txtCpf"></td>
                             </tr>
 
                              <tr>
                                     <td>Rg:</td>
-                                <td><input type="number" maxlength="7" id="txtRg"></td>
+                                <td><input type="text" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="txtRg"></td>
                             </tr>
 
                             <tr>
@@ -65,7 +65,7 @@
 
                              <tr>
                                     <td>Data Admissão:</td>
-                                <td><input maxlength="10" type="datetime" id="txtDataAdmissao" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
+                                <td><input maxlength="10" oninput="this.value=this.value.replace(/[^0-9/]/g,'');" type="datetime" id="txtDataAdmissao" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
                             </tr>
 
                              <tr>

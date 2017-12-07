@@ -87,7 +87,18 @@
     
      function salvarDados(){
          
-        $.ajax({
+                if($('#txtNome').val() != "" &&
+                 $('#txtRua').val() != "" &&
+                $('#txtCep').val() != "" &&
+                $('#txtBairro').val() != "" &&
+                 $('#txtCidade').val() != "" &&
+                 $('#txtCpf').val() != "" &&
+                $('#txtRg').val() != ""  &&
+                $('#txtSexo').val() != "" &&
+                $('#txtDataAdmissao').val() &&
+                 $('#txtTelefone').val() != ""){
+
+                         $.ajax({
             url: '../controllers/funcionario.controller.php',
             type: 'POST',
             data: {
@@ -112,7 +123,12 @@
             }, error:function(response){
                 alert("ERRO AO CADASTRAR");
             }
-        });  
+        });
+                }else{
+                    alert("Preencha todos os campos.");
+                }
+
+     
     }
 </script>
 

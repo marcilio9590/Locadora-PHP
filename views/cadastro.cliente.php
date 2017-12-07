@@ -110,7 +110,17 @@
     var clientes = [];
 
     function cadastrarCliente(){
-        $.ajax({
+
+       if($('#txtNome').val() != "" &&
+               $('#txtEmail').val()!= ""  &&
+                $('#txtCpf').val() != "" &&
+                 $('#txtSexo').val() != "" &&
+               $('#txtTelefone').val() != "" &&                 
+                 $('#txtEndereco').val() != "" &&
+                $('#txtBairro').val() != "" &&
+                 $('#txtCidade').val() != "" &&
+                $('#txtEstado').val() != ""){
+           $.ajax({
             url: '../controllers/cliente.controller.php',
             type: 'POST',
             data: {
@@ -123,7 +133,7 @@
                 bairroCliente:   $('#txtBairro').val(),
                 cidadeCliente:   $('#txtCidade').val(),
                 estadoCliente:   $('#txtEstado').val(),
-				        salvarDados: true
+                salvarDados: true
             },success:function(response){
                 if(response.trim() == "1"){
                    alert('Cliente Cadastrado');
@@ -134,7 +144,12 @@
             }, error:function(response){
                 alert("ERRO AO CADASTRAR");
             }
-        });  
+        }); 
+       }else{
+        alert("Preencha todos os campos");
+       }
+
+        
     }
     
 </script>

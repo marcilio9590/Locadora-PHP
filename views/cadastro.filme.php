@@ -73,12 +73,11 @@
                 alert("ERRO AO CADASTRAR FILME");
             }
         });  
-    }
-             }else {
+    } else {
                 alert("Preencha todos os campos.");
              }
 
-
+}
        
 
 </script>

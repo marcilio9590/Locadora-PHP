@@ -49,7 +49,12 @@
 <script>
     
      function cadastrarFilme(){
-        $.ajax({
+
+
+             if($('#txtNomeFilme').val() != "" && 
+               $('#txtGeneroFilme').val()  != ""  && 
+                $('#txtPrecoFilme').val()  != ""  ){
+                 $.ajax({
             url: '../controllers/filme.controller.php',
             type: 'POST',
             data: {
@@ -69,6 +74,12 @@
             }
         });  
     }
+             }else {
+                alert("Preencha todos os campos.");
+             }
+
+
+       
 
 </script>
 

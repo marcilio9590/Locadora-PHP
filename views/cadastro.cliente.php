@@ -33,12 +33,12 @@
 
                             <tr>
                                     <td>Cpf:</td>
-                                <td><input type="number" id="txtCpf"></td>
+                                <td><input type="number" maxlength="11" id="txtCpf"></td>
                             </tr>
 
                             <tr>
                                     <td>Telefone:</td> 
-                                <td><input type="number" id="txtTelefone"></td>
+                                <td><input type="number" maxlength="11" id="txtTelefone"></td>
                             </tr>
                                 
                             <tr>

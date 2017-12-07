@@ -50,12 +50,12 @@
 
                              <tr>
                                     <td>Cpf:</td>
-                                <td><input type="number" id="txtCpf"></td>
+                                <td><input type="number" maxlength="11" id="txtCpf"></td>
                             </tr>
 
                              <tr>
                                     <td>Rg:</td>
-                                <td><input type="number" id="txtRg"></td>
+                                <td><input type="number" maxlength="7" id="txtRg"></td>
                             </tr>
 
                             <tr>
@@ -65,12 +65,12 @@
 
                              <tr>
                                     <td>Data Admissão:</td>
-                                <td><input type="datetime" id="txtDataAdmissao" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
+                                <td><input maxlength="10" type="datetime" id="txtDataAdmissao" style="text-align:center;"value="<?php echo date("d/m/Y"); ?>"></td>
                             </tr>
 
                              <tr>
                                     <td>Telefone:</td>
-                                <td><input type="number" id="txtTelefone"></td>
+                                <td><input type="number" maxlength="11" id="txtTelefone"></td>
                             </tr>
                         </table>
                         <button title='Salvar' class="pull-left btn btn-default" type="button" id="btnSalvar" onclick="salvarDados()">Salvar</button>
